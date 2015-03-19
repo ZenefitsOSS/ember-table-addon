@@ -3,6 +3,7 @@ import StyleBindingsMixin from 'ember-table/mixins/style-bindings';
 import ResizeHandlerMixin from 'ember-table/mixins/resize-handler';
 import RowArrayController from 'ember-table/controllers/row-array';
 import Row from 'ember-table/controllers/row';
+import GetScrollbarSize from 'ember-table/utils/get-scrollbar-size';
 
 export default Ember.Component.extend(
 StyleBindingsMixin, ResizeHandlerMixin, {
@@ -137,7 +138,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
           value = resolvedContent;
         });
 
-        // returns [] if the promise doesn't resolve immediately, or 
+        // returns [] if the promise doesn't resolve immediately, or
         // the resolved value if it's ready
         return value;
       }
@@ -156,9 +157,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     }
     if (!Ember.$().mousewheel) {
       throw 'Missing dependency: jquery-mousewheel';
-    }
-    if (!Ember.$().antiscroll) {
-      throw 'Missing dependency: antiscroll.js';
     }
     return this.prepareTableColumns();
   },
@@ -253,6 +251,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     this.set('_tableScrollTop', 0);
     this.elementSizeDidChange();
     this.doForceFillColumns();
+    this.set('_scrollbarSize', GetScrollbarSize());
   },
 
   onResizeEnd: function() {
@@ -293,8 +292,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     if ((this.get('_state') || this.get('state')) !== 'inDOM') {
       return;
     }
-    // updating antiscroll
-    this.$('.antiscroll-wrap').antiscroll().data('antiscroll').rebuild();
     if (this.get('columnsFillTable')) {
       return this.doForceFillColumns();
     }
@@ -353,6 +350,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   _tableScrollTop: 0,
   _tableScrollLeft: 0,
+  _scrollbarSize: 0,
 
   _width: null,
   _height: null,
@@ -392,8 +390,13 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     // reorder into the last column.
     var contentWidth = this._getTotalWidth(this.get('tableColumns')) + 3;
     var availableWidth = this.get('_width') - this.get('_fixedColumnsWidth');
+    if (this.get('_hasVerticalScrollbar')) {
+      availableWidth -= this.get('_scrollbarSize');
+      contentWidth += this.get('_scrollbarSize');
+    }
     return Math.max(contentWidth, availableWidth);
-  }).property('tableColumns.@each.width', '_width', '_fixedColumnsWidth'),
+  }).property('tableColumns.@each.width', '_width', '_fixedColumnsWidth',
+      '_hasVerticalScrollbar'),
 
   _rowWidth: Ember.computed(function() {
     var columnsWidth = this.get('_tableColumnsWidth');
@@ -423,6 +426,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     if (this.get('hasFooter')) {
       bodyHeight -= this.get('footerHeight');
     }
+    if(this.get('_hasHorizontalScrollbar')){
+      bodyHeight -= this.get('_scrollbarSize');
+    }
     return bodyHeight;
   }).property('_tablesContainerHeight', '_hasHorizontalScrollbar',
       '_headerHeight', 'footerHeight', 'hasHeader', 'hasFooter'),
@@ -431,19 +437,21 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     return this.get('_width') - this.get('_fixedColumnsWidth');
   }).property('_width', '_fixedColumnsWidth'),
 
-  _fixedBlockWidthBinding: '_fixedColumnsWidth',
+  _fixedBlockWidth: Ember.computed.alias('_fixedColumnsWidth'),
 
   _tableContentHeight: Ember.computed(function() {
     return this.get('rowHeight') * this.get('bodyContent.length');
   }).property('rowHeight', 'bodyContent.length'),
 
-  _tableContainerWidth: Ember.computed(function() {
-    return this.get('_width');
-  }).property('_width'),
+  _tableContainerWidth: Ember.computed.alias('_width'),
 
   _scrollContainerWidth: Ember.computed(function() {
-    return this.get('_width') - this.get('_fixedColumnsWidth');
-  }).property('_width', '_fixedColumnsWidth'),
+    var width = this.get('_width') - this.get('_fixedColumnsWidth');
+    if(this.get('_hasVerticalScrollbar')){
+      width -= this.get('_scrollbarSize');
+    }
+    return width;
+  }).property('_width', '_fixedColumnsWidth', '_hasVerticalScrollbar'),
 
   _numItemsShowing: Ember.computed(function() {
     return Math.floor(this.get('_bodyHeight') / this.get('rowHeight'));

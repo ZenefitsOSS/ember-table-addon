@@ -2,46 +2,48 @@
 // Ember Table Financial Theme
 // -----------------------------------------------------------------------------
 
-.ember-table-financial {
+@import 'et';
+
+.et-financial {
+
   /* Table Structures */
 
   // TODO(Louis): This is a hack for now, it should be:
-  // &.ember-table-tables-container {
-  .ember-table-tables-container {
+  // &.et-tables-container {
+  .et-tables-container {
     background-color: transparent;
     border: none;
     color: #77777a;
     overflow: hidden;
-    .border-radius(0);
-    .box-sizing();
+    border-radius: 0;
+    box-sizing: border-box;
 
     &.widget {
       border: 1px solid @table-body-border-color;
       border: 1px solid #cfd1d4;
-      .box-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-      .border-radius(2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
     }
 
     * {
-      .user-select(none)
+      user-select: none;
     }
   }
 
-  .ember-table-header-container,
-  .ember-table-footer-container {
-    .box-shadow(none);
+  .et-header-container,
+  .et-footer-container {
+    box-shadow: none;
   }
 
-  .ember-table-header-row,
-  .ember-table-header-container .ember-table-table-fixed-wrapper {
+  .et-header-row,
+  .et-header-container .et-table-fixed-wrapper {
     background: transparent;
     background-color: transparent;
-    .gradient(0);
   }
 
   /* Table Cell */
 
-  .ember-table-cell {
+  .et-cell {
     // Important: We defined font-size: 0 in .tables-container due to the use of
     // display-inline: block. Font-size: 13px is used for the cell content
     font-size: 13px;
@@ -49,24 +51,24 @@
     border-right: 16px solid transparent;
   }
 
-  .ember-table-cell-container {
+  .et-cell-container {
     border-bottom: 1px dotted #bbb;
   }
 
-  .ember-table-left-table-block .ember-table-cell {
+  .et-left-table-block .et-cell {
     border-right: 16px solid transparent !important;
   }
 
   /* Header Container */
 
-  .ember-table-header-container {
+  .et-header-container {
     border-bottom-width: 0;
   }
 
-  .ember-table-header-container .ember-table-right-table-block .ember-table-table-row {
+  .et-header-container .et-right-table-block .et-table-row {
     width: 100%;
     overflow-x: auto;
-    .box-sizing();
+    box-sizing: border-box;
 
     .ui-sortable {
       // Dynamically set the width
@@ -76,7 +78,7 @@
 
   /* Header Cells */
 
-  .ember-table-header-cell {
+  .et-header-cell {
     font-weight: 600;
     font-size: 9px !important;
     text-transform: uppercase;
@@ -88,7 +90,7 @@
       line-height: 1;
     }
 
-    .ember-table-header-content-container {
+    .et-header-content-container {
       position: absolute;
       top: 0;
       bottom: 0;
@@ -99,7 +101,7 @@
         cursor: pointer;
       }
 
-      .ember-table-content {
+      .et-content {
         padding: 5px 0;
         line-height: 1.4;
         position: absolute;
@@ -108,7 +110,7 @@
       }
     }
 
-    .ember-table-toggle {
+    .et-toggle {
       position: relative;
 
       i{
@@ -119,19 +121,19 @@
     }
   }
 
-  .ember-table-header-cell.text-align-left .ember-table-content {
+  .et-header-cell.text-align-left .et-content {
     left: 0;
   }
 
-  .ember-table-header-cell.text-align-right .ember-table-content {
+  .et-header-cell.text-align-right .et-content {
     right: 0;
   }
 
-  .ember-table-table-header-tree-cell .ember-table-header-content-container {
+  .et-table-header-tree-cell .et-header-content-container {
     left: 20px;
   }
 
-  .ember-table-table-header-tree-cell .ember-table-toggle-span {
+  .et-table-header-tree-cell .et-toggle-span {
     // Need to override stronger selectors
     position: absolute !important;
     top: 0;
@@ -143,7 +145,7 @@
   // > http://jqueryui.com/draggable/#cursor-style
   // cursor: -webkit-grabbing; cursor: -moz-grabbing;
 
-  .ember-table-table-dropdown-toggle {
+  .et-table-dropdown-toggle {
     height: @table-header-cell-control-group-height - 1;
     float: right;
     margin: 0;
@@ -154,69 +156,69 @@
 
   /* Footer */
 
-  .ember-table-footer-container {
+  .et-footer-container {
     border: none;
 
-    .ember-table-cell-container {
+    .et-cell-container {
       border-top: 1px dotted #bbb;
       border-bottom: none;
     }
   }
 
-  .ember-table-fixed-table-container.ember-table-header-container,
-  .ember-table-fixed-table-container.ember-table-footer-container {
+  .et-fixed-table-container.et-header-container,
+  .et-fixed-table-container.et-footer-container {
     background-color: transparent;
   }
 
   /* Add Column Button */
 
-  .ember-table-add-column-button {
+  .et-add-column-button {
     display: none;
   }
 
   /* Levels */
 
-  .ember-table-table-row {
+  .et-table-row {
     border-bottom-width: 0 !important;
     // .transition(0.1s background-color linear);
     color: #333;
 
-    &.ember-table-row-style-1 {
+    &.et-row-style-1 {
       font-weight: bold;
     }
 
-    &.ember-table-row-style-2 {
+    &.et-row-style-2 {
       font-weight: normal;
     }
 
-    &.ember-table-row-style-3 {
+    &.et-row-style-3 {
       font-weight: 300;
     }
 
-    &.ember-table-row-style-4 {
+    &.et-row-style-4 {
       font-weight: 300;
     }
 
-    &.ember-table-row-style-5 {
+    &.et-row-style-5 {
       font-weight: 300;
     }
 
-    &.ember-table-row-style-6 {
+    &.et-row-style-6 {
       font-weight: 300;
     }
 
-    &.ember-table-last-row .ember-table-cell-container {
+    &.et-last-row .et-cell-container {
       border-bottom: none !important;
     }
 
-    &.ember-table-selected .ember-table-cell {
+    &.et-selected .et-cell {
       // Note: must be the same as above
       border-right: 16px solid transparent;
     }
   }
 
-  .ember-table-body-container .ember-table-table-row.ember-table-hover {
-    .ember-table-toggle.ember-table-collapse .ember-table-toggle-icon {
+  .et-body-container .et-table-row.et-hover {
+    .et-toggle.et-collapse .et-toggle-icon {
       opacity: 0.3;
     }
   }
