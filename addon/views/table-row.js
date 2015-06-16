@@ -5,11 +5,11 @@ import LazyItemView from 'ember-table/views/lazy-item';
 export default LazyItemView.extend(
 RegisterTableComponentMixin, {
   templateName: 'table-row',
-  classNames: 'ember-table-table-row',
-  classNameBindings: ['row.isHovered:ember-table-hover',
-      'row.isSelected:ember-table-selected',
+  classNames: 'et-table-row',
+  classNameBindings: ['row.isHovered:et-hover',
+      'row.isSelected:et-selected',
       'row.rowStyle',
-      'isLastRow:ember-table-last-row'],
+      'isLastRow:et-last-row'],
   styleBindings: ['width', 'height'],
   row: Ember.computed.alias('content'),
   columns: Ember.computed.alias('parentView.columns'),

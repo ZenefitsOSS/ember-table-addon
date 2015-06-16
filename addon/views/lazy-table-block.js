@@ -4,7 +4,7 @@ import LazyContainerView from 'ember-table/views/lazy-container';
 
 export default LazyContainerView.extend(
 RegisterTableComponentMixin, {
-  classNames: ['ember-table-table-block'],
+  classNames: ['et-table-block'],
   styleBindings: ['width'],
   itemViewClass: Ember.computed.alias('tableComponent.tableRowViewClass'),
   rowHeight: Ember.computed.alias('tableComponent.rowHeight'),

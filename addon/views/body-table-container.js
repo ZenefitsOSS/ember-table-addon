@@ -9,7 +9,7 @@ export default TableContainer.extend(
 MouseWheelHandlerMixin, TouchMoveHandlerMixin, ScrollHandlerMixin,
 RegisterTableComponentMixin, {
   templateName: 'body-table-container',
-  classNames: ['ember-table-table-container', 'ember-table-body-container'],
+  classNames: ['et-table-container', 'et-body-container'],
 
   height: Ember.computed.alias('tableComponent._bodyHeight'),
   width: Ember.computed.alias('tableComponent._width'),
@@ -26,7 +26,7 @@ RegisterTableComponentMixin, {
     if (Math.abs(deltaX) <= Math.abs(deltaY)) {
       return;
     }
-    var scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX;
+    var scrollLeft = this.$('.et-right-table-block').scrollLeft() + deltaX;
     this.set('scrollLeft', scrollLeft);
     event.preventDefault();
   },
@@ -36,7 +36,7 @@ RegisterTableComponentMixin, {
     if (Math.abs(deltaX) <= Math.abs(deltaY)) {
       return;
     }
-    var scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX;
+    var scrollLeft = this.$('.et-right-table-block').scrollLeft() + deltaX;
     this.set('scrollLeft', scrollLeft);
     event.preventDefault();
   }

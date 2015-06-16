@@ -7,7 +7,7 @@ import RegisterTableComponentMixin from 'ember-table/mixins/register-table-compo
 export default Ember.View.extend(
 StyleBindingsMixin, RegisterTableComponentMixin, {
   templateName: 'header-row',
-  classNames: ['ember-table-table-row', 'ember-table-header-row'],
+  classNames: ['et-table-row', 'et-header-row'],
   styleBindings: ['width'],
   columns: Ember.computed.alias('content'),
   width: Ember.computed.alias('tableComponent._rowWidth'),
@@ -20,7 +20,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
       containment: 'parent',
       cursor: 'move',
       helper: 'clone',
-      items: ".ember-table-header-cell.sortable",
+      items: ".et-header-cell.sortable",
       opacity: 0.9,
       placeholder: 'ui-state-highlight',
       scroll: true,
@@ -64,7 +64,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
 
   onColumnSortChange: function() {
     var left = this.$('.ui-state-highlight').offset().left -
-        this.$().closest('.ember-table-tables-container').offset().left;
+        this.$().closest('.et-tables-container').offset().left;
     this.set('tableComponent._isShowingSortableIndicator', true);
     this.set('tableComponent._sortableIndicatorLeft', left);
   },

@@ -4,7 +4,7 @@ import RegisterTableComponentMixin from 'ember-table/mixins/register-table-compo
 
 export default Ember.View.extend(
 StyleBindingsMixin, RegisterTableComponentMixin, {
-  classNames: 'ember-table-column-sortable-indicator',
+  classNames: 'et-column-sortable-indicator',
   classNameBindings: 'tableComponent._isShowingSortableIndicator:active',
   styleBindings: ['left', 'height'],
   left: Ember.computed.alias('tableComponent._sortableIndicatorLeft'),

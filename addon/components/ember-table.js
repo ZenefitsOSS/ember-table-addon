@@ -7,8 +7,8 @@ import GetScrollbarSize from 'ember-table/utils/get-scrollbar-size';
 
 export default Ember.Component.extend(
 StyleBindingsMixin, ResizeHandlerMixin, {
-  classNames: ['ember-table-tables-container'],
-  classNameBindings: ['enableContentSelection:ember-table-content-selectable'],
+  classNames: ['et-tables-container'],
+  classNameBindings: ['enableContentSelection:et-content-selectable'],
 
   // ---------------------------------------------------------------------------
   // API - Inputs
@@ -596,7 +596,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   },
 
   getRowForEvent: function(event) {
-    var $rowView = Ember.$(event.target).parents('.ember-table-table-row');
+    var $rowView = Ember.$(event.target).parents('.et-table-row');
     var view = Ember.View.views[$rowView.attr('id')];
     if (view) {
       return view.get('row');

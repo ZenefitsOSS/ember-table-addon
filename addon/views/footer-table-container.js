@@ -7,9 +7,9 @@ import TouchMoveHandlerMixin from 'ember-table/mixins/touch-move-handler';
 export default TableContainer.extend(
 MouseWheelHandlerMixin, TouchMoveHandlerMixin, RegisterTableComponentMixin, {
   templateName: 'footer-table-container',
-  classNames: ['ember-table-table-container',
-    'ember-table-fixed-table-container',
-    'ember-table-footer-container'],
+  classNames: ['et-table-container',
+    'et-fixed-table-container',
+    'et-footer-container'],
   styleBindings: 'top',
   height: Ember.computed.alias('tableComponent.footerHeight'),
   width: Ember.computed.alias('tableComponent._tableContainerWidth'),
@@ -29,14 +29,14 @@ MouseWheelHandlerMixin, TouchMoveHandlerMixin, RegisterTableComponentMixin, {
       'tableComponent._tableContentHeight'),
 
   onMouseWheel: function(event, delta, deltaX) {
-    var scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() +
+    var scrollLeft = this.$('.et-right-table-block').scrollLeft() +
         deltaX;
     this.set('scrollLeft', scrollLeft);
     event.preventDefault();
   },
 
   onTouchMove: function(event, deltaX) {
-    var scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() +
+    var scrollLeft = this.$('.et-right-table-block').scrollLeft() +
         deltaX;
     this.set('scrollLeft', scrollLeft);
     event.preventDefault();

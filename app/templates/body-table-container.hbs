@@ -1,6 +1,6 @@
-<div class="ember-table-table-scrollable-wrapper">
+<div class="et-table-scrollable-wrapper">
   {{#if numFixedColumns}}
-    {{view "lazy-table-block" classNames="ember-table-left-table-block"
+    {{view "lazy-table-block" classNames="et-left-table-block"
       content=bodyContent
       columns=fixedColumns
       width=_fixedBlockWidth
@@ -9,7 +9,7 @@
       startIndex=_startIndex
     }}
   {{/if}}
-  {{view "lazy-table-block" classNames="ember-table-right-table-block"
+  {{view "lazy-table-block" classNames="et-right-table-block"
     content=bodyContent
     columns=tableColumns
     scrollLeft=_tableScrollLeft

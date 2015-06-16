@@ -10,7 +10,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
 
   // TODO: Doc
   templateName: 'header-cell',
-  classNames: ['ember-table-cell', 'ember-table-header-cell'],
+  classNames: ['et-cell', 'et-header-cell'],
   classNameBindings: ['column.isSortable:sortable', 'column.textAlign'],
   styleBindings: ['width', 'height'],
 
@@ -118,7 +118,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   elementSizeDidChange: function() {
     var maxHeight = 0;
     // TODO(Louis): This seems bad...
-    Ember.$('.ember-table-header-block .ember-table-content').each(function() {
+    Ember.$('.et-header-block .et-content').each(function() {
       var thisHeight = Ember.$(this).outerHeight();
       if (thisHeight > maxHeight) {
         return maxHeight = thisHeight;

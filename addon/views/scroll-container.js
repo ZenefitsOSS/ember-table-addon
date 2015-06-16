@@ -6,7 +6,7 @@ import ScrollHandlerMixin from 'ember-table/mixins/scroll-handler';
 export default Ember.View.extend(
 StyleBindingsMixin, ScrollHandlerMixin, RegisterTableComponentMixin, {
   templateName: 'scroll-container',
-  classNames: ['ember-table-scroll-container'],
+  classNames: ['et-scroll-container'],
   styleBindings: ['left', 'width', 'height'],
   width: Ember.computed.alias('tableComponent._scrollContainerWidth'),
   // 15 is the height of the horizontal scrollbar
