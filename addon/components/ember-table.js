@@ -3,7 +3,7 @@ import StyleBindingsMixin from 'ember-table/mixins/style-bindings';
 import ResizeHandlerMixin from 'ember-table/mixins/resize-handler';
 import RowArrayController from 'ember-table/controllers/row-array';
 import Row from 'ember-table/controllers/row';
-import GetScrollbarSize from 'ember-table/utils/get-scrollbar-size';
+import getScrollbarSize from 'ember-table/utils/get-scrollbar-size';
 
 export default Ember.Component.extend(
 StyleBindingsMixin, ResizeHandlerMixin, {
@@ -253,7 +253,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     this.set('_tableScrollTop', 0);
     this.elementSizeDidChange();
     this.doForceFillColumns();
-    this.set('_scrollbarSize', GetScrollbarSize());
+    this.set('_scrollbarSize', getScrollbarSize());
   },
 
   onResizeEnd: function() {
