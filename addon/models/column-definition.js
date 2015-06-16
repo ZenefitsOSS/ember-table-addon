@@ -34,7 +34,7 @@ export default Ember.Object.extend({
 
   // Alignment of the text in the cell. Possible values are "left", "center",
   // and "right".
-  textAlign: 'text-align-right',
+  textAlign: '',
 
   // Whether the column can automatically resize to fill space in the table.
   canAutoResize: false,

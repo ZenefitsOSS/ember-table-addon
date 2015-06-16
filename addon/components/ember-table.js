@@ -8,7 +8,8 @@ import getScrollbarSize from 'ember-table/utils/get-scrollbar-size';
 export default Ember.Component.extend(
 StyleBindingsMixin, ResizeHandlerMixin, {
   classNames: ['et-tables-container'],
-  classNameBindings: ['enableContentSelection:et-content-selectable'],
+  classNameBindings: ['enableContentSelection:et-content-selectable',
+      'scrolledX:has-scrollbarX', 'scrolledY:has-scrollbarY'],
   scrolledX: Ember.computed.gt('_tableScrollLeft', 0),
   scrolledY: Ember.computed.gt('_tableScrollTop', 0),
 
@@ -309,7 +310,13 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var allColumns = this.get('columns');
     var columnsToResize = allColumns.filterProperty('canAutoResize');
     var unresizableColumns = allColumns.filterProperty('canAutoResize', false);
+    // TODO(Louis): Remove 3px from the available width to make the last column
+    // more easily sortable. Value needs to be synced with _tableColumnsWidth
     var availableWidth = this.get('_width') - this._getTotalWidth(unresizableColumns);
+    if (this.get('_hasVerticalScrollbar')) {
+      availableWidth -= this.get('_scrollbarSize');
+    }
+
     var doNextLoop = true;
     var nextColumnsToResize = [];
     var totalResizableWidth;
@@ -319,6 +326,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       doNextLoop = false;
       nextColumnsToResize = [];
       totalResizableWidth = this._getTotalWidth(columnsToResize);
+      if (this.get('_hasVerticalScrollbar')) {
+        totalResizableWidth += this.get('_scrollbarSize');
+      }
       /*jshint loopfunc:true */
       // TODO(azirbel): Revisit JSHint error above
       columnsToResize.forEach(function(column) {
@@ -377,9 +387,12 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var height = this.get('_height');
     var contentHeight = this.get('_tableContentHeight') +
         this.get('_headerHeight') + this.get('_footerHeight');
+    if(this.get('_hasHorizontalScrollbar')){
+      contentHeight += this.get('_scrollbarSize');
+    }
     return Math.min(contentHeight, height);
   }).property('_height', '_tableContentHeight', '_headerHeight',
-      '_footerHeight'),
+      '_footerHeight', '_hasHorizontalScrollbar', '_scrollbarSize'),
 
   // Actual width of the fixed columns
   _fixedColumnsWidth: Ember.computed(function() {
@@ -388,8 +401,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   // Actual width of the (non-fixed) columns
   _tableColumnsWidth: Ember.computed(function() {
-    // Hack: We add 3px padding to the right of the table content so that we can
-    // reorder into the last column.
+    // TODO(Louis): Hack: We add 3px padding to the right of the table content
+    // so that we can reorder into the last column. This value needs
+    // to be synced with doForceFillColumns
     var contentWidth = this._getTotalWidth(this.get('tableColumns')) + 3;
     var availableWidth = this.get('_width') - this.get('_fixedColumnsWidth');
     if (this.get('_hasVerticalScrollbar')) {

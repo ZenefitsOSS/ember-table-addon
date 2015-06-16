@@ -9,11 +9,16 @@ StyleBindingsMixin, ScrollHandlerMixin, RegisterTableComponentMixin, {
   classNames: ['et-scroll-container'],
   styleBindings: ['left', 'width', 'height'],
   width: Ember.computed.alias('tableComponent._scrollContainerWidth'),
-  // 15 is the height of the horizontal scrollbar
-  height: 15,
   left: Ember.computed.alias('tableComponent._fixedColumnsWidth'),
   scrollTop: Ember.computed.alias('tableComponent._tableScrollTop'),
   scrollLeft: Ember.computed.alias('tableComponent._tableScrollLeft'),
+
+  height: function() {
+    if (this.get('tableComponent._hasHorizontalScrollbar')) {
+      return this.get('tableComponent._scrollbarSize');
+    }
+    return 0;
+  }.property('tableComponent._scrollbarSize', 'tableComponent._hasHorizontalScrollbar'),
 
   // HACK: onScrollLeftDidChange will not fire unless scrollLeft has been get
   // at least once. Therefore, we want to call onScrollLeftDidChange in

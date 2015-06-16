@@ -2,63 +2,63 @@
 // Ember Table (et)
 // =============================================================================
 
-@color-white: #fff;
-@color-grey-50: #fafafa;
-@color-grey-100: #f5f5f5;
-@color-grey-200: #eee;
-@color-grey-300: #e0e0e0;
-@color-grey-400: #bdbdbd;
-@color-grey-500: #9e9e9e;
-@color-grey-600: #757575;
-@color-grey-700: #616161;
-@color-grey-800: #424242;
-@color-grey-900: #212121;
+$color-white: #fff;
+$color-grey-50: #fafafa;
+$color-grey-100: #f5f5f5;
+$color-grey-200: #eee;
+$color-grey-300: #e0e0e0;
+$color-grey-400: #bdbdbd;
+$color-grey-500: #9e9e9e;
+$color-grey-600: #757575;
+$color-grey-700: #616161;
+$color-grey-800: #424242;
+$color-grey-900: #212121;
 
 // Variables
 // ---------
 
 // Note: This should be equal to the rowHeight in the tableController
-@et-height-row: 38px;
+$et-height-row: 38px;
 
-@et-fontSize: 15px;
+$et-fontSize: 14px;
 
-@et-header-fontSize: @et-fontSize;
-@et-body-fontSize: @et-fontSize;
+$et-header-fontSize: $et-fontSize;
+$et-body-fontSize: $et-fontSize;
 
-@et-color-body: @color-grey-700;
-@et-color-selectedRow: @color-grey-300;
+$et-color-body: $color-grey-700;
+$et-color-selectedRow: $color-grey-300;
 
-@et-backgroundColor: @color-white;
-@et-backgroundColor-header: @et-backgroundColor;
-@et-backgroundColor-headerRow: @et-backgroundColor;
-@et-backgroundColor-headerCell: @et-backgroundColor;
-@et-backgroundColor-footer: @et-backgroundColor;
-@et-backgroundColor-selectedRow: #227ecb;
-@et-backgroundColor-hoverRow: #e5edf8;
+$et-backgroundColor: $color-white;
+$et-backgroundColor-header: $et-backgroundColor;
+$et-backgroundColor-headerRow: $et-backgroundColor;
+$et-backgroundColor-headerCell: $et-backgroundColor;
+$et-backgroundColor-footer: $et-backgroundColor;
+$et-backgroundColor-selectedRow: #227ecb;
+$et-backgroundColor-hoverRow: #e5edf8;
 
-@et-borderSize: 1px;
-@et-borderSize-vertical: 0;
-@et-borderSize-horizontal: 1px;
-@et-borderSize-header: @et-borderSize;
-@et-borderSize-rowBottom: @et-borderSize-horizontal;
-@et-borderSize-cellVertical: @et-borderSize-vertical;
-@et-borderSize-footer: @et-borderSize;
+$et-borderSize: 1px;
+$et-borderSize-vertical: 0;
+$et-borderSize-horizontal: 1px;
+$et-borderSize-header: $et-borderSize;
+$et-borderSize-rowBottom: $et-borderSize-horizontal;
+$et-borderSize-cellVertical: $et-borderSize-vertical;
+$et-borderSize-footer: $et-borderSize;
 
-@et-borderColor: @color-grey-500;
-@et-borderColor-header: @et-borderColor;
-@et-borderColor-body: @et-borderColor;
-@et-borderColor-footer: @et-borderColor;
-@et-borderColor-selectedRow: @et-borderColor;
+$et-borderColor: $color-grey-200;
+$et-borderColor-header: $et-borderColor;
+$et-borderColor-body: $et-borderColor;
+$et-borderColor-footer: $et-borderColor;
+$et-borderColor-selectedRow: $et-borderColor;
 
 // TODO(Louis): Review
-@et-height-headerDropdownToggle: 20px;
-@et-color-headerDropdownToggle: @color-grey-400;
-@et-backgroundColor-headerDropdownToggle: @color-grey-400;
+$et-height-headerDropdownToggle: 20px;
+$et-color-headerDropdownToggle: $color-grey-400;
+$et-backgroundColor-headerDropdownToggle: $color-grey-400;
 
-@et-horizontalPadding-cell: 8px;
-@et-horizontalPadding-headerCell: 8px;
+$et-horizontalPadding-cell: 8px;
+$et-horizontalPadding-headerCell: 8px;
 
-@et-verticalPadding-headerCell: 8px;
+$et-verticalPadding-headerCell: 8px;
 
 // Ember Table Structure
 // ---------------------
@@ -77,8 +77,8 @@
   // and have 4px margins without using font-size: 0
   font-size: 0;
   user-select: none;
-  background-color: @et-backgroundColor;
-  border: @et-borderSize solid @et-borderColor;
+  background-color: $et-backgroundColor;
+  border: $et-borderSize solid $et-borderColor;
   outline: 0;
   &.is-selectable {
     user-select: text;
@@ -91,6 +91,7 @@
 .et-table-container {
   position: relative;
   z-index: 3;
+  box-sizing: border-box;
   overflow-x: hidden;
   // Height and Width defined dynamically through JS
   // Let Antiscroll handle the overflow
@@ -98,7 +99,6 @@
   // deal with Linux Chrome v38 wrapping bug
   // reset to normal in .et-table-block
   white-space: nowrap;
-  box-sizing: border-box;
 }
 
 .et-table-fixed-wrapper,
@@ -152,10 +152,10 @@
 .et-fixed-table-container {
   z-index: 4;
   &.et-header-container {
-    background-color: @et-backgroundColor-header;
+    background-color: $et-backgroundColor-header;
   }
   &.et-footer-container {
-    background-color: @et-backgroundColor-footer;
+    background-color: $et-backgroundColor-footer;
   }
 }
 
@@ -166,7 +166,7 @@
 
 .et-header-row,
 .et-header-container .et-table-fixed-wrapper {
-  background-color: @et-backgroundColor-headerRow;
+  background-color: $et-backgroundColor-headerRow;
 }
 
 /* Table Rows */
@@ -195,20 +195,20 @@
   height: 100%;
   // Important: We defined font-size: 0 in .tables-container due to the use of
   // display-inline: block.
-  font-size: @et-body-fontSize;
-  border-right: @et-borderSize-cellVertical solid @et-borderColor-body;
+  font-size: $et-body-fontSize;
+  border-right: $et-borderSize-cellVertical solid $et-borderColor-body;
   .et-content,
   .et-toggle-span {
     padding: 0;
     // Note the -1 is because we use box sizing and the row has a bottom border
-    line-height: @et-height-row - 1;
+    line-height: $et-height-row - 1;
     &:hover {
       cursor: pointer;
     }
   }
   .et-content {
     display: block;
-    padding: 0 @et-horizontalPadding-cell;
+    padding: 0 $et-horizontalPadding-cell;
   }
 }
 
@@ -235,14 +235,14 @@
 
 // TODO(Louis): Why do this?
 // .et-left-table-block .et-cell {
-//  border-right: @et-borderSize-body solid @et-borderColor-body !important;
+//  border-right: $et-borderSize-body solid $et-borderColor-body !important;
 // }
 
 /* Header Container */
 
 .et-header-container {
   overflow: hidden;
-  border-bottom: @et-borderSize-header solid @et-borderColor-header;
+  border-bottom: $et-borderSize-header solid $et-borderColor-header;
   .ui-state-highlight {
     position: relative;
     // margin-left: -3px;
@@ -306,8 +306,8 @@
   // Override the jQuery sortable
   display: block !important;
   padding: 0;
-  font-size: @et-header-fontSize !important;
-  background-color: @et-backgroundColor-headerCell;
+  font-size: $et-header-fontSize !important;
+  background-color: $et-backgroundColor-headerCell;
   span {
     line-height: 1;
   }
@@ -327,7 +327,7 @@
       position: absolute;
       bottom: 2px;
       width: 100%;
-      padding: @et-verticalPadding-headerCell @et-horizontalPadding-headerCell;
+      padding: $et-verticalPadding-headerCell $et-horizontalPadding-headerCell;
       font-weight: 500;
       line-height: 1.3;
     }
@@ -360,12 +360,12 @@
 
 .et-table-dropdown-toggle {
   float: right;
-  height: @et-height-headerDropdownToggle - 1;
+  height: $et-height-headerDropdownToggle - 1;
   padding: 3px 2px 0 2px;
   margin: 0;
-  color: @et-color-headerDropdownToggle;
+  color: $et-color-headerDropdownToggle;
   text-align: center;
-  background-color: @et-backgroundColor-headerDropdownToggle;
+  background-color: $et-backgroundColor-headerDropdownToggle;
 }
 
 /* Footer */
@@ -374,7 +374,7 @@
   position: absolute;
   z-index: 1;
   overflow: hidden;
-  border-top: @et-borderSize-footer solid @et-borderColor-footer;
+  border-top: $et-borderSize-footer solid $et-borderColor-footer;
   .et-toggle {
     display: none;
   }
@@ -409,11 +409,11 @@
   }
 }
 
-.et-toggle.ember-table-expand {
+.et-toggle.et-expand {
   margin-top: -2px;
   .et-toggle-icon {
     padding-left: 0;
-    padding-left: 3px;
+    padding-top: 3px;
     opacity: 1;
     transform: rotate(-90deg);
   }
@@ -440,7 +440,7 @@
 
 .et-table-row {
   min-width: 100%;
-  border-bottom: @et-borderSize-rowBottom solid @et-borderColor-body;
+  border-bottom: $et-borderSize-rowBottom solid $et-borderColor-body;
   // &.et-row-style-1
   // Note that the following row styles exist:
   // .et-row-style-1
@@ -455,15 +455,15 @@
 }
 
 .et-body-container .et-table-row {
-  color: @et-color-body;
+  color: $et-color-body;
   &.et-hover {
-    background-color: @et-backgroundColor-hoverRow;
+    background-color: $et-backgroundColor-hoverRow;
   }
   &.et-selected {
-    color: @et-color-selectedRow;
-    background-color: @et-backgroundColor-selectedRow;
+    color: $et-color-selectedRow;
+    background-color: $et-backgroundColor-selectedRow;
     .et-cell {
-      border-right: @et-borderSize-cellVertical solid @et-borderColor-selectedRow;
+      border-right: $et-borderSize-cellVertical solid $et-borderColor-selectedRow;
     }
   }
 }
