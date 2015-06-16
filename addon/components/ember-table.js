@@ -9,6 +9,8 @@ export default Ember.Component.extend(
 StyleBindingsMixin, ResizeHandlerMixin, {
   classNames: ['et-tables-container'],
   classNameBindings: ['enableContentSelection:et-content-selectable'],
+  scrolledX: Ember.computed.gt('_tableScrollLeft', 0),
+  scrolledY: Ember.computed.gt('_tableScrollTop', 0),
 
   // ---------------------------------------------------------------------------
   // API - Inputs
