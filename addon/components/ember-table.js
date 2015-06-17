@@ -303,15 +303,12 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   },
 
   updateHeaderLayout: function() {
-    var maxHeight = 0;
     // TODO(Louis): This seems bad...
-    Ember.$('.et-header-block .et-content').each(function() {
-      var thisHeight = Ember.$(this).outerHeight();
-      if (thisHeight > maxHeight) {
-        return maxHeight = thisHeight;
-      }
+    var heights = Ember.$('.et-header-block .et-content').map(function() {
+      return Ember.$(this).outerHeight();
     });
-    return this.set('tableComponent._contentHeaderHeight', maxHeight);
+    var maxHeight = Math.max.apply(null, heights);
+    return this.set('_contentHeaderHeight', maxHeight);
   },
 
   updateLayout: function() {
