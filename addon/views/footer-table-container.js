@@ -11,7 +11,14 @@ MouseWheelHandlerMixin, TouchMoveHandlerMixin, RegisterTableComponentMixin, {
     'et-fixed-table-container',
     'et-footer-container'],
   styleBindings: 'top',
-  height: Ember.computed.alias('tableComponent.footerHeight'),
+  height: Ember.computed(function() {
+    var height = this.get('tableComponent._footerHeight');
+    if(this.get('tableComponent._hasHorizontalScrollbar')){
+      height += this.get('tableComponent._scrollbarSize');
+    }
+    return height;
+  }).property('tableComponent._footerHeight',
+    'tableComponent._hasHorizontalScrollbar', 'tableComponent._scrollbarSize'),
   width: Ember.computed.alias('tableComponent._tableContainerWidth'),
   scrollLeft: Ember.computed.alias('tableComponent._tableScrollLeft'),
 
