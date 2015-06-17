@@ -13,5 +13,9 @@ module.exports = {
   afterInstall: function() {
     this.addBowerPackageToProject('jquery-mousewheel');
     this.addBowerPackageToProject('jquery-ui');
+  },
+
+  isDevelopingAddon: function () {
+    return true;
   }
 };
