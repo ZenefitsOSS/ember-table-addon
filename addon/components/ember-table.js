@@ -10,9 +10,16 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   classNames: ['et-tables-container'],
   classNameBindings: ['enableContentSelection:et-content-selectable',
     'hasFrozenColumnShadow:has-frozenColumnShdaow',
-    'hasHeaderShdow:has-headerShadow'],
+    'hasHeaderShdow:has-headerShadow',
+    'hasFooterShdow:has-footerShadow'],
   hasFrozenColumnShadow: Ember.computed.gt('_tableScrollLeft', 0),
   hasHeaderShdow: Ember.computed.gt('_tableScrollTop', 0),
+  hasFooterShdow: function() {
+    // the scrollTop position when we are scrolled to bottom
+    var scrollTopAtBottom = this.get('_tableContentHeight') - this.get('_bodyHeight');
+    // has footer shadow when table is not scrolled to bottom
+    return this.get('_tableScrollTop') !== scrollTopAtBottom;
+  }.property('_tableScrollTop', '_bodyHeight', '_tableContentHeight'),
 
   // ---------------------------------------------------------------------------
   // API - Inputs
