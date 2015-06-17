@@ -451,8 +451,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   // Dynamic footer height that adjusts according to the footer content height
   _footerHeight: Ember.computed(function() {
-    return this.get('hasFooter') ? this.get('footerHeight') : 0;
-  }).property('footerHeight', 'hasFooter'),
+    if(this.get('hasFooter')) {
+      return this.get('footerHeight') + this.get('_scrollContainerHeight');
+    }
+    return 0;
+  }).property('hasFooter', 'footerHeight', '_scrollContainerHeight'),
 
   _bodyHeight: Ember.computed(function() {
     var bodyHeight = this.get('_tablesContainerHeight');
@@ -460,14 +463,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       bodyHeight -= this.get('_headerHeight');
     }
     if (this.get('hasFooter')) {
-      bodyHeight -= this.get('footerHeight');
-    }
-    if(this.get('_hasHorizontalScrollbar')){
-      bodyHeight -= this.get('_scrollbarSize');
+      bodyHeight -= this.get('_footerHeight');
     }
     return bodyHeight;
-  }).property('_tablesContainerHeight', '_hasHorizontalScrollbar',
-      '_headerHeight', 'footerHeight', 'hasHeader', 'hasFooter'),
+  }).property('_tablesContainerHeight', '_headerHeight', '_footerHeight',
+      'hasHeader', 'hasFooter'),
 
   _tableBlockWidth: Ember.computed(function() {
     return this.get('_width') - this.get('_fixedColumnsWidth');
@@ -488,6 +488,13 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     }
     return width;
   }).property('_width', '_fixedColumnsWidth', '_hasVerticalScrollbar'),
+
+  _scrollContainerHeight: Ember.computed(function() {
+    if(this.get('_hasHorizontalScrollbar')) {
+      return this.get('_scrollbarSize');
+    }
+    return 0;
+  }).property('_hasHorizontalScrollbar', '_scrollbarSize'),
 
   _numItemsShowing: Ember.computed(function() {
     return Math.floor(this.get('_bodyHeight') / this.get('rowHeight'));
