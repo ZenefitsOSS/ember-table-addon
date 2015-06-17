@@ -74,7 +74,6 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   }).property('effectiveMinWidth', 'effectiveMaxWidth'),
 
   didInsertElement: function() {
-    this.elementSizeDidChange();
     this.recomputeResizableHandle();
   },
 
@@ -116,15 +115,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   },
 
   elementSizeDidChange: function() {
-    var maxHeight = 0;
-    // TODO(Louis): This seems bad...
-    Ember.$('.et-header-block .et-content').each(function() {
-      var thisHeight = Ember.$(this).outerHeight();
-      if (thisHeight > maxHeight) {
-        return maxHeight = thisHeight;
-      }
-    });
-    return this.set('tableComponent._contentHeaderHeight', maxHeight);
+    this.get('tableComponent').updateHeaderLayout();
   },
 
   cellWidthDidChange: Ember.observer(function() {

@@ -285,7 +285,10 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     this.set('_height', this.$().parent().height());
     // we need to wait for the table to be fully rendered before antiscroll can
     // be used
-    return Ember.run.next(this, this.updateLayout);
+    return Ember.run.next(this, function() {
+      this.updateHeaderLayout();
+      this.updateLayout();
+    });
   },
 
   tableWidthNowTooSmall: function() {
@@ -297,6 +300,18 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     // TODO(azirbel): This should be 'columns', I believe. Fix separately.
     var totalColumnWidth = this._getTotalWidth(this.get('tableColumns'));
     return (oldTableWidth > totalColumnWidth) && (newTableWidth < totalColumnWidth);
+  },
+
+  updateHeaderLayout: function() {
+    var maxHeight = 0;
+    // TODO(Louis): This seems bad...
+    Ember.$('.et-header-block .et-content').each(function() {
+      var thisHeight = Ember.$(this).outerHeight();
+      if (thisHeight > maxHeight) {
+        return maxHeight = thisHeight;
+      }
+    });
+    return this.set('tableComponent._contentHeaderHeight', maxHeight);
   },
 
   updateLayout: function() {
