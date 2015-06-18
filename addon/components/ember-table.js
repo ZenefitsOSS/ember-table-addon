@@ -388,9 +388,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   _height: null,
   _contentHeaderHeight: null,
 
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
   // Scrollbars
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
 
   _hasVerticalScrollbar: Ember.computed(function() {
     var height = this.get('_height');
@@ -413,9 +413,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     return this.get('_hasHorizontalScrollbar') ? this.get('_scrollbarSize') : 0;
   }).property('_hasHorizontalScrollbar', '_scrollbarSize'),
 
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
   // Whole Table
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
 
   // tables-container height adjusts to the content height
   _tablesContainerHeight: Ember.computed(function() {
@@ -435,9 +435,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     return this.get('rowHeight') * this.get('bodyContent.length');
   }).property('rowHeight', 'bodyContent.length'),
 
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
   // Left Block
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
 
   // actual width of left block
   _fixedColumnsWidth: Ember.computed(function() {
@@ -446,9 +446,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   _fixedBlockWidth: Ember.computed.alias('_fixedColumnsWidth'),
 
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
   // Center Block
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
 
   // center block container width
   _tableBlockWidth: Ember.computed.alias('_centerBlockContainerWidth'),
@@ -487,9 +487,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   }).property('_tablesContainerHeight', '_headerHeight', '_footerHeight',
       'hasHeader', 'hasFooter'),
 
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
   // Header Block
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
 
   // Dynamic header height that adjusts according to the header content height
   _headerHeight: Ember.computed(function() {
@@ -498,9 +498,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     return Math.max(contentHeaderHeight, minHeight);
   }).property('_contentHeaderHeight', 'minHeaderHeight'),
 
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
   // Footer Block
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
 
   // TODO(Peter): there is a loop where we need to figure out whether was have
   // horizontal scroll bar to determine whether we have vertical scroll bar
@@ -516,9 +516,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     this.set('_footerHeight', this.getFooterHeight());
   }.observes('hasFooter', 'footerHeight', '_horizontalScrollbarSize').on('init'),
 
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
   // Scroll Container Block
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
 
   _scrollContainerHeight: Ember.computed.alias('_horizontalScrollbarSize'),
 
@@ -526,9 +526,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     return this.get('_centerBlockContainerWidth') - this.get('_verticalScrollbarSize');
   }).property('_centerBlockContainerWidth', '_verticalScrollbarSize'),
 
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
   // Other
-  /////////////////////////////////////////////////////////////////////////////
+  // ---------------------------------------------------------------------------
 
   _numItemsShowing: Ember.computed(function() {
     return Math.floor(this.get('_bodyHeight') / this.get('rowHeight'));
