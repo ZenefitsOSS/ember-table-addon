@@ -1,9 +1,6 @@
 import Ember from 'ember';
-import StyleBindingsMixin from 'ember-table/mixins/style-bindings';
 
-export default Ember.CollectionView.extend(
-StyleBindingsMixin, {
-  styleBindings: 'width',
+export default Ember.CollectionView.extend({
   itemViewClassField: null,
 
   createChildView: function(view, attrs) {

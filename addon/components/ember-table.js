@@ -428,10 +428,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _centerBlockContainerWidth = _tableContainerWidth - _fixedColumnsWidth;
     var _tableBlockWidth = _centerBlockContainerWidth;
 
-    var bodyContentWidth = this._getTotalWidth(this.get('tableColumns')) + 3;
+    var bodyContentWidth = this._getTotalWidth(this.get('tableColumns'));
     // center block content width
-    var _tableColumnsWidth  = Math.max(bodyContentWidth, _centerBlockContainerWidth) -
+    var _tableColumnsWidth = Math.max(bodyContentWidth + 3, _centerBlockContainerWidth) -
         _verticalScrollbarSize;
+    var _rowWidth = Math.max(bodyContentWidth, _centerBlockContainerWidth);
 
     var _tableContentHeight = rowHeight * numRows;
     // tables-container height adjusts to the content height
@@ -449,6 +450,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       _centerBlockContainerWidth: _centerBlockContainerWidth,
       _tableBlockWidth: _tableBlockWidth,
       _tableColumnsWidth: _tableColumnsWidth,
+      _rowWidth: _rowWidth,
       _tableContentHeight: _tableContentHeight,
       _tablesContainerHeight: _tablesContainerHeight,
       _bodyHeight: _bodyHeight
@@ -494,13 +496,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       'rowHeight', 'bodyContent.length',
       '_contentHeaderHeight', 'minHeaderHeight',
       'fixedColumns.@each.width', 'tableColumns.@each.width'),
-
-  // center block container width
-  _rowWidth: Ember.computed(function() {
-    var contentWidth = this.get('_tableColumnsWidth');
-    var containerWidth = this.get('_centerBlockContainerWidth');
-    return Math.max(contentWidth, containerWidth);
-  }).property('_centerBlockContainerWidth', '_tableColumnsWidth'),
 
   // ---------------------------------------------------------------------------
   // Other
