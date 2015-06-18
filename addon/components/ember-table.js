@@ -418,7 +418,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _headerHeight = hasHeader ? Math.max(headerContentHeight, minHeaderHeight) : 0;
 
     // calculate footer heights
-    var _footerHeight = _horizontalScrollbarSize + (hasFooter ? footerHeight : 0);
+    var _footerHeight = hasFooter ? footerHeight + _horizontalScrollbarSize : 0;
 
     // actual width of left block
     var _fixedColumnsWidth = this._getTotalWidth(this.get('fixedColumns'));
