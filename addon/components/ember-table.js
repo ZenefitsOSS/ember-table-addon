@@ -397,8 +397,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var contentHeight = this.get('_tableContentHeight') +
         this.get('_headerHeight') + this.get('_footerHeight');
     return height < contentHeight;
-  }).property('_height', '_tableContentHeight', '_headerHeight',
-      '_footerHeight'),
+  }).property('_height', '_tableContentHeight', '_headerHeight', '_footerHeight'),
 
   _hasHorizontalScrollbar: Ember.computed(function() {
     var contentWidth = this.get('_tableColumnsWidth');
@@ -503,13 +502,19 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // Footer Block
   /////////////////////////////////////////////////////////////////////////////
 
+  // TODO(Peter): there is a loop where we need to figure out whether was have
+  // horizontal scroll bar to determine whether we have vertical scroll bar
+  // and footer height is caught in the middle of the loop. To break the loop
+  // we use observer. This is incredibly terrible...
   // Dynamic footer height that adjusts according to the footer content height
-  _footerHeight: Ember.computed(function() {
-    if(this.get('hasFooter')) {
-      return this.get('footerHeight') + this.get('_horizontalScrollbarSize');
-    }
-    return 0;
-  }).property('hasFooter', 'footerHeight', '_horizontalScrollbarSize'),
+  _footerHeight: 0,
+  getFooterHeight: function() {
+    return this.get('hasFooter') ?
+      this.get('footerHeight') + this.get('_horizontalScrollbarSize') : 0;
+  },
+  footerHeightDidChange: function() {
+    this.set('_footerHeight', this.getFooterHeight());
+  }.observes('hasFooter', 'footerHeight', '_horizontalScrollbarSize').on('init'),
 
   /////////////////////////////////////////////////////////////////////////////
   // Scroll Container Block
