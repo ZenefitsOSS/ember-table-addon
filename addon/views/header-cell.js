@@ -105,9 +105,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
       this.get('nextResizableColumn').resize(
           this.get('nextResizableColumn.width') + diff);
     }
-
-    this.elementSizeDidChange();
-
+    this.updateHeaderLayout();
     // Trigger the table resize (and redraw of layout) when resizing is done
     if (event.type === 'resizestop') {
       this.get('tableComponent').elementSizeDidChange();
