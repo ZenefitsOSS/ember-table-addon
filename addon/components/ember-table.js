@@ -281,8 +281,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     if ((this.get('_state') || this.get('state')) !== 'inDOM') {
       return;
     }
-    this.set('_width', this.$().parent().width());
-    this.set('_height', this.$().parent().height());
+    // We use innerWidth and innerHeight in case the parent has a border
+    this.set('_width', this.$().parent().innerWidth());
+    this.set('_height', this.$().parent().innerHeight());
     // we need to wait for the table to be fully rendered before antiscroll can
     // be used
     return Ember.run.next(this, function() {
