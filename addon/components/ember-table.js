@@ -509,10 +509,12 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // we use observer. This is incredibly terrible...
   // Dynamic footer height that adjusts according to the footer content height
   _footerHeight: 0,
+
   getFooterHeight: function() {
-    return this.get('hasFooter') ?
-      this.get('footerHeight') + this.get('_horizontalScrollbarSize') : 0;
+    var height = this.get('_horizontalScrollbarSize');
+    return height + (this.get('hasFooter') ? this.get('footerHeight') : 0);
   },
+
   footerHeightDidChange: function() {
     this.set('_footerHeight', this.getFooterHeight());
   }.observes('hasFooter', 'footerHeight', '_horizontalScrollbarSize').on('init'),
