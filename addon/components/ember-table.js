@@ -393,81 +393,107 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // Scrollbars
   // ---------------------------------------------------------------------------
 
-  _hasVerticalScrollbar: Ember.computed(function() {
-    var height = this.get('_height');
-    var contentHeight = this.get('_tableContentHeight') +
-        this.get('_headerHeight') + this.get('_footerHeight');
-    return height < contentHeight;
-  }).property('_height', '_tableContentHeight', '_headerHeight', '_footerHeight'),
+  _horizontalScrollbarSize: 0,
+  _verticalScrollbarSize: 0,
 
-  _hasHorizontalScrollbar: Ember.computed(function() {
-    var contentWidth = this.get('_tableColumnsWidth');
-    var tableWidth = this.get('_width') - this.get('_fixedColumnsWidth');
-    return contentWidth > tableWidth;
-  }).property('_tableColumnsWidth', '_width', '_fixedColumnsWidth'),
+  measureBlockDimensions: function() {
+    var hasHeader = this.get('hasHeader');
+    var hasFooter = this.get('hasFooter');
+    var rowHeight = this.get('rowHeight');
+    var footerHeight = this.get('footerHeight');
+    var numRows = this.get('bodyContent.length');
+    var _height = this.get('_height');
+    var _width = this.get('_width');
+    // NOTE: measuring horizontal and vertical scrollbar size here will cause loop
+    // we have to breakup calculations.
+    var _horizontalScrollbarSize = this.get('_horizontalScrollbarSize');
+    var _verticalScrollbarSize = this.get('_verticalScrollbarSize');
 
-  _verticalScrollbarSize: Ember.computed(function() {
-    return this.get('_hasVerticalScrollbar') ? this.get('_scrollbarSize') : 0;
-  }).property('_hasVerticalScrollbar', '_scrollbarSize'),
+    var _tableContainerWidth = _width;
 
-  _horizontalScrollbarSize: Ember.computed(function() {
-    return this.get('_hasHorizontalScrollbar') ? this.get('_scrollbarSize') : 0;
-  }).property('_hasHorizontalScrollbar', '_scrollbarSize'),
+    // calculate header heights
+    var minHeaderHeight = this.get('minHeaderHeight');
+    var headerContentHeight = this.get('_contentHeaderHeight');
+    // Dynamic header height that adjusts according to the header content height
+    var _headerHeight = hasHeader ? Math.max(headerContentHeight, minHeaderHeight) : 0;
 
-  // ---------------------------------------------------------------------------
-  // Whole Table
-  // ---------------------------------------------------------------------------
+    // calculate footer heights
+    var _footerHeight = _horizontalScrollbarSize + (hasFooter ? footerHeight : 0);
 
-  // tables-container height adjusts to the content height
-  _tablesContainerHeight: Ember.computed(function() {
-    var height = this.get('_height');
-    var contentHeight = this.get('_tableContentHeight') +
-        this.get('_headerHeight') + this.get('_footerHeight');
-    if(this.get('_hasHorizontalScrollbar')){
-      contentHeight += this.get('_scrollbarSize');
-    }
-    return Math.min(contentHeight, height);
-  }).property('_height', '_tableContentHeight', '_headerHeight',
-      '_footerHeight', '_hasHorizontalScrollbar', '_scrollbarSize'),
+    // actual width of left block
+    var _fixedColumnsWidth = this._getTotalWidth(this.get('fixedColumns'));
+    var _fixedBlockWidth = _fixedColumnsWidth;
 
-  _tableContainerWidth: Ember.computed.alias('_width'),
+    // center block container width
+    var _centerBlockContainerWidth = _tableContainerWidth - _fixedColumnsWidth;
+    var _tableBlockWidth = _centerBlockContainerWidth;
 
-  _tableContentHeight: Ember.computed(function() {
-    return this.get('rowHeight') * this.get('bodyContent.length');
-  }).property('rowHeight', 'bodyContent.length'),
+    var bodyContentWidth = this._getTotalWidth(this.get('tableColumns')) + 3;
+    // center block content width
+    var _tableColumnsWidth  = Math.max(bodyContentWidth, _centerBlockContainerWidth) -
+        _verticalScrollbarSize;
 
-  // ---------------------------------------------------------------------------
-  // Left Block
-  // ---------------------------------------------------------------------------
+    var _tableContentHeight = rowHeight * numRows;
+    // tables-container height adjusts to the content height
+    var _tablesContainerHeight = Math.min(_height,
+        _tableContentHeight + _headerHeight + _footerHeight + _horizontalScrollbarSize);
 
-  // actual width of left block
-  _fixedColumnsWidth: Ember.computed(function() {
-    return this._getTotalWidth(this.get('fixedColumns'));
-  }).property('fixedColumns.@each.width'),
+    var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight;
 
-  _fixedBlockWidth: Ember.computed.alias('_fixedColumnsWidth'),
+    this.setProperties({
+      _tableContainerWidth: _tableContainerWidth,
+      _headerHeight: _headerHeight,
+      _footerHeight: _footerHeight,
+      _fixedColumnsWidth: _fixedColumnsWidth,
+      _fixedBlockWidth: _fixedBlockWidth,
+      _centerBlockContainerWidth: _centerBlockContainerWidth,
+      _tableBlockWidth: _tableBlockWidth,
+      _tableColumnsWidth: _tableColumnsWidth,
+      _tableContentHeight: _tableContentHeight,
+      _tablesContainerHeight: _tablesContainerHeight,
+      _bodyHeight: _bodyHeight
+    });
+  },
 
-  // ---------------------------------------------------------------------------
-  // Center Block
-  // ---------------------------------------------------------------------------
+  measureScrollbars: function() {
+    var _height = this.get('_height');
+    var _width = this.get('_width');
+    var _tableContentHeight = this.get('_tableContentHeight');
+    var _tableColumnsWidth = this.get('_tableColumnsWidth');
+    var _fixedColumnsWidth = this.get('_fixedColumnsWidth');
+    var _centerBlockContainerWidth = this.get('_centerBlockContainerWidth');
+    var _headerHeight = this.get('_headerHeight');
+    var _footerHeight = this.get('_footerHeight');
+    var _scrollbarSize = this.get('_scrollbarSize');
 
-  // center block container width
-  _tableBlockWidth: Ember.computed.alias('_centerBlockContainerWidth'),
-  _centerBlockContainerWidth: Ember.computed(function() {
-    return this.get('_tableContainerWidth') - this.get('_fixedColumnsWidth');
-  }).property('_tableContainerWidth', '_fixedColumnsWidth'),
+    var _hasVerticalScrollbar = _height < (_tableContentHeight + _headerHeight + _footerHeight);
+    var _hasHorizontalScrollbar = _tableColumnsWidth > (_width - _fixedColumnsWidth);
+    var _verticalScrollbarSize = _hasVerticalScrollbar ? _scrollbarSize : 0;
+    var _horizontalScrollbarSize = _hasHorizontalScrollbar ? _scrollbarSize : 0;
 
-  // center block content width
-  _tableColumnsWidth: Ember.computed(function() {
-    // TODO(Louis): Hack: We add 3px padding to the right of the table content
-    // so that we can reorder into the last column. This value needs
-    // to be synced with doForceFillColumns
-    var contentWidth = this._getTotalWidth(this.get('tableColumns')) + 3;
-    var containerWidth = this.get('_centerBlockContainerWidth');
-    containerWidth -= this.get('_verticalScrollbarSize');
-    contentWidth += this.get('_verticalScrollbarSize');
-    return Math.max(contentWidth, containerWidth);
-  }).property('tableColumns.@each.width', '_centerBlockContainerWidth', '_verticalScrollbarSize'),
+    var _scrollContainerHeight = _horizontalScrollbarSize;
+    var _scrollContainerWidth = _centerBlockContainerWidth - _verticalScrollbarSize;
+
+    this.setProperties({
+      _hasVerticalScrollbar: _hasVerticalScrollbar,
+      _hasHorizontalScrollbar: _hasHorizontalScrollbar,
+      _verticalScrollbarSize: _verticalScrollbarSize,
+      _horizontalScrollbarSize: _horizontalScrollbarSize,
+      _scrollContainerHeight: _scrollContainerHeight,
+      _scrollContainerWidth: _scrollContainerWidth
+    });
+  },
+
+  // react style render... binding is making things really slow
+  propertiesDidChange: function() {
+    this.measureBlockDimensions();
+    this.measureScrollbars();
+    // measure block dimensions again, now that we adjusted scrollbars
+    this.measureBlockDimensions();
+  }.observes('_height', '_width', 'hasHeader', 'hasFooter', 'footerHeight',
+      'rowHeight', 'bodyContent.length',
+      '_contentHeaderHeight', 'minHeaderHeight',
+      'fixedColumns.@each.width', 'tableColumns.@each.width'),
 
   // center block container width
   _rowWidth: Ember.computed(function() {
@@ -475,59 +501,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var containerWidth = this.get('_centerBlockContainerWidth');
     return Math.max(contentWidth, containerWidth);
   }).property('_centerBlockContainerWidth', '_tableColumnsWidth'),
-
-  _bodyHeight: Ember.computed(function() {
-    var bodyHeight = this.get('_tablesContainerHeight');
-    if (this.get('hasHeader')) {
-      bodyHeight -= this.get('_headerHeight');
-    }
-    if (this.get('hasFooter')) {
-      bodyHeight -= this.get('_footerHeight');
-    }
-    return bodyHeight;
-  }).property('_tablesContainerHeight', '_headerHeight', '_footerHeight',
-      'hasHeader', 'hasFooter'),
-
-  // ---------------------------------------------------------------------------
-  // Header Block
-  // ---------------------------------------------------------------------------
-
-  // Dynamic header height that adjusts according to the header content height
-  _headerHeight: Ember.computed(function() {
-    var minHeight = this.get('minHeaderHeight');
-    var contentHeaderHeight = this.get('_contentHeaderHeight');
-    return Math.max(contentHeaderHeight, minHeight);
-  }).property('_contentHeaderHeight', 'minHeaderHeight'),
-
-  // ---------------------------------------------------------------------------
-  // Footer Block
-  // ---------------------------------------------------------------------------
-
-  // TODO(Peter): there is a loop where we need to figure out whether was have
-  // horizontal scroll bar to determine whether we have vertical scroll bar
-  // and footer height is caught in the middle of the loop. To break the loop
-  // we use observer. This is incredibly terrible...
-  // Dynamic footer height that adjusts according to the footer content height
-  _footerHeight: 0,
-
-  getFooterHeight: function() {
-    var height = this.get('_horizontalScrollbarSize');
-    return height + (this.get('hasFooter') ? this.get('footerHeight') : 0);
-  },
-
-  footerHeightDidChange: function() {
-    this.set('_footerHeight', this.getFooterHeight());
-  }.observes('hasFooter', 'footerHeight', '_horizontalScrollbarSize').on('init'),
-
-  // ---------------------------------------------------------------------------
-  // Scroll Container Block
-  // ---------------------------------------------------------------------------
-
-  _scrollContainerHeight: Ember.computed.alias('_horizontalScrollbarSize'),
-
-  _scrollContainerWidth: Ember.computed(function() {
-    return this.get('_centerBlockContainerWidth') - this.get('_verticalScrollbarSize');
-  }).property('_centerBlockContainerWidth', '_verticalScrollbarSize'),
 
   // ---------------------------------------------------------------------------
   // Other
