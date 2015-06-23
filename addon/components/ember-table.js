@@ -92,6 +92,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   borderSize: 0,
 
+  maxHeight: Infinity,
+
   // ---------------------------------------------------------------------------
   // API - Outputs
   // ---------------------------------------------------------------------------
@@ -407,6 +409,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var hasHeader = this.get('hasHeader');
     var hasFooter = this.get('hasFooter');
     var rowHeight = this.get('rowHeight');
+    var maxHeight = this.get('maxHeight');
     var footerHeight = this.get('footerHeight');
     var numRows = this.get('bodyContent.length');
     var _height = this.get('_height');
@@ -448,7 +451,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     // tables-container height adjusts to the content height
     var _tablesContainerHeight = _height;
     if (useContentHeight) {
-      _tablesContainerHeight = Math.min(_height, _tableContentHeight + _headerHeight +
+      _tablesContainerHeight = Math.min(maxHeight, _tableContentHeight + _headerHeight +
           _footerHeight + _horizontalScrollbarSize);
     }
     var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight -
@@ -507,7 +510,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     this.measureBlockDimensions();
 
   }.observes('_height', '_width', 'hasHeader', 'hasFooter', 'footerHeight',
-      'rowHeight', 'bodyContent.length',
+      'rowHeight', 'maxHeight', 'bodyContent.length',
       '_contentHeaderHeight', 'minHeaderHeight',
       'fixedColumns.@each.width', 'tableColumns.@each.width'),
 
