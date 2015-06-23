@@ -428,7 +428,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _headerHeight = hasHeader ? Math.max(headerContentHeight, minHeaderHeight) : 0;
 
     // calculate footer heights
-    var _footerHeight = (hasFooter ? footerHeight : 0) + _horizontalScrollbarSize;
+    var _footerHeight = hasFooter ? footerHeight : 0;
 
     // actual width of left block
     var _fixedColumnsWidth = this._getTotalWidth(this.get('fixedColumns'));
@@ -448,9 +448,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     // tables-container height adjusts to the content height
     var _tablesContainerHeight = _height;
     if (useContentHeight) {
-      _tablesContainerHeight = _tableContentHeight + _headerHeight + _footerHeight;
+      _tablesContainerHeight = _tableContentHeight + _headerHeight + _footerHeight +
+          _horizontalScrollbarSize;
     }
-    var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight;
+    var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight -
+        _horizontalScrollbarSize;
 
     this.setProperties({
       _tableContainerWidth: _tableContainerWidth,

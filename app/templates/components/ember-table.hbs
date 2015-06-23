@@ -2,6 +2,8 @@
   {{view "header-table-container"}}
 {{/if}}
 {{view "body-table-container"}}
-{{view "footer-table-container"}}
+{{#if hasFooter}}
+  {{view "footer-table-container"}}
+{{/if}}
 {{view "scroll-container"}}
 {{view "column-sortable-indicator"}}
