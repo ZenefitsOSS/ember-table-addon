@@ -87,6 +87,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // through ctrl/cmd-click or shift-click).
   selectionMode: 'single',
 
+  // similar to android: match-parent or wrap-content
+  layoutHeight: 'wrap-content',
+
+  borderSize: 0,
+
   // ---------------------------------------------------------------------------
   // API - Outputs
   // ---------------------------------------------------------------------------
@@ -126,6 +131,13 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   isEmberTable: true,
 
   columnsFillTable: true,
+
+  height: Ember.computed.alias('_tablesContainerHeight'),
+
+  // TODO(new-api): eliminate view alias
+  // specify the view class to use for rendering the table rows
+  tableRowView: 'table-row',
+  tableRowViewClass: Ember.computed.alias('tableRowView'),
 
   // _resolvedContent is an intermediate property between content and rows
   // This allows content to be a plain array or a promise resolving to an array
@@ -177,13 +189,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     addColumn: Ember.K,
     sortByColumn: Ember.K
   },
-
-  height: Ember.computed.alias('_tablesContainerHeight'),
-
-  // TODO(new-api): eliminate view alias
-  // specify the view class to use for rendering the table rows
-  tableRowView: 'table-row',
-  tableRowViewClass: Ember.computed.alias('tableRowView'),
 
   onColumnSort: function(column, newIndex) {
     // Fixed columns are not affected by column reordering
@@ -281,9 +286,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     if ((this.get('_state') || this.get('state')) !== 'inDOM') {
       return;
     }
+    // border size of the table. we need to take this into account
+    var borderSizes = this.get('borderSize') * 2;
     // We use innerWidth and innerHeight in case the parent has a border
-    this.set('_width', this.$().parent().innerWidth());
-    this.set('_height', this.$().parent().innerHeight());
+    this.set('_width', this.$().parent().innerWidth() - borderSizes);
+    this.set('_height', this.$().parent().innerHeight() - borderSizes);
     // we need to wait for the table to be fully rendered before antiscroll can
     // be used
     return Ember.run.next(this, function() {
@@ -404,6 +411,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var numRows = this.get('bodyContent.length');
     var _height = this.get('_height');
     var _width = this.get('_width');
+    var layoutHeight = this.get('layoutHeight');
+    var useContentHeight = layoutHeight === 'wrap-content';
+
     // NOTE: measuring horizontal and vertical scrollbar size here will cause loop
     // we have to breakup calculations.
     var _horizontalScrollbarSize = this.get('_horizontalScrollbarSize');
@@ -418,7 +428,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _headerHeight = hasHeader ? Math.max(headerContentHeight, minHeaderHeight) : 0;
 
     // calculate footer heights
-    var _footerHeight = hasFooter ? footerHeight + _horizontalScrollbarSize : 0;
+    var _footerHeight = (hasFooter ? footerHeight : 0) + _horizontalScrollbarSize;
 
     // actual width of left block
     var _fixedColumnsWidth = this._getTotalWidth(this.get('fixedColumns'));
@@ -436,9 +446,10 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
     var _tableContentHeight = rowHeight * numRows;
     // tables-container height adjusts to the content height
-    var _tablesContainerHeight = Math.min(_height,
-        _tableContentHeight + _headerHeight + _footerHeight + _horizontalScrollbarSize);
-
+    var _tablesContainerHeight = _height;
+    if (useContentHeight) {
+      _tablesContainerHeight = _tableContentHeight + _headerHeight + _footerHeight;
+    }
     var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight;
 
     this.setProperties({
@@ -492,6 +503,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     this.measureScrollbars();
     // measure block dimensions again, now that we adjusted scrollbars
     this.measureBlockDimensions();
+
   }.observes('_height', '_width', 'hasHeader', 'hasFooter', 'footerHeight',
       'rowHeight', 'bodyContent.length',
       '_contentHeaderHeight', 'minHeaderHeight',
