@@ -449,7 +449,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _tablesContainerHeight = _height;
     if (useContentHeight) {
       _tablesContainerHeight = Math.min(_height, _tableContentHeight + _headerHeight +
-          _footerHeight + _horizontalScrollbarSize;
+          _footerHeight + _horizontalScrollbarSize);
     }
     var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight -
         _horizontalScrollbarSize;
