@@ -283,17 +283,15 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     }
     // border size of the table. we need to take this into account
     var borderSizes = this.get('borderSize') * 2;
+    this.beginPropertyChanges();
     // We use innerWidth and innerHeight in case the parent has a border
     this.setProperties({
       _width: this.$().parent().innerWidth() - borderSizes,
       _height: this.$().parent().innerHeight() - borderSizes
     });
-    // we need to wait for the table to be fully rendered before antiscroll can
-    // be used
-    return Ember.run.next(this, function() {
-      this.updateHeaderLayout();
-      this.updateLayout();
-    });
+    this.updateHeaderLayout();
+    this.updateLayout();
+    this.endPropertyChanges();
   },
 
   updateHeaderLayout: function() {
@@ -500,17 +498,18 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     });
   },
 
-  // react style render... binding is making things really slow
-  propertiesDidChange: function() {
+  measureDimentsions: function() {
     this.measureBlockDimensions();
     this.measureScrollbars();
-    // measure block dimensions again, now that we adjusted scrollbars
-    this.measureBlockDimensions();
+  },
 
+  propertiesDidChange: function() {
+    // react style render...
+    // prevent measureDimentsions from being called more than once per runloop
+    Ember.run.scheduleOnce('afterRender', this, this.measureDimentsions);
   }.observes('_height', '_width', 'hasHeader', 'hasFooter', 'footerHeight',
       'rowHeight', 'maxHeight', 'bodyContent.length',
-      '_contentHeaderHeight', 'minHeaderHeight',
-      'fixedColumns.@each.width', 'tableColumns.@each.width'),
+      '_contentHeaderHeight', 'minHeaderHeight', 'columns.@each.width'),
 
   // ---------------------------------------------------------------------------
   // Other
