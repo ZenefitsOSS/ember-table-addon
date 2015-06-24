@@ -266,18 +266,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   didInsertElement: function() {
     this._super();
-    this.set('_tableScrollTop', 0);
-    this.elementSizeDidChange();
-    this.doForceFillColumns();
     this.set('_scrollbarSize', getScrollbarSize());
+    this.elementSizeDidChange();
   },
 
   onResizeEnd: function() {
-    // We need to put this on the run loop, because resize event came from
-    // window. Otherwise, we get this warning when used in tests. You have
-    // turned on testing mode, which disabled the run-loop's autorun. You
-    // will need to wrap any code with asynchronous side-effects in an
-    // Ember.run
     if (this.tableWidthNowTooSmall()) {
       this.set('columnsFillTable', true);
     }
@@ -291,25 +284,16 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     // border size of the table. we need to take this into account
     var borderSizes = this.get('borderSize') * 2;
     // We use innerWidth and innerHeight in case the parent has a border
-    this.set('_width', this.$().parent().innerWidth() - borderSizes);
-    this.set('_height', this.$().parent().innerHeight() - borderSizes);
+    this.setProperties({
+      _width: this.$().parent().innerWidth() - borderSizes,
+      _height: this.$().parent().innerHeight() - borderSizes
+    });
     // we need to wait for the table to be fully rendered before antiscroll can
     // be used
     return Ember.run.next(this, function() {
       this.updateHeaderLayout();
       this.updateLayout();
     });
-  },
-
-  tableWidthNowTooSmall: function() {
-    if ((this.get('_state') || this.get('state')) !== 'inDOM') {
-      return false;
-    }
-    var oldTableWidth = this.get('_width');
-    var newTableWidth = this.$().parent().width();
-    // TODO(azirbel): This should be 'columns', I believe. Fix separately.
-    var totalColumnWidth = this._getTotalWidth(this.get('tableColumns'));
-    return (oldTableWidth > totalColumnWidth) && (newTableWidth < totalColumnWidth);
   },
 
   updateHeaderLayout: function() {
@@ -328,6 +312,17 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     if (this.get('columnsFillTable')) {
       return this.doForceFillColumns();
     }
+  },
+
+  tableWidthNowTooSmall: function() {
+    if ((this.get('_state') || this.get('state')) !== 'inDOM') {
+      return false;
+    }
+    var oldTableWidth = this.get('_width');
+    var newTableWidth = this.$().parent().width();
+    // TODO(azirbel): This should be 'columns', I believe. Fix separately.
+    var totalColumnWidth = this._getTotalWidth(this.get('tableColumns'));
+    return (oldTableWidth > totalColumnWidth) && (newTableWidth < totalColumnWidth);
   },
 
   // Iteratively adjusts column widths to adjust to a changed table width.
@@ -457,6 +452,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight -
         _horizontalScrollbarSize;
 
+    var _numItemsShowing = Math.floor(_bodyHeight / rowHeight);
+
     this.setProperties({
       _tableContainerWidth: _tableContainerWidth,
       _headerHeight: _headerHeight,
@@ -469,7 +466,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       _rowWidth: _rowWidth,
       _tableContentHeight: _tableContentHeight,
       _tablesContainerHeight: _tablesContainerHeight,
-      _bodyHeight: _bodyHeight
+      _bodyHeight: _bodyHeight,
+      _numItemsShowing: _numItemsShowing
     });
   },
 
@@ -517,10 +515,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // ---------------------------------------------------------------------------
   // Other
   // ---------------------------------------------------------------------------
-
-  _numItemsShowing: Ember.computed(function() {
-    return Math.floor(this.get('_bodyHeight') / this.get('rowHeight'));
-  }).property('_bodyHeight', 'rowHeight'),
 
   _startIndex: Ember.computed(function() {
     var numContent = this.get('bodyContent.length');

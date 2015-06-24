@@ -11,7 +11,7 @@ StyleBindingsMixin, {
   scrollTop: null,
   startIndex: null,
 
-  init: function() {
+  didInsertElement: function() {
     this._super();
     return this.onNumChildViewsDidChange();
   },
@@ -25,7 +25,6 @@ StyleBindingsMixin, {
   }).property('numItemsShowing'),
 
   onNumChildViewsDidChange: Ember.observer(function() {
-    var view = this;
     // We are getting the class from a string e.g. "Ember.Table.Row"
     var itemViewClass = this.get('itemViewClass');
     if (typeof itemViewClass === 'string') {
@@ -47,11 +46,17 @@ StyleBindingsMixin, {
     if (numViewsToInsert < 0) {
       var viewsToRemove = this.slice(newNumViews, oldNumViews);
       this.removeObjects(viewsToRemove);
+      viewsToRemove.forEach(function(view) {
+        view.destroy();
+      });
     // if oldNumViews < newNumViews we need to add more views
     } else if (numViewsToInsert > 0) {
+      var viewsToInsert = [];
       for (var i = 0; i < numViewsToInsert; ++i) {
-        this.pushObject(view.createChildView(itemViewClass));
+        viewsToInsert.pushObject(this.createChildView(itemViewClass));
       }
+      // we want to batch insert view to make things faster
+      this.pushObjects(viewsToInsert);
     }
     this.viewportDidChange();
   }, 'numChildViews', 'itemViewClass'),
@@ -84,8 +89,10 @@ StyleBindingsMixin, {
       var item = content.objectAt(itemIndex);
       if (item !== childView.get('content')) {
         childView.teardownContent();
-        childView.set('itemIndex', itemIndex);
-        childView.set('content', item);
+        childView.setProperties({
+          itemIndex: itemIndex,
+          content: item
+        });
         childView.prepareContent();
       }
     });
