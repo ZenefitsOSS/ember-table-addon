@@ -88,7 +88,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   selectionMode: 'single',
 
   // similar to android: match-parent or wrap-content
-  layoutHeight: 'wrap-content',
+  layoutHeight: 'match-parent',
 
   borderSize: 0,
 
