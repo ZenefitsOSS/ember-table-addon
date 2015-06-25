@@ -39,7 +39,6 @@ StyleBindingsMixin, {
   }.property('itemViewClass'),
 
   onNumChildViewsDidChange: Ember.observer(function() {
-    console.log('lazy-container:onNumChildViewsDidChange');
     var itemView = this.get('itemView');
     var newNumViews = this.get('numChildViews');
     var oldNumViews = this.get('length');
@@ -70,7 +69,6 @@ StyleBindingsMixin, {
   // TODO(Peter): Consider making this a computed... binding logic will go
   // into the LazyItemMixin
   viewportDidChange: Ember.observer(function() {
-    console.log('lazy-container:viewportDidChange');
     var childViews = this.get('childViews');
     var content = this.get('content') || [];
     var clength = content.get('length');
