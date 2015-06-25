@@ -24,23 +24,28 @@ StyleBindingsMixin, {
     return this.get('numItemsShowing') + 2;
   }).property('numItemsShowing'),
 
-  onNumChildViewsDidChange: Ember.observer(function() {
+  itemView: function() {
     // We are getting the class from a string e.g. "Ember.Table.Row"
     var itemViewClass = this.get('itemViewClass');
     if (typeof itemViewClass === 'string') {
       if (/[A-Z]+/.exec(itemViewClass)) {
         // Global var lookup - 'App.MessagePreviewView'
-        itemViewClass = Ember.get(Ember.lookup, itemViewClass);
+        return Ember.get(Ember.lookup, itemViewClass);
       } else {
         // Ember CLI Style lookup - 'message/preview'
-        itemViewClass = this.container.lookupFactory("view:" + itemViewClass);
+        return this.container.lookupFactory("view:" + itemViewClass);
       }
     }
+  }.property('itemViewClass'),
+
+  onNumChildViewsDidChange: Ember.observer(function() {
+    console.log('lazy-container:onNumChildViewsDidChange');
+    var itemView = this.get('itemView');
     var newNumViews = this.get('numChildViews');
-    if (!itemViewClass || !newNumViews) {
+    var oldNumViews = this.get('length');
+    if (!itemView || !newNumViews) {
       return;
     }
-    var oldNumViews = this.get('length');
     var numViewsToInsert = newNumViews - oldNumViews;
     // if newNumViews < oldNumViews we need to remove some views
     if (numViewsToInsert < 0) {
@@ -49,21 +54,23 @@ StyleBindingsMixin, {
       viewsToRemove.forEach(function(view) {
         view.destroy();
       });
+    }
     // if oldNumViews < newNumViews we need to add more views
-    } else if (numViewsToInsert > 0) {
+    else if (numViewsToInsert > 0) {
       var viewsToInsert = [];
       for (var i = 0; i < numViewsToInsert; ++i) {
-        viewsToInsert.pushObject(this.createChildView(itemViewClass));
+        viewsToInsert.pushObject(this.createChildView(itemView));
       }
       // we want to batch insert view to make things faster
       this.pushObjects(viewsToInsert);
     }
     this.viewportDidChange();
-  }, 'numChildViews', 'itemViewClass'),
+  }, 'numChildViews', 'itemView'),
 
   // TODO(Peter): Consider making this a computed... binding logic will go
   // into the LazyItemMixin
   viewportDidChange: Ember.observer(function() {
+    console.log('lazy-container:viewportDidChange');
     var childViews = this.get('childViews');
     var content = this.get('content') || [];
     var clength = content.get('length');
