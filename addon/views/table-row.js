@@ -2,14 +2,14 @@ import Ember from 'ember';
 import RegisterTableComponentMixin from 'ember-table/mixins/register-table-component';
 import LazyItemView from 'ember-table/views/lazy-item';
 
-export default LazyItemView.extend(
-RegisterTableComponentMixin, {
+export default LazyItemView.extend(RegisterTableComponentMixin, {
   templateName: 'table-row',
   classNames: 'et-table-row',
   classNameBindings: ['row.isHovered:et-hover',
-      'row.isSelected:et-selected',
-      'row.rowStyle',
-      'isLastRow:et-last-row'],
+    'row.isSelected:et-selected',
+    'row.rowStyle',
+    'isLastRow:et-last-row'
+  ],
   styleBindings: ['width', 'height'],
   row: Ember.computed.alias('content'),
   columns: Ember.computed.alias('parentView.columns'),
@@ -18,7 +18,7 @@ RegisterTableComponentMixin, {
 
   isLastRow: Ember.computed(function() {
     return this.get('row') ===
-        this.get('tableComponent.bodyContent.lastObject');
+      this.get('tableComponent.bodyContent.lastObject');
   }).property('tableComponent.bodyContent.lastObject', 'row'),
 
   // TODO(azirbel): Could simplify slightly via

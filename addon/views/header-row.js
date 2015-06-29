@@ -20,7 +20,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
       containment: 'parent',
       cursor: 'move',
       helper: 'clone',
-      items: ".et-header-cell.sortable",
+      items: '.et-header-cell.sortable',
       opacity: 0.9,
       placeholder: 'ui-state-highlight',
       scroll: true,
