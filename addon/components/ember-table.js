@@ -436,26 +436,22 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
     var bodyContentWidth = this._getTotalWidth(this.get('tableColumns'));
     // center block content width
-    var _tableColumnsWidth = Math.max(bodyContentWidth + 3, _centerBlockContainerWidth) -
-        _verticalScrollbarSize;
+    var _tableColumnsWidth = Math.max(bodyContentWidth + 3, _centerBlockContainerWidth) - _verticalScrollbarSize;
     var _rowWidth = Math.max(bodyContentWidth, _centerBlockContainerWidth);
 
     var _tableContentHeight = rowHeight * numRows;
     // tables-container height adjusts to the content height
     var _tablesContainerHeight = _height;
     if (useContentHeight) {
-      _tablesContainerHeight = Math.min(maxHeight, _tableContentHeight + _headerHeight +
-          _footerHeight + _horizontalScrollbarSize);
+      _tablesContainerHeight = Math.min(maxHeight, _tableContentHeight + _headerHeight + _footerHeight + _horizontalScrollbarSize);
     }
-    var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight -
-        _horizontalScrollbarSize;
+    var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight - _horizontalScrollbarSize;
 
     var _numItemsShowing = Math.floor(_bodyHeight / rowHeight);
 
     this.setProperties({
       _tableContainerWidth: _tableContainerWidth,
-      _headerHeight: _headerHeight,
-      _footerHeight: _footerHeight,
+      _tablesContainerHeight: _tablesContainerHeight,
       _fixedColumnsWidth: _fixedColumnsWidth,
       _fixedBlockWidth: _fixedBlockWidth,
       _centerBlockContainerWidth: _centerBlockContainerWidth,
@@ -463,8 +459,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       _tableColumnsWidth: _tableColumnsWidth,
       _rowWidth: _rowWidth,
       _tableContentHeight: _tableContentHeight,
-      _tablesContainerHeight: _tablesContainerHeight,
+      _headerHeight: _headerHeight,
       _bodyHeight: _bodyHeight,
+      _footerHeight: _footerHeight,
       _numItemsShowing: _numItemsShowing
     });
   },
