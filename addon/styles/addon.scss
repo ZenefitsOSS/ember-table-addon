@@ -2,120 +2,124 @@
 // Ember Table (et)
 // =============================================================================
 
-
-//////////////////////////////////
-// NOTE: THIS ISN'T UP TO DATE. //
-//////////////////////////////////
-
-
 // TODO(ldvz): Duplicated colors for now, however, should remove eventually.
-@color-white: #fff;
-@color-grey-50: #fafafa;
-@color-grey-100: #f5f5f5;
-@color-grey-200: #eee;
-@color-grey-300: #e0e0e0;
-@color-grey-400: #bdbdbd;
-@color-grey-500: #9e9e9e;
-@color-grey-600: #757575;
-@color-grey-700: #616161;
-@color-grey-800: #424242;
-@color-grey-900: #212121;
+$color-white: #fff;
+$color-grey-50: #fafafa;
+$color-grey-100: #f5f5f5;
+$color-grey-200: #eee;
+$color-grey-300: #e0e0e0;
+$color-grey-400: #bdbdbd;
+$color-grey-500: #9e9e9e;
+$color-grey-600: #757575;
+$color-grey-700: #616161;
+$color-grey-800: #424242;
+$color-grey-900: #212121;
 
-@color-blue-50:   #e3f2fd;
-@color-blue-100:  #bbdefb;
-@color-blue-200:  #90caf9;
-@color-blue-300:  #64b5f6;
-@color-blue-400:  #42a5f5;
-@color-blue-500:  #2196f3;
-@color-blue-600:  #1e88e5;
-@color-blue-700:  #1976d2;
-@color-blue-800:  #1565c0;
-@color-blue-900:  #0d47a1;
-@color-blue-A100: #82b1ff;
-@color-blue-A200: #448aff;
-@color-blue-A400: #2979ff;
-@color-blue-A700: #2962ff;
+$color-blue-50:   #e3f2fd;
+$color-blue-100:  #bbdefb;
+$color-blue-200:  #90caf9;
+$color-blue-300:  #64b5f6;
+$color-blue-400:  #42a5f5;
+$color-blue-500:  #2196f3;
+$color-blue-600:  #1e88e5;
+$color-blue-700:  #1976d2;
+$color-blue-800:  #1565c0;
+$color-blue-900:  #0d47a1;
+$color-blue-A100: #82b1ff;
+$color-blue-A200: #448aff;
+$color-blue-A400: #2979ff;
+$color-blue-A700: #2962ff;
 
-@transition-easing: cubic-bezier(.230, 1.000, .320, 1.000);
+$transition-easing: cubic-bezier(.230, 1.000, .320, 1.000);
 
 // Variables
 // ---------
 
-@et-zIndex: 0;
+$et-zIndex: 0 !default;
 
 // Note: This should be equal to the rowHeight in the tableController
-@et-height-row: 38px;
+$et-height-row: 38px !default;
 
-@et-fontSize-header: 12px;
-@et-fontSize-body: 13px;
+$et-fontSize-header: 12px !default;
+$et-fontSize-body: 13px !default;
 
-@et-color-header: @color-grey-500;
-@et-color-body: @color-grey-800;
-@et-color-selectedRow: @color-grey-50;
+$et-color-header: $color-grey-500 !default;
+$et-color-body: $color-grey-800 !default;
+$et-color-selectedRow: $color-grey-50 !default;
 
-@et-backgroundColor: @color-white;
-@et-backgroundColor-header: @et-backgroundColor;
-@et-backgroundColor-headerRow: @et-backgroundColor;
-@et-backgroundColor-headerCell: @et-backgroundColor;
-@et-backgroundColor-footer: @et-backgroundColor;
-@et-backgroundColor-selectedRow: @color-blue-700;
-// @et-backgroundColor-hoverRow: rgba(@et-backgroundColor-selectedRow, .2);
-@et-backgroundColor-hoverRow: fade(@et-backgroundColor-selectedRow, 20);
+$et-backgroundColor: $color-white !default;
+$et-backgroundColor-header: $et-backgroundColor !default;
+$et-backgroundColor-headerRow: $et-backgroundColor !default;
+$et-backgroundColor-headerCell: $et-backgroundColor !default;
+$et-backgroundColor-footer: $et-backgroundColor !default;
+$et-backgroundColor-selectedRow: $color-blue-700 !default;
+$et-backgroundColor-hoverRow: rgba($et-backgroundColor-selectedRow, .2) !default;
 
-@et-borderSize: 1px;
-@et-borderSize-vertical: 0;
-@et-borderSize-horizontal: 1px;
-@et-borderSize-header: @et-borderSize;
-@et-borderSize-rowBottom: @et-borderSize-horizontal;
-@et-borderSize-cellVertical: @et-borderSize-vertical;
-@et-borderSize-footer: @et-borderSize;
+$et-borderSize: 1px !default;
+$et-borderSize-vertical: 0 !default;
+$et-borderSize-horizontal: 1px !default;
+$et-borderSize-header: $et-borderSize !default;
+$et-borderSize-rowBottom: $et-borderSize-horizontal !default;
+$et-borderSize-cellVertical: $et-borderSize-vertical !default;
+$et-borderSize-footer: $et-borderSize !default;
 
-@et-borderColor: @color-grey-200;
-@et-borderColor-header: @et-borderColor;
-@et-borderColor-body: @et-borderColor;
-@et-borderColor-footer: @et-borderColor;
-@et-borderColor-selectedRow: @et-borderColor;
+$et-borderColor: $color-grey-200 !default;
+$et-borderColor-container: $color-grey-200 !default;
+$et-borderColor-header: $et-borderColor !default;
+$et-borderColor-body: $et-borderColor !default;
+$et-borderColor-footer: $et-borderColor !default;
+$et-borderColor-selectedRow: $et-borderColor !default;
 
 // TODO(Louis): Review
-@et-height-headerDropdownToggle: 20px;
-@et-color-headerDropdownToggle: @color-grey-400;
-@et-backgroundColor-headerDropdownToggle: @color-grey-400;
+$et-height-headerDropdownToggle: 20px !default;
+$et-color-headerDropdownToggle: $color-grey-400 !default;
+$et-backgroundColor-headerDropdownToggle: $color-grey-400 !default;
 
-@et-horizontalPadding-cell: 8px;
-@et-horizontalPadding-headerCell: 8px;
+$et-horizontalPadding-cell: 8px !default;
+$et-horizontalPadding-headerCell: 8px !default;
 
-@et-verticalPadding-headerCell: 8px;
+$et-verticalPadding-headerCell: 8px !default;
 
 // Table Structures
 // ----------------
 
 .et-tables-container {
 	position: relative;
-	z-index: @et-zIndex;
+	z-index: $et-zIndex;
 	width: 100%;
 	height: 100%;
-	// We use content-box because want to take the entire width with javascript
-	box-sizing: content-box;
+	box-sizing: border-box;
 	overflow: hidden;
 	// Important: We use display:inline-block and they are not flush
 	// and have 4px margins without using font-size: 0
 	font-size: 0;
 	user-select: none;
-	background-color: @et-backgroundColor;
-	border: @et-borderSize solid @et-borderColor;
+	background-color: $et-backgroundColor;
+	// Note: Size of the border needs to be synced with the size in ember-table.js
+	border: $et-borderSize solid $et-borderColor-container;
 	outline: 0;
-	&.is-selectable {
-		user-select: text;
-	}
-	&.collapse {
-		border: 0;
-	}
+	border-radius: 3px;
+
+	// &.is-selectable {
+	// 	user-select: text;
+	// }
+}
+
+.et-tables-container--collapse {
+	border: 0;
+}
+
+.et-tables-container--box {
+	border-radius: 0;
+}
+
+.et-tables-container * {
+	box-sizing: inherit;
 }
 
 .et-table-container {
 	position: relative;
-	z-index: @et-zIndex + 3;
-	box-sizing: border-box;
+	z-index: $et-zIndex + 3;
 	overflow-x: hidden;
 	// Height and Width defined dynamically through JS
 	// Let Antiscroll handle the overflow
@@ -157,22 +161,21 @@
 
 .et-scroll-container {
 	// Top, left, height and width defined dynamically through JS
-	// Override antiscroll-wrapper position relative
 	position: absolute;
 	bottom: 0;
-	z-index: @et-zIndex + 5;
+	z-index: $et-zIndex + 5;
 	overflow-x: auto;
 	overflow-y: hidden;
-	border-left: @et-borderSize solid @et-borderColor;
+	border-left: $et-borderSize solid $et-borderColor;
 }
 
 .et-fixed-table-container {
-	z-index: @et-zIndex + 4;
+	z-index: $et-zIndex + 4;
 	&.et-header-container {
-		background-color: @et-backgroundColor-header;
+		background-color: $et-backgroundColor-header;
 	}
 	&.et-footer-container {
-		background-color: @et-backgroundColor-footer;
+		background-color: $et-backgroundColor-footer;
 	}
 }
 
@@ -183,7 +186,7 @@
 
 .et-header-row,
 .et-header-container .et-table-fixed-wrapper {
-	background-color: @et-backgroundColor-headerRow;
+	background-color: $et-backgroundColor-headerRow;
 }
 
 // Table Rows
@@ -212,23 +215,23 @@
 .et-cell {
 	float: left;
 	height: 100%;
-	// Important: We defined font-size: 0 in .tables-container due to the use of
-	// display-inline: block.
-	font-size: @et-fontSize-body;
-	border-right: @et-borderSize-cellVertical solid @et-borderColor-body;
-	.et-content,
-	.et-toggle-span {
-		padding: 0;
-		// Note the -1 is because we use box sizing and the row has a bottom border
-		line-height: @et-height-row - 1;
-		&:hover {
-			cursor: pointer;
-		}
-	}
-	.et-content {
-		display: block;
-		padding: 0 @et-horizontalPadding-cell;
-	}
+	// Important: We defined font-size: 0 in .tables-container due to the use
+	// of display-inline: block
+	font-size: $et-fontSize-body;
+}
+
+.et-content-container {
+	height: 100%;
+}
+
+.et-content {
+	display: block;
+	padding: 0 $et-horizontalPadding-cell;
+	line-height: $et-height-row - $et-borderSize-horizontal;
+}
+
+.et-cell.is-selected {
+	border-color: $color-blue-600;
 }
 
 .et-cell-container {
@@ -254,7 +257,7 @@
 
 // TODO(Louis): Why do this?
 // .et-left-table-block .et-cell {
-//  border-right: @et-borderSize-body solid @et-borderColor-body !important;
+//  border-right: $et-borderSize-body solid $et-borderColor-body !important;
 // }
 
 // Header Container
@@ -262,12 +265,12 @@
 
 .et-header-container {
 	overflow: hidden;
-	border-bottom: @et-borderSize-header solid @et-borderColor-header;
+	border-bottom: $et-borderSize-header solid $et-borderColor-header;
 	.ui-state-highlight {
 		position: relative;
 		// margin-left: -3px;
 		left: -3px;
-		z-index: @et-zIndex + 100;
+		z-index: $et-zIndex + 100;
 		float: left;
 		width: 0;
 		height: 100%;
@@ -327,40 +330,52 @@
 	// Override the jQuery sortable
 	display: block !important;
 	padding: 0;
-	font-size: @et-fontSize-header !important;
-	color: @et-color-header;
-	background-color: @et-backgroundColor-headerCell;
+	font-size: $et-fontSize-header !important;
+	color: $et-color-header;
+	background-color: $et-backgroundColor-headerCell;
 	span {
 		line-height: 1;
 	}
-	.et-content-container {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		&.et-table-header-tree-cell {
-			left: 20px;
-		}
-		&:hover {
-			cursor: pointer;
-		}
-		.et-content {
-			position: absolute;
-			bottom: 2px;
-			width: 100%;
-			padding: @et-verticalPadding-headerCell @et-horizontalPadding-headerCell;
-			font-weight: 500;
-			line-height: 1.3;
-		}
+}
+
+.et-header-cell .et-content-container {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	&.et-table-header-tree-cell {
+		left: 20px;
 	}
-	.et-toggle {
-		position: relative;
-		i {
-			position: absolute;
-			bottom: 8px;
-			font-size: 13px;
-		}
+	&:hover {
+	cursor: pointer;
+	}
+}
+
+.et-header-cell .et-content {
+	position: absolute;
+	bottom: 2px;
+	width: 100%;
+	padding: $et-verticalPadding-headerCell $et-horizontalPadding-headerCell;
+	font-weight: 500;
+	line-height: 1.3;
+}
+
+.et-header-cell .et-toggle {
+	position: relative;
+	i {
+		position: absolute;
+		bottom: 8px;
+		font-size: 13px;
+	}
+}
+
+.et-toggle-span {
+	padding: 0;
+	// Note the -1 is because we use box sizing and the row has a bottom border
+	line-height: $et-height-row - 1;
+	&:hover {
+		cursor: pointer;
 	}
 }
 
@@ -382,12 +397,12 @@
 
 .et-table-dropdown-toggle {
 	float: right;
-	height: @et-height-headerDropdownToggle - 1;
+	height: $et-height-headerDropdownToggle - 1;
 	padding: 3px 2px 0 2px;
 	margin: 0;
-	color: @et-color-headerDropdownToggle;
+	color: $et-color-headerDropdownToggle;
 	text-align: center;
-	background-color: @et-backgroundColor-headerDropdownToggle;
+	background-color: $et-backgroundColor-headerDropdownToggle;
 }
 
 // Footer
@@ -395,9 +410,9 @@
 
 .et-footer-container {
 	position: absolute;
-	z-index: @et-zIndex + 1;
+	z-index: $et-zIndex + 5;
 	overflow: hidden;
-	border-top: @et-borderSize-footer solid @et-borderColor-footer;
+	border-top: $et-borderSize-footer solid $et-borderColor-footer;
 	.et-toggle {
 		display: none;
 	}
@@ -450,7 +465,7 @@
 	position: absolute;
 	top: 0;
 	left: -2px;
-	z-index: @et-zIndex + 1000;
+	z-index: $et-zIndex + 1000;
 	width: 3px;
 	height: 100%;
 	visibility: hidden;
@@ -466,7 +481,7 @@
 
 .et-table-row {
 	min-width: 100%;
-	border-bottom: @et-borderSize-rowBottom solid @et-borderColor-body;
+	border-bottom: $et-borderSize-rowBottom solid $et-borderColor-body;
 	// &.et-row-style-1
 	// Note that the following row styles exist:
 	// .et-row-style-1
@@ -481,16 +496,16 @@
 }
 
 .et-body-container .et-table-row {
-	color: @et-color-body;
+	color: $et-color-body;
 	&.et-hover {
-		background-color: @et-backgroundColor-hoverRow;
+		background-color: $et-backgroundColor-hoverRow;
 	}
 	&.et-selected {
-		color: @et-color-selectedRow;
-		background-color: @et-backgroundColor-selectedRow;
-		.et-cell {
-			border-right: @et-borderSize-cellVertical solid @et-borderColor-selectedRow;
-		}
+		color: $et-color-selectedRow;
+		background-color: $et-backgroundColor-selectedRow;
+		// .et-cell {
+		// 	border-right: $et-borderSize-cellVertical solid $et-borderColor-selectedRow;
+		// }
 	}
 }
 
@@ -499,7 +514,7 @@
 
 .et-left-table-block {
 	// Make sure left is on top
-	z-index: @et-zIndex + 100;
+	z-index: $et-zIndex + 100;
 }
 
 // We override this so that the shadow doesn't show of the body-container
@@ -510,7 +525,7 @@
 .et-header-container,
 .et-footer-container,
 .et-left-table-block {
-	transition: box-shadow .6s @transition-easing;
+	transition: box-shadow .6s $transition-easing;
 }
 
 .has-headerShadow .et-header-container,

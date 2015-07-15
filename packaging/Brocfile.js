@@ -3,13 +3,12 @@
 var mergeTrees = require('broccoli-merge-trees');
 var Funnel = require('broccoli-funnel');
 // TODO(azirbel): This is deprecated
-var pickFiles = require('broccoli-static-compiler');
+var pickFiles = require('broccoli-funnel');
 // TODO(azirbel): Deprecated, remove and use es6modules
 var compileES6 = require('broccoli-es6-concatenator');
-var ES6Modules = require('broccoli-es6modules');
 var es3Safe = require('broccoli-es3-safe-recast');
 var templateCompiler = require('broccoli-ember-hbs-template-compiler');
-var less = require('broccoli-less-single');
+var scss = require('ember-cli-sass');
 var wrap = require('./wrap');
 var globals = require('./globals');
 
@@ -49,10 +48,18 @@ var compiled = compileES6(jsTree, {
 // Wrap in a function which is executed
 compiled = wrap(compiled);
 
-// Compile LESS
-var lessTree = pickFiles('addon/styles', { srcDir: '/', destDir: '/' });
-var lessMain = 'addon.less';
-var lessOutput = 'ember-table.css';
-lessTree = less(lessTree, lessMain, lessOutput);
+// Compile scss
+var scssTree = pickFiles('addon/styles', { srcDir: '/', destDir: '/' });
+var scssMain = 'addon.scss';
+var scssOutput = 'ember-table.css';
+console.log('================================================================');
+console.log(scssTree)
+console.log('=========')
+console.log(scssMain)
+console.log('=========')
+console.log(scssOutput)
+console.log('=========')
+debugger
+scssTree = compileSass(scssTree, scssMain, scssOutput);
 
-module.exports = mergeTrees([es3Safe(compiled), lessTree]);
+module.exports = mergeTrees([es3Safe(compiled), scssTree]);

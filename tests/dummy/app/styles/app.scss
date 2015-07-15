@@ -2,25 +2,25 @@
 // Import other LESS & CSS
 // -----------------------------------------------------------------------------
 
-@import '../../bower_components/bootstrap/less/bootstrap.less';
+@import '../../bower_components/bootstrap/less/bootstrap.scss';
 
 // Ember Table
 // -------------------------
-@import '../../addon/styles/addon.less';
-@import '../../addon/styles/themes/financial.less';
+@import '../../addon/styles/addon.scss';
+@import '../../addon/styles/themes/financial.scss';
 
 // Addepar Open Source
 // -------------------------
-@import 'typography.less';
-@import 'mixins.less';
+@import 'typography.scss';
+@import 'mixins.scss';
 
 // Variables used for this file
-@import 'variables.less';
-@import 'prettify.less';
+@import 'variables.scss';
+@import 'prettify.scss';
 
 // Addepar Open Source Pages
 // -------------------------
-@import 'ember-table-page.less';
+@import 'ember-table-page.scss';
 
 //
 // General CSS
@@ -31,7 +31,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: @sansFontFamily;
+  font-family: $sansFontFamily;
 }
 
 /* Typography
@@ -60,23 +60,23 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: @sansFontFamily;
+  font-family: $sansFontFamily;
   color: #45494D;
   line-height: 1.5;
 }
 
 h1 {
-  font: normal 24px/1.5 @sansFontFamily;
+  font: normal 24px/1.5 $sansFontFamily;
   margin-bottom: 15px;
 
   small {
-    font: normal 18px/1.5 @sansFontFamily;
+    font: normal 18px/1.5 $sansFontFamily;
   }
 }
 
 h2 {
-  font: normal 20px/1.5 @sansFontFamily;
-  color: @75-percent-black;
+  font: normal 20px/1.5 $sansFontFamily;
+  color: $75-percent-black;
 
   small {
     font-size: 14px;
@@ -84,12 +84,12 @@ h2 {
 }
 
 h3 {
-  font: normal 18px/1.5 @sansFontFamily;
+  font: normal 18px/1.5 $sansFontFamily;
   font-family: 'Univers Next W01 Light';
 }
 
 h4 {
-  font: 500 15px/1.5 @sansFontFamily;
+  font: 500 15px/1.5 $sansFontFamily;
   font-family: 'Univers Next W01 Medium';
 
   &.byline {
@@ -102,7 +102,7 @@ h5 {
   padding-bottom: 4px;
   color: rgba(0, 0, 0, 0.4);
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-  font: bold 13px/1.5 @sansFontFamily;
+  font: bold 13px/1.5 $sansFontFamily;
   font-family: 'Univers Next W01 Bold';
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -111,26 +111,26 @@ h5 {
 p,
 .styled li {
   .box-sizing(border-box);
-  font: normal 14px/1.62 @sansFontFamily;
+  font: normal 14px/1.62 $sansFontFamily;
   // Don't know yet
   font-family: 'UniversNextW01-Regular';
   font-family: 'Univers Next W01 Light';
-  color: @55-percent-black;
+  color: $55-percent-black;
   margin-bottom: 20px;
 
   &.elevated {
-    font: normal 16px/1.62 @sansFontFamily;
+    font: normal 16px/1.62 $sansFontFamily;
     font-family: 'Univers Next W01 Light';
     margin-bottom: 25px;
   }
 
   &.reduced {
-    font: normal 11px/1.4 @sansFontFamily;
+    font: normal 11px/1.4 $sansFontFamily;
     font-family: 'UniversNextW01-Regular';
   }
 
   &.byline {
-    font: normal 12px/1.4 @sansFontFamily;
+    font: normal 12px/1.4 $sansFontFamily;
     font-family: 'Univers Next W01 Light';
     margin-top: 2px;
     margin-bottom: 6px;
@@ -146,13 +146,13 @@ p,
 }
 
 a {
-  color: @highlight-blue;
+  color: $highlight-blue;
   // color: #333;
 
   &:hover,
   &:active {
-    color: @highlight-blue;
-    color: lighten(@highlight-blue, 10%);
+    color: $highlight-blue;
+    color: lighten($highlight-blue, 10%);
     text-decoration: none;
   }
 }
@@ -190,7 +190,7 @@ input[type="color"],
 
 strong {
   font-weight: 500;
-  font-family: @sansFontFamily;
+  font-family: $sansFontFamily;
   font-family: 'Univers Next W01 Medium';
 }
 
@@ -214,7 +214,7 @@ pre {
 /* Buttons
 -------------------------------------------------- */
 .addepar-btn {
-  font: normal 13px @sansFontFamily;
+  font: normal 13px $sansFontFamily;
   font-family: 'Univers Next W01 Medium';
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -260,7 +260,7 @@ pre {
 .addepar-btn-primary {
   color: #FFF;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
-  // background: lighten(@highlight-blue,10%);
+  // background: lighten($highlight-blue,10%);
   background: rgba(0,0,0,0.7);
   border: 0 solid transparent;
   box-shadow: none;
@@ -367,7 +367,7 @@ pre {
 -------------------------------------------------- */
 .hero-container {
   background-color: #000;
-  height: @hero-height;
+  height: $hero-height;
   position: relative;
   overflow: hidden;
   // So that the hero is on top of the slide out navigation
@@ -379,21 +379,21 @@ pre {
     top: 0;
     left: 0;
     right: 0;
-    height: @hero-height;
+    height: $hero-height;
     // display: none;
     background-color: #000;
   }
 
   &.small-hero-container {
-    height: @small-hero-height;
+    height: $small-hero-height;
   }
 
   &.large-hero-container {
-    height: @large-hero-height;
+    height: $large-hero-height;
 
     .hero,
     .hero-overlay {
-      height: @large-hero-height;
+      height: $large-hero-height;
     }
 
     .hero-content-container {
@@ -420,7 +420,7 @@ pre {
 }
 
 .hero-tagline h1 {
-  font: 300 26px/1.5 @sansFontFamily;
+  font: 300 26px/1.5 $sansFontFamily;
   font-family: 'Univers Next W01 Light';
   color: #fff;
   margin-bottom: 15px;
@@ -457,7 +457,7 @@ pre {
 .hero-overlay {
   position: absolute;
   top: 0;
-  height: @hero-height;
+  height: $hero-height;
   left: 0;
   right: 0;
   z-index: 1;
@@ -482,11 +482,11 @@ pre {
 }
 
 .hero-container.sub-page {
-  height: @hero-sub-page-height;
+  height: $hero-sub-page-height;
 
   .hero,
   .hero-overlay {
-    height: @hero-sub-page-height;
+    height: $hero-sub-page-height;
   }
 
   .hero-content-container {
@@ -531,7 +531,7 @@ pre {
 
   a {
     color: #777;
-    font: 13px @sansFontFamily;
+    font: 13px $sansFontFamily;
   }
 
   li {
@@ -553,7 +553,7 @@ pre {
   }
 
   p {
-    font: 13px @sansFontFamily;
+    font: 13px $sansFontFamily;
     margin-bottom: 0;
     color: #444;
   }
@@ -703,7 +703,7 @@ pre {
   margin: 10px 0;
 
   a {
-    color: @55-percent-black;
+    color: $55-percent-black;
   }
 
   iframe {
@@ -720,7 +720,7 @@ pre {
     border: 1px solid #ddd;
 
     &:hover {
-      border: 1px solid @highlight-blue;
+      border: 1px solid $highlight-blue;
     }
   }
 }
@@ -796,7 +796,7 @@ pre {
 
 .main-content-container-shadow {
   background-color: #f8f8f8;
-  box-shadow: @main-content-container-width 0 0 0 #fff inset, @main-content-container-width -10px 10px 0 rgba(0,0,0,0.1) inset;
+  box-shadow: $main-content-container-width 0 0 0 #fff inset, $main-content-container-width -10px 10px 0 rgba(0,0,0,0.1) inset;
 }
 
 .left-border {
