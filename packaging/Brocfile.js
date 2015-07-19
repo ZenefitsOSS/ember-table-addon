@@ -67,6 +67,6 @@ var scssTree = funnel('addon/styles', {
 });
 var scssMain = 'addon.scss';
 var scssOutputFile = 'ember-table.css';
-var scssOutput = compileSass(scssTree, scssMain, scssOutputFile);
+var scssOutput = compileSass([scssTree], scssMain, scssOutputFile);
 
 module.exports = mergeTrees([es3Safe(compiled), scssOutput]);
