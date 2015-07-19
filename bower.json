@@ -9,7 +9,7 @@
     "jquery-ui": "~1.11.4"
   },
   "devDependencies": {
-    "bootstrap": "3.0.0",
+    "bootstrap-sass": "3.3.4",
     "d3": "~3.5.3",
     "ember-resolver": "~0.1.11",
     "loader.js": "ember-cli/loader.js#1.0.1",

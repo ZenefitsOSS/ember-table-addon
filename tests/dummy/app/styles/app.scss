@@ -2,25 +2,25 @@
 // Import other LESS & CSS
 // -----------------------------------------------------------------------------
 
-@import '../../bower_components/bootstrap/less/bootstrap.scss';
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 
 // Ember Table
 // -------------------------
-@import '../../addon/styles/addon.scss';
-@import '../../addon/styles/themes/financial.scss';
+@import "../../addon/styles/addon";
+@import "../../addon/styles/themes/financial";
 
 // Addepar Open Source
 // -------------------------
-@import 'typography.scss';
-@import 'mixins.scss';
+@import "typography";
+@import "mixins";
 
 // Variables used for this file
-@import 'variables.scss';
-@import 'prettify.scss';
+@import "variables";
+@import "prettify";
 
 // Addepar Open Source Pages
 // -------------------------
-@import 'ember-table-page.scss';
+@import "ember-table-page";
 
 //
 // General CSS
@@ -28,9 +28,10 @@
 
 /* Body and structure
 -------------------------------------------------- */
-html, body {
-  margin: 0;
+html,
+body {
   padding: 0;
+  margin: 0;
   font-family: $sansFontFamily;
 }
 
@@ -221,10 +222,10 @@ pre {
   text-shadow: none;
   background-color: #ccc;
   border: 1px solid #ededed;
-  .box-shadow(inset 0 -2px rgba(0, 0, 0, 0.1));
+  box-shadow: inset 0 -2px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  .transition(all 0.2s);
-  .user-select(none);
+  transition: all 0.2s;
+  user-select: none;
 
   &:hover {
     cursor: pointer;
@@ -237,7 +238,7 @@ pre {
 
 .addepar-btn-outline {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  .box-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   padding: 14px 24px 15px 24px;
   background: none;
   border: 2px solid #BBB;
@@ -247,10 +248,10 @@ pre {
 .addepar-btn-white {
   color: #eee;
   border-color: rgba(255, 255, 255, 0.5);
-  .transition(all 0.2s);
+  transition: all 0.2s;
 
   &:hover {
-    .transition(all 0.5s);
+    transition: all 0.5s;
     color: #fff;
     border-color: rgba(255, 255, 255, 0.99);
     background: none;
@@ -264,7 +265,7 @@ pre {
   background: rgba(0,0,0,0.7);
   border: 0 solid transparent;
   box-shadow: none;
-  .transition(all 0.2s);
+  transition: all 0.2s;
 
   &:hover {
     background: rgba(0,0,0,0.88);
@@ -303,7 +304,7 @@ pre {
 }
 
 .image-shadow img {
-  .box-shadow(0 1px 15px rgba(0, 0, 0, 0.4));
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.4);
 }
 
 //
@@ -329,7 +330,7 @@ pre {
   letter-spacing: 2px;
   text-shadow: none;
   background: transparent;
-  .transition(all 0.2s);
+  transition: all 0.2s;
 
   &:hover {
     color: rgba(255, 255, 255, 0.95);
@@ -372,7 +373,7 @@ pre {
   overflow: hidden;
   // So that the hero is on top of the slide out navigation
   z-index: 2;
-  .transition(all 0.5s);
+  transition: all 0.5s;
 
   .hero {
     position: absolute;
@@ -409,7 +410,7 @@ pre {
 .hero .hero-overlay {
   background-color: rgba(0,0,0,0.73);
   // TODO(Louis): Still on the fence about this
-  // .box-shadow(0 1px 15px rgba(0, 0, 0, 0.4));
+  // box-shadow: 0 1px 15px rgba(0, 0, 0, 0.4);
 }
 
 .hero-content-container {

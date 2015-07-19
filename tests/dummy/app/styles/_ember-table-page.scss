@@ -3,28 +3,23 @@
 
 .table-hero {
   background: #000 url(../images/ember-table-hero.jpg) no-repeat center center;
-  .background-size(cover);
-
+  background-size: cover;
   .hero-content-container {
     top: 300px;
   }
-
   .hero-overlay {
-    background-color: rgba(0,0,0,0.73);
+    background-color: rgba(0,0,0,.73);
   }
 }
 
 .ember-table-examples {
   padding: 0;
-
   img {
     border: 1px solid #ddd;
   }
-
   .preview-box {
-    border: 1px solid #ddd;
     margin-bottom: 30px;
-
+    border: 1px solid #ddd;
     &:hover {
       border: 1px solid @highlight-blue;
     }
@@ -42,86 +37,82 @@
 .ember-table-options {
   margin-top: 30px;
   margin-bottom: 50px;
-
   td:first-child {
     font-family: 'Univers Next W01 Bold';
     color: #333;
   }
 }
 
+
 .table {
   th {
     font-size: 11px;
     font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
     color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     border-top: none !important;
   }
 }
 
 .et-header-cell .et-content-container .et-content,
 .et-financial .et-header-cell {
-  font-weight: normal;
   font-family: 'Univers LT W01 65 Bold';
+  font-weight: normal;
 }
 
 .et-financial .et-table-row {
-  background-color: transparent;
-  border-bottom-width: 0 !important;
   // .transition(0.1s background-color linear);
   color: #333;
-
+  background-color: transparent;
+  border-bottom-width: 0 !important;
   &.et-row-style-1 {
-    font-weight: normal;
     font-family: 'Univers LT W01 65 Bold';
+    font-weight: normal;
   }
-
   &.et-row-style-2 {
-    font-weight: normal;
     font-family: 'Univers LT W01 55 Roman';
+    font-weight: normal;
   }
-
   &.et-row-style-3 {
-    font-weight: normal;
     font-family: 'Univers LT W01 45 Light';
+    font-weight: normal;
   }
-
   &.et-row-style-4 {
-    font-weight: normal;
     font-family: 'Univers LT W01 45 Light';
+    font-weight: normal;
   }
-
   &.et-row-style-5 {
-    font-weight: normal;
     font-family: 'Univers LT W01 45 Light';
+    font-weight: normal;
   }
-
   &.et-row-style-6 {
-    font-weight: normal;
     font-family: 'Univers LT W01 45 Light';
+    font-weight: normal;
   }
 }
 
-
 /* Editable Ember Table
 -------------------------------------------------- */
-.editable-table-cell input, .editable-table-cell div {
+
+.editable-table-cell input,
+.editable-table-cell div {
   width: 100%;
   height: 100%;
 }
 .rating {
+  width: 120px;
+  margin: auto;
+  font-size: 20px;
+
   unicode-bidi: bidi-override;
   direction: rtl;
-  font-size: 20px;
-  margin: auto;
-  width: 120px;
 }
 .rating span {
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
   display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
 }
 .rating span:hover {
   cursor: pointer;
@@ -133,8 +124,8 @@
 .rating span:before,
 .rating:hover span.active:before,
 .rating:hover span.active ~ span:before {
-  content: "\f006";
   padding-right: 5px;
+  content: "\f006";
 }
 .rating span:hover:before,
 .rating span:hover ~ span:before {
@@ -144,24 +135,24 @@
 /* Ember Table Bar Chart Cells
 -------------------------------------------------- */
 .bar-cell {
-  height: 29px !important;
   display: inline-block;
+  height: 29px !important;
   vertical-align: middle;
 }
-.blue .bar-cell{
+.blue .bar-cell {
   background-color: #004358;
 }
-.teal .bar-cell{
-  background-color: #1F8A70;
+.teal .bar-cell {
+  background-color: #1f8a70;
 }
-.green .bar-cell{
-  background-color: #BEDB39;
+.green .bar-cell {
+  background-color: #bedb39;
 }
-.yellow .bar-cell{
-  background-color: #FFE11A;
+.yellow .bar-cell {
+  background-color: #ffe11a;
 }
-.orange .bar-cell{
-  background-color: #FD7400;
+.orange .bar-cell {
+  background-color: #fd7400;
 }
 
 /* Ajax cells
