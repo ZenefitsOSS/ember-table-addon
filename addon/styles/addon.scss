@@ -2,7 +2,6 @@
 // Ember Table (et)
 // =============================================================================
 
-
 // TODO(ldvz): Duplicated colors for now, however, should remove eventually.
 $color-white: #fff;
 $color-grey-50: #fafafa;
@@ -42,19 +41,20 @@ $et-zIndex: 0 !default;
 $et-height-row: 38px !default;
 
 $et-fontSize-header: 12px !default;
-$et-fontSize-body: 13px !default;
+$et-fontSize-body: 14px !default;
 
 $et-color-header: $color-grey-500 !default;
 $et-color-body: $color-grey-800 !default;
-$et-color-selectedRow: $color-grey-50 !default;
+$et-color-selectedRow: $color-grey-800 !default;
 
 $et-backgroundColor: $color-white !default;
 $et-backgroundColor-header: $et-backgroundColor !default;
 $et-backgroundColor-headerRow: $et-backgroundColor !default;
 $et-backgroundColor-headerCell: $et-backgroundColor !default;
 $et-backgroundColor-footer: $et-backgroundColor !default;
-$et-backgroundColor-selectedRow: $color-blue-700 !default;
-$et-backgroundColor-hoverRow: rgba($et-backgroundColor-selectedRow, .2) !default;
+// $et-backgroundColor-selectedRow: $color-blue-700 !default;
+$et-backgroundColor-selectedRow: rgba(#1e82f6, .15) !default;
+$et-backgroundColor-hoverRow: rgba(#1e82f6, .07) !default;
 
 $et-borderSize: 1px !default;
 $et-borderSize-vertical: 0 !default;
@@ -74,7 +74,7 @@ $et-borderColor-selectedRow: $et-borderColor !default;
 // TODO(Louis): Review
 $et-height-headerDropdownToggle: 20px !default;
 $et-color-headerDropdownToggle: $color-grey-400 !default;
-$et-backgroundColor-headerDropdownToggle: $color-grey-400 !default;
+$et-backgroundColor-headerDropdownToggle: $et-backgroundColor !default;
 
 $et-horizontalPadding-cell: 8px !default;
 $et-horizontalPadding-headerCell: 8px !default;
@@ -397,7 +397,6 @@ $et-verticalPadding-headerCell: 8px !default;
 // cursor: -webkit-grabbing; cursor: -moz-grabbing;
 
 .et-table-dropdown-toggle {
-	float: right;
 	height: $et-height-headerDropdownToggle - 1;
 	padding: 3px 2px 0 2px;
 	margin: 0;

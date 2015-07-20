@@ -21,7 +21,7 @@
     margin-bottom: 30px;
     border: 1px solid #ddd;
     &:hover {
-      border: 1px solid @highlight-blue;
+      border: 1px solid $highlight-blue;
     }
   }
 }
