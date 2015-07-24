@@ -56,10 +56,9 @@ $body-bg-color: #fff;
 
 /* Type */
 
-$univers: 'UniversNextW01-Regular';
-$univers-tabular: 'Univers LT W01 55 Roman';
-$backup-fonts: 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
-$sansFontFamily: $univers, $backup-fonts;
+$franklinGothic: "franklin-gothic-urw";
+$backup-fonts: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+$sansFontFamily: $franklinGothic, $backup-fonts;
 
 /* Layout */
 

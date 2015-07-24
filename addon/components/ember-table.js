@@ -51,17 +51,17 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   // The row height in pixels. A consistent row height is necessary to calculate
   // which rows are being shown, to enable lazy rendering.
-  // TODO: Currently must be kept in sync with the LESS file.
-  rowHeight: 30,
+  // TODO: Currently must be kept in sync with the SCSS file.
+  rowHeight: 38,
 
   // The minimum header height in pixels. Headers will grow in height if given
   // more content than they can display.
-  // TODO: Currently must be kept in sync with the LESS file.
-  minHeaderHeight: 30,
+  // TODO: Currently must be kept in sync with the SCSS file.
+  minHeaderHeight: 38,
 
   // The footer height in pixels.
-  // TODO: Currently must be kept in sync with the LESS file.
-  footerHeight: 30,
+  // TODO: Currently must be kept in sync with the SCSS file.
+  footerHeight: 38,
 
   // Enables or disables the header block.
   hasHeader: true,
@@ -90,7 +90,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // similar to android: match-parent or wrap-content
   layoutHeight: 'match-parent',
 
-  borderSize: 0,
+  borderSize: 1,
 
   maxHeight: Infinity,
 
