@@ -38,11 +38,11 @@ module.exports = function(environment) {
      */
     contentSecurityPolicy: {
       'default-src': "'self' ghbtns.com",
-      'script-src': "'self' api.github.com",
-      'font-src': "'self' fast.fonts.net",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' api.github.com use.typekit.net",
+      'font-src': "'self' data: fast.fonts.net use.typekit.net ",
       'connect-src': "'self' api.github.com",
       'img-src': "'self' ghbtns.com avatars.githubusercontent.com",
-      'style-src': "'self' 'unsafe-inline' fast.fonts.net",
+      'style-src': "'self' 'unsafe-inline' fast.fonts.net use.typekit.net",
       'media-src': "'self'",
     }
   };

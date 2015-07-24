@@ -282,12 +282,12 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       return;
     }
     // border size of the table. we need to take this into account
-    var borderSizes = this.get('borderSize') * 2;
+    var totalBorderWidth = this.get('borderSize') * 2;
     this.beginPropertyChanges();
     // We use innerWidth and innerHeight in case the parent has a border
     this.setProperties({
-      _width: this.$().parent().innerWidth() - borderSizes,
-      _height: this.$().parent().innerHeight() - borderSizes
+      _width: this.$().parent().innerWidth() - totalBorderWidth,
+      _height: this.$().parent().innerHeight() - totalBorderWidth
     });
     this.updateHeaderLayout();
     this.updateLayout();
@@ -469,6 +469,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   measureScrollbars: function() {
     var _height = this.get('_height');
     var _width = this.get('_width');
+    var _bodyHeight = this.get('_bodyHeight');
     var _tableContentHeight = this.get('_tableContentHeight');
     var _tableColumnsWidth = this.get('_tableColumnsWidth');
     var _fixedColumnsWidth = this.get('_fixedColumnsWidth');
@@ -482,6 +483,10 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _verticalScrollbarSize = _hasVerticalScrollbar ? _scrollbarSize : 0;
     var _horizontalScrollbarSize = _hasHorizontalScrollbar ? _scrollbarSize : 0;
 
+    // Update containers
+    _bodyHeight = _bodyHeight - _verticalScrollbarSize;
+
+    // Set heights on the scroll container
     var _scrollContainerHeight = _horizontalScrollbarSize;
     var _scrollContainerWidth = _centerBlockContainerWidth - _verticalScrollbarSize;
 
@@ -490,6 +495,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       _hasHorizontalScrollbar: _hasHorizontalScrollbar,
       _verticalScrollbarSize: _verticalScrollbarSize,
       _horizontalScrollbarSize: _horizontalScrollbarSize,
+      _bodyHeight: _bodyHeight,
       _scrollContainerHeight: _scrollContainerHeight,
       _scrollContainerWidth: _scrollContainerWidth
     });
