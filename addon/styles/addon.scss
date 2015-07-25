@@ -167,7 +167,8 @@ $et-verticalPadding-headerCell: 8px !default;
 	z-index: $et-zIndex + 5;
 	overflow-x: auto;
 	overflow-y: hidden;
-	border-left: $et-borderSize solid $et-borderColor;
+	// TODO(ldvz): need to figure
+	// border-left: $et-borderSize solid $et-borderColor;
 }
 
 .et-fixed-table-container {

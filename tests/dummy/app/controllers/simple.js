@@ -2,6 +2,17 @@ import Ember from 'ember';
 import ColumnDefinition from 'ember-table/models/column-definition';
 
 export default Ember.Controller.extend({
+	oneTableColumn: Ember.computed(function () {
+		var dateColumn = ColumnDefinition.create({
+			savedWidth: 200,
+			headerCellName: 'Date',
+			getCellContent: function (row) {
+				return row.get('date').toDateString();
+			}
+		});
+		return [dateColumn];
+	}),
+
 	tableColumns: Ember.computed(function () {
 		var dateColumn = ColumnDefinition.create({
 			savedWidth: 200,

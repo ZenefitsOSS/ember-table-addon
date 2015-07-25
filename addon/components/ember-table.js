@@ -472,6 +472,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _bodyHeight = this.get('_bodyHeight');
     var _tableContentHeight = this.get('_tableContentHeight');
     var _tableColumnsWidth = this.get('_tableColumnsWidth');
+    var _tablesContainerHeight = this.get('_tablesContainerHeight');
     var _fixedColumnsWidth = this.get('_fixedColumnsWidth');
     var _centerBlockContainerWidth = this.get('_centerBlockContainerWidth');
     var _headerHeight = this.get('_headerHeight');
@@ -484,6 +485,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _horizontalScrollbarSize = _hasHorizontalScrollbar ? _scrollbarSize : 0;
 
     // Update containers
+    _tableColumnsWidth = _tableColumnsWidth - _verticalScrollbarSize;
+    _tablesContainerHeight = _tablesContainerHeight + _horizontalScrollbarSize;
     _bodyHeight = _bodyHeight - _verticalScrollbarSize;
 
     // Set heights on the scroll container
@@ -496,6 +499,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       _verticalScrollbarSize: _verticalScrollbarSize,
       _horizontalScrollbarSize: _horizontalScrollbarSize,
       _bodyHeight: _bodyHeight,
+      _tableColumnsWidth: _tableColumnsWidth,
+      _tablesContainerHeight: _tablesContainerHeight,
       _scrollContainerHeight: _scrollContainerHeight,
       _scrollContainerWidth: _scrollContainerWidth
     });

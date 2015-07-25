@@ -1,5 +1,27 @@
 <div class="ember-table-example-container">
   {{ember-table
+    numFixedColumns=0
+    hasFooter=false
+    columns=oneTableColumn
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=1
+    hasFooter=true
+    columns=oneTableColumn
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
     hasFooter=false
     columns=tableColumns
     content=tableContent

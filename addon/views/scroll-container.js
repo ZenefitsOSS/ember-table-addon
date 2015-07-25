@@ -7,6 +7,7 @@ export default Ember.View.extend(
 StyleBindingsMixin, ScrollHandlerMixin, RegisterTableComponentMixin, {
   templateName: 'scroll-container',
   classNames: ['et-scroll-container'],
+  classNameBindings: ['tableComponent._scrollContainerHeight'],
   styleBindings: ['left', 'width', 'height'],
   height: Ember.computed.alias('tableComponent._scrollContainerHeight'),
   width: Ember.computed.alias('tableComponent._scrollContainerWidth'),
