@@ -25,6 +25,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     // The scrollTop position when we are scrolled to bottom
     var scrollTopAtBottom = this.get('_tableContentHeight') - this.get(
       '_bodyHeight');
+
     if (scrollTopAtBottom < currentScrollTop) {
       return false;
     } else {
