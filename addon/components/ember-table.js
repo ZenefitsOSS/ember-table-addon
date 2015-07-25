@@ -15,11 +15,23 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   hasFrozenColumnShadow: Ember.computed.gt('_tableScrollLeft', 0),
   hasHeaderShdow: Ember.computed.gt('_tableScrollTop', 0),
   hasFooterShdow: function() {
-    // the scrollTop position when we are scrolled to bottom
-    var scrollTopAtBottom = this.get('_tableContentHeight') - this.get('_bodyHeight');
-    // has footer shadow when table is not scrolled to bottom
-    return this.get('_tableScrollTop') !== scrollTopAtBottom;
-  }.property('_tableScrollTop', '_bodyHeight', '_tableContentHeight'),
+    // Handle case when layoutHeight === 'wrap-content'
+    if (this.get('layoutHeight') === 'wrap-content') {
+      return false;
+    }
+
+    // We add 1 pixel for odd rendering issues where there are decimal pixels
+    var currentScrollTop = this.get('_tableScrollTop') + 1;
+    // The scrollTop position when we are scrolled to bottom
+    var scrollTopAtBottom = this.get('_tableContentHeight') - this.get(
+      '_bodyHeight');
+    if (scrollTopAtBottom < currentScrollTop) {
+      return false;
+    } else {
+      return true;
+    }
+  }.property('_tableScrollTop', '_bodyHeight', '_tableContentHeight',
+    'layoutHeight'),
 
   // ---------------------------------------------------------------------------
   // API - Inputs
@@ -410,11 +422,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var layoutHeight = this.get('layoutHeight');
     var useContentHeight = layoutHeight === 'wrap-content';
 
-    // NOTE: measuring horizontal and vertical scrollbar size here will cause loop
-    // we have to breakup calculations.
-    var _horizontalScrollbarSize = this.get('_horizontalScrollbarSize');
-    var _verticalScrollbarSize = this.get('_verticalScrollbarSize');
-
     var _tableContainerWidth = _width;
 
     // calculate header heights
@@ -436,16 +443,16 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
     var bodyContentWidth = this._getTotalWidth(this.get('tableColumns'));
     // center block content width
-    var _tableColumnsWidth = Math.max(bodyContentWidth + 3, _centerBlockContainerWidth) - _verticalScrollbarSize;
+    var _tableColumnsWidth = Math.max(bodyContentWidth + 3, _centerBlockContainerWidth);
     var _rowWidth = Math.max(bodyContentWidth, _centerBlockContainerWidth);
 
     var _tableContentHeight = rowHeight * numRows;
     // tables-container height adjusts to the content height
     var _tablesContainerHeight = _height;
     if (useContentHeight) {
-      _tablesContainerHeight = Math.min(maxHeight, _tableContentHeight + _headerHeight + _footerHeight + _horizontalScrollbarSize);
+      _tablesContainerHeight = Math.min(maxHeight, _tableContentHeight + _headerHeight + _footerHeight);
     }
-    var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight - _horizontalScrollbarSize;
+    var _bodyHeight = _tablesContainerHeight - _headerHeight - _footerHeight;
 
     var _numItemsShowing = Math.floor(_bodyHeight / rowHeight);
 
@@ -472,7 +479,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _bodyHeight = this.get('_bodyHeight');
     var _tableContentHeight = this.get('_tableContentHeight');
     var _tableColumnsWidth = this.get('_tableColumnsWidth');
-    var _tablesContainerHeight = this.get('_tablesContainerHeight');
     var _fixedColumnsWidth = this.get('_fixedColumnsWidth');
     var _centerBlockContainerWidth = this.get('_centerBlockContainerWidth');
     var _headerHeight = this.get('_headerHeight');
@@ -486,8 +492,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
     // Update containers
     _tableColumnsWidth = _tableColumnsWidth - _verticalScrollbarSize;
-    _tablesContainerHeight = _tablesContainerHeight + _horizontalScrollbarSize;
-    _bodyHeight = _bodyHeight - _verticalScrollbarSize;
+    _bodyHeight = _bodyHeight - _horizontalScrollbarSize;
 
     // Set heights on the scroll container
     var _scrollContainerHeight = _horizontalScrollbarSize;
@@ -500,7 +505,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       _horizontalScrollbarSize: _horizontalScrollbarSize,
       _bodyHeight: _bodyHeight,
       _tableColumnsWidth: _tableColumnsWidth,
-      _tablesContainerHeight: _tablesContainerHeight,
       _scrollContainerHeight: _scrollContainerHeight,
       _scrollContainerWidth: _scrollContainerWidth
     });
