@@ -85,7 +85,8 @@ $et-headerCellSortIconContainer-width: 16px;
 $et-headerCellPopoverLink-size: 16px;
 $et-horizontalResizeHandler-width: 3px;
 
-$et-cellContent-rightPadding: 1px + $et-headerCellPopoverLink-size + 1px + $et-horizontalResizeHandler-width;
+$et-headerCellPopoverLink-margin: 2px;
+$et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellPopoverLink-size + $et-headerCellPopoverLink-margin + $et-horizontalResizeHandler-width;
 
 // Utils
 // -----
@@ -417,8 +418,8 @@ $et-cellContent-rightPadding: 1px + $et-headerCellPopoverLink-size + 1px + $et-h
 .et-headerCellPopoverLink-container {
 	position: absolute;
 	// Because of the sortable handle
-	right: $et-horizontalResizeHandler-width + 1px;
-	bottom: $et-verticalPadding-headerCell;
+	right: $et-horizontalResizeHandler-width + $et-headerCellPopoverLink-margin;
+	bottom: $et-verticalPadding-headerCell - 2px;
 	width: $et-headerCellPopoverLink-size;
 	height: $et-headerCellPopoverLink-size;
 	// -2px because of border

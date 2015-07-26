@@ -1,8 +1,15 @@
 <div class="et-content-container" {{action "sortByColumn" view.content}}>
 	<span class="et-sortIcon">
-		&uarr;
+		{{#if view.content.isSorted}}
+			{{#if view.content.sortAscending}}
+				&uarr;
+			{{else}}
+				&darr;
+			{{/if}}
+		{{/if}}
 	</span>
-	<span class="et-content et-content--headerCell is-sortedBy js-header-content">
+
+	<span class="et-content et-content--headerCell {{if view.content.isSorted 'is-sortedBy'}} js-header-content">
 		{{view.content.headerCellName}}
 	</span>
 </div>
