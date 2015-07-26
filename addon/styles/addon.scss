@@ -44,8 +44,8 @@ $et-fontSize-header: 12px !default;
 $et-fontSize-body: 14px !default;
 
 $et-color-header: $color-grey-500 !default;
-$et-color-body: $color-grey-800 !default;
-$et-color-selectedRow: $color-grey-800 !default;
+$et-color-body: $color-grey-700 !default;
+$et-color-selectedRow: $color-grey-700 !default;
 
 $et-backgroundColor: $color-white !default;
 $et-backgroundColor-header: $et-backgroundColor !default;
@@ -80,6 +80,21 @@ $et-horizontalPadding-cell: 8px !default;
 $et-horizontalPadding-headerCell: 8px !default;
 
 $et-verticalPadding-headerCell: 8px !default;
+
+// Utils
+// -----
+
+.u-textRight {
+	text-align: right;
+}
+
+.u-textLeft {
+	text-align: left;
+}
+
+.u-textCenter {
+	text-align: center;
+}
 
 // Table Structures
 // ----------------
@@ -276,26 +291,18 @@ $et-verticalPadding-headerCell: 8px !default;
 		float: left;
 		width: 0;
 		height: 100%;
-		background-color: #e1e1e1;
+		background-color: blue;
 	}
 	.ui-resizable-handle {
 		position: absolute;
-		right: -3px;
+		right: 0;
+		background-color: red;
 		&.ui-resizable-e {
 			top: 0;
-			width: 15px;
+			width: 3px;
 			height: 100%;
 			&:hover {
 				cursor: col-resize;
-			}
-		}
-		&.ui-resizable-s {
-			bottom: 0;
-			width: 100%;
-			height: 2px;
-			background: transparent;
-			&:hover {
-				cursor: row-resize;
 			}
 		}
 	}
@@ -305,12 +312,12 @@ $et-verticalPadding-headerCell: 8px !default;
 		height: 100%;
 	}
 	.ui-sortable-helper {
-		background-color: #eaeaea;
+		background-color: green;
 		.et-content-container {
 			display: none;
 		}
 		.ui-resizable-handle {
-			background-color: #eaeaea;
+			background-color: brown;
 		}
 	}
 }
@@ -338,6 +345,9 @@ $et-verticalPadding-headerCell: 8px !default;
 	span {
 		line-height: 1;
 	}
+	&:hover {
+		background-color: #f3f3f3;
+	}
 }
 
 .et-header-cell .et-content-container {
@@ -350,17 +360,20 @@ $et-verticalPadding-headerCell: 8px !default;
 		left: 20px;
 	}
 	&:hover {
-	cursor: pointer;
+		cursor: pointer;
 	}
 }
 
+.et-content-container
+
 .et-header-cell .et-content {
 	position: absolute;
-	bottom: 2px;
+	bottom: 0;
 	width: 100%;
 	padding: $et-verticalPadding-headerCell $et-horizontalPadding-headerCell;
 	font-weight: 500;
 	line-height: 1.3;
+	background-color: blue;
 }
 
 .et-header-cell .et-toggle {
@@ -381,11 +394,11 @@ $et-verticalPadding-headerCell: 8px !default;
 	}
 }
 
-.et-header-cell.text-align-left .et-content {
+.et-header-cell.u-textLeft .et-content {
 	left: 0;
 }
 
-.et-header-cell.text-align-right .et-content {
+.et-header-cell.u-textRight .et-content {
 	right: 0;
 }
 
@@ -462,16 +475,16 @@ $et-verticalPadding-headerCell: 8px !default;
 // Column Indicator
 // ----------------
 
+$et-sortableIndicator-color: rgba(0, 0, 0, .3);
 .et-column-sortable-indicator {
 	position: absolute;
 	top: 0;
-	left: -2px;
+	left: 0;
 	z-index: $et-zIndex + 1000;
-	width: 3px;
+	width: 1px;
 	height: 100%;
 	visibility: hidden;
-	background-color: #333;
-	opacity: .4;
+	background-color: $et-sortableIndicator-color;
 	&.active {
 		visibility: visible;
 	}
@@ -504,9 +517,6 @@ $et-verticalPadding-headerCell: 8px !default;
 	&.et-selected {
 		color: $et-color-selectedRow;
 		background-color: $et-backgroundColor-selectedRow;
-		// .et-cell {
-		// 	border-right: $et-borderSize-cellVertical solid $et-borderColor-selectedRow;
-		// }
 	}
 }
 

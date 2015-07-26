@@ -32,8 +32,8 @@ export default Ember.Object.extend({
   // TODO(new-api): Rename to `isReorderable`
   isSortable: true,
 
-  // Alignment of the text in the cell. Possible values are "left", "center",
-  // and "right".
+  // Alignment of the text in the cell. Possible values are "u-textLeft", "u-textCenter",
+  // and "u-textRight".
   textAlign: '',
 
   // Whether the column can automatically resize to fill space in the table.

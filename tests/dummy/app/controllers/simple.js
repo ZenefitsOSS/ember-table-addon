@@ -13,6 +13,33 @@ export default Ember.Controller.extend({
 		return [dateColumn];
 	}),
 
+	twoTableColumns: Ember.computed(function () {
+		var dateColumn = ColumnDefinition.create({
+			savedWidth: 200,
+			headerCellName: 'Date',
+			getCellContent: function (row) {
+				return row.get('date').toDateString();
+			}
+		});
+		var openColumn = ColumnDefinition.create({
+			savedWidth: 200,
+			headerCellName: 'Open',
+			getCellContent: function (row) {
+				return row.get('open').toFixed(2);
+			},
+			textAlign: 'u-textRight',
+		});
+		var highColumn = ColumnDefinition.create({
+			savedWidth: 200,
+			headerCellName: 'Open',
+			getCellContent: function (row) {
+				return row.get('open').toFixed(2);
+			},
+			textAlign: 'u-textRight',
+		});
+		return [dateColumn, openColumn, highColumn];
+	}),
+
 	tableColumns: Ember.computed(function () {
 		var dateColumn = ColumnDefinition.create({
 			savedWidth: 200,
@@ -47,7 +74,8 @@ export default Ember.Controller.extend({
 			headerCellName: 'Close',
 			getCellContent: function (row) {
 				return row.get('close').toFixed(2);
-			}
+			},
+			textAlign: 'u-textRight',
 		});
 		return [dateColumn, openColumn, highColumn, lowColumn, closeColumn];
 	}),

@@ -21,6 +21,7 @@
     "ember-qunit-notifications": "0.0.7",
     "lodash": "^2.4.0",
     "qunit": "~1.17.1",
-    "underscore": "1.8.3"
+    "underscore": "1.8.3",
+    "material-design-iconic-font": "2.0.2"
   }
 }

@@ -2,11 +2,18 @@
 // Import other Sass & CSS
 // -----------------------------------------------------------------------------
 
+// External Dependencies
+// ---------------------
+
+// Bootstrap
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 
-// Ember Table
-// -------------------------
-@import "../../addon/styles/addon";
+// Material design icon font
+$md-font-path:		"../fonts";
+$md-css-prefix:		md;
+$md-icon-prefix:	mdi;
+@import
+	"../../bower_components/material-design-iconic-font/scss/material-design-iconic-font";
 
 // Addepar Open Source
 // -------------------------
