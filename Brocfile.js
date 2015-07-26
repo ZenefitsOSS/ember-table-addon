@@ -10,6 +10,10 @@ function htmlEntities(str) {
 }
 
 var app = new EmberAddon({
+	autoprefixer: {
+		browsers: ['last 2 versions'],
+		cascade: false
+	},
 	/*
 	 * Replace patterns. We use this to replace strings such as:
 	 * @@{controllers/file.js}
