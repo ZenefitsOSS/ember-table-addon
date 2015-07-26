@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
 		});
 		var highColumn = ColumnDefinition.create({
 			savedWidth: 200,
-			headerCellName: 'Open',
+			headerCellName: 'Fusce sit amet ex vehicula pretium lectus felis',
 			getCellContent: function (row) {
 				return row.get('open').toFixed(2);
 			},

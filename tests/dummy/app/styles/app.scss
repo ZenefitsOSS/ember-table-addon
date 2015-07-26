@@ -39,6 +39,10 @@ body {
 	padding: 0;
 	margin: 0;
 	font-family: $sansFontFamily;
+		-moz-osx-font-smoothing: grayscale;
+	        font-smoothing: antialiased;
+	// Somehow autoprefixer doesn't take care of this
+	-webkit-font-smoothing: antialiased;
 }
 
 /* Typography

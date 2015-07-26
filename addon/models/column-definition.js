@@ -15,7 +15,8 @@ export default Ember.Object.extend({
   contentPath: undefined,
 
   // Minimum column width. Affects both manual resizing and automatic resizing.
-  minWidth: 25,
+  // Ellipsis breaks with anything less than 30
+  minWidth: 30,
 
   // Maximum column width. Affects both manual resizing and automatic resizing.
   maxWidth: undefined,
