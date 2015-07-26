@@ -79,7 +79,13 @@ $et-backgroundColor-headerDropdownToggle: $et-backgroundColor !default;
 $et-horizontalPadding-cell: 20px !default;
 $et-horizontalPadding-headerCell: 20px !default;
 
-$et-verticalPadding-headerCell: 8px !default;
+$et-verticalPadding-headerCell: 12px !default;
+
+$et-headerCellSortIconContainer-width: 16px;
+$et-headerCellPopoverLink-size: 16px;
+$et-horizontalResizeHandler-width: 3px;
+
+$et-cellContent-rightPadding: 1px + $et-headerCellPopoverLink-size + 1px + $et-horizontalResizeHandler-width;
 
 // Utils
 // -----
@@ -228,22 +234,18 @@ $et-verticalPadding-headerCell: 8px !default;
 // Table Cell
 // ----------
 
+.et-cell-container {
+	float: left;
+	width: 100%;
+	height: 100%;
+}
+
 .et-cell {
 	float: left;
 	height: 100%;
 	// Important: We defined font-size: 0 in .tables-container due to the use
 	// of display-inline: block
 	font-size: $et-fontSize-body;
-}
-
-.et-content-container {
-	height: 100%;
-}
-
-.et-content {
-	display: block;
-	padding-right: $et-horizontalPadding-cell;
-	line-height: $et-height-row - $et-borderSize-horizontal;
 }
 
 .et-cell:first-child {
@@ -254,10 +256,14 @@ $et-verticalPadding-headerCell: 8px !default;
 	border-color: $color-blue-600;
 }
 
-.et-cell-container {
-	float: left;
-	width: 100%;
+.et-content-container {
 	height: 100%;
+}
+
+.et-content {
+	display: block;
+	padding-right: $et-cellContent-rightPadding;
+	line-height: $et-height-row - $et-borderSize-horizontal;
 }
 
 .et-body-container .et-content,
@@ -288,7 +294,6 @@ $et-verticalPadding-headerCell: 8px !default;
 	border-bottom: $et-borderSize-header solid $et-borderColor-header;
 	.ui-state-highlight {
 		position: relative;
-		// margin-left: -3px;
 		left: -3px;
 		z-index: $et-zIndex + 100;
 		float: left;
@@ -327,10 +332,8 @@ $et-verticalPadding-headerCell: 8px !default;
 // > http://jqueryui.com/draggable/#cursor-style
 // cursor: -webkit-grabbing; cursor: -moz-grabbing;
 
-$et-headerCellSortIconContainer-width: 16px;
-$et-headerCellPopoverLink-size: 16px;
-
 .et-header-cell {
+	// ui-resizable-handle depends on this
 	position: relative;
 	// Override the jQuery sortable
 	display: block !important;
@@ -355,9 +358,10 @@ $et-headerCellPopoverLink-size: 16px;
 	transition: background-color .3s $transition-easing;
 	&.ui-resizable-e {
 		top: 0;
-		width: 3px;
-		height: 100%;
+		width: $et-horizontalResizeHandler-width;
+		bottom: 0;
 		&:hover {
+			// Overide the cursor
 			cursor: col-resize;
 		}
 	}
@@ -381,45 +385,19 @@ $et-headerCellPopoverLink-size: 16px;
 	justify-content: flex-end;
 }
 
-.et-header-cell .et-headerCellContent {
+.et-content--headerCell {
 	padding-top: $et-verticalPadding-headerCell;
 	padding-bottom: $et-verticalPadding-headerCell;
 	font-weight: 500;
 	line-height: 1.3;
 }
 
+.et-content--headerCell.is-sortedBy {
+	color: $color-grey-800;
+}
+
 .et-header-cell:first-child {
 	padding-left: $et-horizontalPadding-cell - $et-headerCellSortIconContainer-width;
-}
-
-.et-header-cell .et-toggle {
-	position: relative;
-	i {
-		position: absolute;
-		bottom: 8px;
-		font-size: 13px;
-	}
-}
-
-.et-toggle-span {
-	padding: 0;
-	// Note the -1 is because we use box sizing and the row has a bottom border
-	line-height: $et-height-row - 1;
-	&:hover {
-		cursor: pointer;
-	}
-}
-
-.et-header-cell.u-textLeft .et-headerCellContent {
-	left: 0;
-}
-
-.et-header-cell.u-textRight .et-headerCellContent {
-	right: 0;
-}
-
-.et-table-header-tree-cell .et-header-content-container {
-	left: 20px;
 }
 
 // Sort Icon
@@ -428,8 +406,9 @@ $et-headerCellPopoverLink-size: 16px;
 .et-sortIcon {
 	width: $et-headerCellSortIconContainer-width;
 	text-align: center;
-	padding-bottom: 8px;
+	padding-bottom: $et-verticalPadding-headerCell;
 	font-size: 16px;
+	line-height: 1.3;
 }
 
 // Header Popover Link
@@ -438,9 +417,8 @@ $et-headerCellPopoverLink-size: 16px;
 .et-headerCellPopoverLink-container {
 	position: absolute;
 	// Because of the sortable handle
-	right: ($et-horizontalPadding-headerCell - $et-headerCellPopoverLink-size) / 2;
-	// TODO(ldvz): needs variable
-	bottom: 6px;
+	right: $et-horizontalResizeHandler-width + 1px;
+	bottom: $et-verticalPadding-headerCell;
 	width: $et-headerCellPopoverLink-size;
 	height: $et-headerCellPopoverLink-size;
 	// -2px because of border
@@ -585,3 +563,28 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 .has-footerShadow .et-footer-container {
 	box-shadow: 0 -3px 3px rgba(0, 0, 0, 0.1);
 }
+
+// Deprecated
+// ----------
+
+// .et-table-header-tree-cell .et-header-content-container {
+// 	left: 20px;
+// }
+
+// .et-header-cell .et-toggle {
+// 	position: relative;
+// 	i {
+// 		position: absolute;
+// 		bottom: 8px;
+// 		font-size: 13px;
+// 	}
+// }
+
+// .et-toggle-span {
+// 	padding: 0;
+// 	// Note the -1 is because we use box sizing and the row has a bottom border
+// 	line-height: $et-height-row - 1;
+// 	&:hover {
+// 		cursor: pointer;
+// 	}
+// }
