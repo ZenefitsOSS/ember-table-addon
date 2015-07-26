@@ -17,8 +17,10 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   sortableOption: Ember.computed(function() {
     return {
       axis: 'x',
+      cancel: '.js-et-headerCellPopoverLink-container',
       containment: 'parent',
       cursor: 'move',
+      delay: 150,
       helper: 'clone',
       items: '.et-header-cell.sortable',
       opacity: 0.9,

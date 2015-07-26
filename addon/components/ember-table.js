@@ -444,7 +444,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
     var bodyContentWidth = this._getTotalWidth(this.get('tableColumns'));
     // center block content width
-    var _tableColumnsWidth = Math.max(bodyContentWidth + 3, _centerBlockContainerWidth);
+    // var _tableColumnsWidth = Math.max(bodyContentWidth + 3, _centerBlockContainerWidth);
+    var _tableColumnsWidth = Math.max(bodyContentWidth, _centerBlockContainerWidth);
     var _rowWidth = Math.max(bodyContentWidth, _centerBlockContainerWidth);
 
     var _tableContentHeight = rowHeight * numRows;

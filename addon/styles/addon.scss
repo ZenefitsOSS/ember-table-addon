@@ -247,6 +247,7 @@ $et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellP
 	// Important: We defined font-size: 0 in .tables-container due to the use
 	// of display-inline: block
 	font-size: $et-fontSize-body;
+	padding-left: $et-headerCellSortIconContainer-width;
 }
 
 .et-cell:first-child {
@@ -263,6 +264,7 @@ $et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellP
 
 .et-content {
 	display: block;
+	// Space for the popover link
 	padding-right: $et-cellContent-rightPadding;
 	line-height: $et-height-row - $et-borderSize-horizontal;
 }
@@ -310,10 +312,10 @@ $et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellP
 	.ui-sortable-helper {
 		background-color: green;
 		.et-content-container {
-			display: none;
+			// display: none;
 		}
 		.ui-resizable-handle {
-			background-color: brown;
+			// background-color: brown;
 		}
 	}
 }
@@ -406,6 +408,8 @@ $et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellP
 
 .et-sortIcon {
 	width: $et-headerCellSortIconContainer-width;
+	// Make sure flexbox doesn't squeeze
+	flex-shrink: 0;
 	text-align: center;
 	padding-bottom: $et-verticalPadding-headerCell;
 	font-size: 16px;
@@ -524,6 +528,12 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 	&.et-last-row {
 		border-bottom: none;
 	}
+}
+
+// Assuming there are not multiple rows in the header and footer
+.et-header-block .et-table-row,
+.et-footer-block .et-table-row {
+	border-bottom: 0;
 }
 
 .et-body-container .et-table-row {

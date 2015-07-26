@@ -15,6 +15,33 @@ export default Ember.Controller.extend({
 
 	twoTableColumns: Ember.computed(function () {
 		var dateColumn = ColumnDefinition.create({
+			savedWidth: 500,
+			headerCellName: 'Date',
+			getCellContent: function (row) {
+				return row.get('date').toDateString();
+			}
+		});
+		var openColumn = ColumnDefinition.create({
+			savedWidth: 500,
+			headerCellName: 'Open',
+			getCellContent: function (row) {
+				return row.get('open').toFixed(2);
+			},
+			textAlign: 'u-textRight',
+		});
+		var highColumn = ColumnDefinition.create({
+			savedWidth: 500,
+			headerCellName: 'Fusce sit amet ex vehicula pretium lectus felis',
+			getCellContent: function (row) {
+				return row.get('open').toFixed(2);
+			},
+			textAlign: 'u-textRight',
+		});
+		return [dateColumn, openColumn, highColumn];
+	}),
+
+	threeTableColumns: Ember.computed(function () {
+		var dateColumn = ColumnDefinition.create({
 			savedWidth: 200,
 			headerCellName: 'Date',
 			getCellContent: function (row) {
@@ -27,7 +54,6 @@ export default Ember.Controller.extend({
 			getCellContent: function (row) {
 				return row.get('open').toFixed(2);
 			},
-			textAlign: 'u-textRight',
 		});
 		var highColumn = ColumnDefinition.create({
 			savedWidth: 200,
@@ -35,7 +61,6 @@ export default Ember.Controller.extend({
 			getCellContent: function (row) {
 				return row.get('open').toFixed(2);
 			},
-			textAlign: 'u-textRight',
 		});
 		return [dateColumn, openColumn, highColumn];
 	}),
