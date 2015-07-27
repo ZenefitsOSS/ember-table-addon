@@ -10,7 +10,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   classNames: ['et-table-row', 'et-header-row'],
   styleBindings: ['width'],
   columns: Ember.computed.alias('content'),
-  width: Ember.computed.alias('tableComponent._rowWidth'),
+  width: Ember.computed.alias('tableComponent._tableBlockWidth'),
   scrollLeft: Ember.computed.alias('tableComponent._tableScrollLeft'),
 
   // Options for jQuery UI sortable
@@ -34,6 +34,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   }),
 
   onScrollLeftDidChange: Ember.observer(function() {
+    console.log(this.get('scrollLeft'));
     this.$().scrollLeft(this.get('scrollLeft'));
   }, 'scrollLeft'),
 

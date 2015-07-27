@@ -3,7 +3,7 @@ import StyleBindingsMixin from 'ember-table/mixins/style-bindings';
 
 export default Ember.ContainerView.extend(
 StyleBindingsMixin, {
-  classNames: 'lazy-list-container',
+  classNames: 'et-lazy-list-container',
   styleBindings: ['height'],
   content: null,
   itemViewClass: null,
