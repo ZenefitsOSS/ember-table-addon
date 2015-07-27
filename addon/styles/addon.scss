@@ -223,16 +223,52 @@ $et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellP
 	border-bottom: $et-borderSize-header solid $et-borderColor-header;
 }
 
-// Table Rows
-// ----------
+// Table Row
+// ---------
 
 .et-table-row {
 	// JS defines height, width, top
 	position: absolute;
-	// TODO(Louis): Add class "selectable" to rows that can be selected
-	cursor: pointer;
+	min-width: 100%;
+	border-bottom: $et-borderSize-rowBottom solid $et-borderColor-body;
 	> div {
 		height: 100%;
+	}
+	// &.et-row-style-1
+	// Note that the following row styles exist:
+	// .et-row-style-1
+	// .et-row-style-2
+	// .et-row-style-3
+	// .et-row-style-4
+	// .et-row-style-5
+	// .et-row-style-6
+	&.et-last-row {
+		border-bottom: none;
+	}
+}
+
+.et-tables-container.is-selectable .et-table-row {
+	cursor: pointer;
+}
+
+// Assuming there are not multiple rows in the header and footer
+.et-header-block .et-table-row,
+.et-footer-block .et-table-row {
+	border-bottom: 0;
+}
+
+.et-body-container .et-table-row {
+	color: $et-color-body;
+	&.et-hover {
+		background-color: $et-backgroundColor-hoverRow;
+	}
+}
+
+// Selected row style
+.et-tables-container.is-selectable {
+	.et-is-selected {
+		color: $et-color-selectedRow;
+		background-color: $et-backgroundColor-selectedRow;
 	}
 }
 
@@ -423,8 +459,8 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 	font-size: 16px;
 	line-height: 1.3;
 	text-align: center;
-	// Make sure flexbox doesn't squeeze
 
+	// Make sure flexbox doesn't squeeze
 	flex-shrink: 0;
 }
 
@@ -502,42 +538,6 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 		padding-left: 0;
 		opacity: 1;
 		transform: rotate(-90deg);
-	}
-}
-
-// Table Row
-// ---------
-
-.et-table-row {
-	min-width: 100%;
-	border-bottom: $et-borderSize-rowBottom solid $et-borderColor-body;
-	// &.et-row-style-1
-	// Note that the following row styles exist:
-	// .et-row-style-1
-	// .et-row-style-2
-	// .et-row-style-3
-	// .et-row-style-4
-	// .et-row-style-5
-	// .et-row-style-6
-	&.et-last-row {
-		border-bottom: none;
-	}
-}
-
-// Assuming there are not multiple rows in the header and footer
-.et-header-block .et-table-row,
-.et-footer-block .et-table-row {
-	border-bottom: 0;
-}
-
-.et-body-container .et-table-row {
-	color: $et-color-body;
-	&.et-hover {
-		background-color: $et-backgroundColor-hoverRow;
-	}
-	&.et-selected {
-		color: $et-color-selectedRow;
-		background-color: $et-backgroundColor-selectedRow;
 	}
 }
 

@@ -6,7 +6,7 @@ export default LazyItemView.extend(RegisterTableComponentMixin, {
   templateName: 'table-row',
   classNames: 'et-table-row',
   classNameBindings: ['row.isHovered:et-hover',
-    'row.isSelected:et-selected',
+    'row.isSelected:et-is-selected',
     'row.rowStyle',
     'isLastRow:et-last-row'
   ],
