@@ -106,7 +106,7 @@ export default Ember.Controller.extend({
 	}),
 
 	tableContent: Ember.computed(function () {
-		return _.range(100).map(function (index) {
+		return _.range(20).map(function (index) {
 			var date = new Date();
 			date.setDate(date.getDate() + index);
 			return {

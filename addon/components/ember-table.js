@@ -478,6 +478,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   measureScrollbars: function() {
     var _height = this.get('_height');
     var _width = this.get('_width');
+    var _tablesContainerHeight = this.get('_tablesContainerHeight');
     var _bodyHeight = this.get('_bodyHeight');
     var _tableContentHeight = this.get('_tableContentHeight');
     var _tableColumnsWidth = this.get('_tableColumnsWidth');
@@ -486,6 +487,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _headerHeight = this.get('_headerHeight');
     var _footerHeight = this.get('_footerHeight');
     var _scrollbarSize = this.get('_scrollbarSize');
+    var layoutHeight = this.get('layoutHeight');
+    var useContentHeight = layoutHeight === 'wrap-content';
 
     var _hasVerticalScrollbar = _height < (_tableContentHeight + _headerHeight + _footerHeight);
     var _hasHorizontalScrollbar = _tableColumnsWidth > (_width - _fixedColumnsWidth);
@@ -494,7 +497,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
     // Update containers
     _tableColumnsWidth = _tableColumnsWidth - _verticalScrollbarSize;
-    _bodyHeight = _bodyHeight - _horizontalScrollbarSize;
+    if (useContentHeight) {
+      _tablesContainerHeight = _tablesContainerHeight + _horizontalScrollbarSize;
+    } else {
+      _bodyHeight = _bodyHeight - _horizontalScrollbarSize;
+    }
 
     // Set heights on the scroll container
     var _scrollContainerHeight = _horizontalScrollbarSize;
@@ -505,6 +512,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       _hasHorizontalScrollbar: _hasHorizontalScrollbar,
       _verticalScrollbarSize: _verticalScrollbarSize,
       _horizontalScrollbarSize: _horizontalScrollbarSize,
+      _tablesContainerHeight: _tablesContainerHeight,
       _bodyHeight: _bodyHeight,
       _tableColumnsWidth: _tableColumnsWidth,
       _scrollContainerHeight: _scrollContainerHeight,
