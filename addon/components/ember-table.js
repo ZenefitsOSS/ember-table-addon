@@ -103,6 +103,10 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // similar to android: match-parent or wrap-content
   layoutHeight: 'match-parent',
 
+  // Allows the scrollbar to be flush with the content when there aren't enough
+  // rows to fill the space
+  snapHorizontalScrollbarToBottom: false,
+
   borderSize: 1,
 
   maxHeight: Infinity,
@@ -489,6 +493,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var _scrollbarSize = this.get('_scrollbarSize');
     var layoutHeight = this.get('layoutHeight');
     var useContentHeight = layoutHeight === 'wrap-content';
+    var snapHorizontalScrollbarToBottom = this.get('snapHorizontalScrollbarToBottom');
 
     var _hasVerticalScrollbar = _height < (_tableContentHeight + _headerHeight + _footerHeight);
     var _hasHorizontalScrollbar = _tableColumnsWidth > (_width - _fixedColumnsWidth);
@@ -506,6 +511,10 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     // Set heights on the scroll container
     var _scrollContainerHeight = _horizontalScrollbarSize;
     var _scrollContainerWidth = _centerBlockContainerWidth - _verticalScrollbarSize;
+    var _scrollContainerTop = 'NA';
+    if (!snapHorizontalScrollbarToBottom && !_hasVerticalScrollbar) {
+      _scrollContainerTop = _tableContentHeight + _headerHeight;
+    }
 
     this.setProperties({
       _hasVerticalScrollbar: _hasVerticalScrollbar,
@@ -516,7 +525,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       _bodyHeight: _bodyHeight,
       _tableColumnsWidth: _tableColumnsWidth,
       _scrollContainerHeight: _scrollContainerHeight,
-      _scrollContainerWidth: _scrollContainerWidth
+      _scrollContainerWidth: _scrollContainerWidth,
+      _scrollContainerTop: _scrollContainerTop
     });
   },
 

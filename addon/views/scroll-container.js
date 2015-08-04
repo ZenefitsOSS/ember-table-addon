@@ -8,10 +8,11 @@ StyleBindingsMixin, ScrollHandlerMixin, RegisterTableComponentMixin, {
   templateName: 'scroll-container',
   classNames: ['et-scroll-container'],
   classNameBindings: ['tableComponent._scrollContainerHeight'],
-  styleBindings: ['left', 'width', 'height'],
+  styleBindings: ['left', 'width', 'height', 'top'],
   height: Ember.computed.alias('tableComponent._scrollContainerHeight'),
   width: Ember.computed.alias('tableComponent._scrollContainerWidth'),
   left: Ember.computed.alias('tableComponent._fixedColumnsWidth'),
+  top: Ember.computed.alias('tableComponent._scrollContainerTop'),
   scrollTop: Ember.computed.alias('tableComponent._tableScrollTop'),
   scrollLeft: Ember.computed.alias('tableComponent._tableScrollLeft'),
 
