@@ -2,9 +2,22 @@
   {{ember-table
     numFixedColumns=0
     hasFooter=false
-    columns=tableColumns
+    columns=oneTableColumn
     content=tableContent
     enableContentSelection=true
+    snapHorizontalScrollbarToContent=true
+  }}
+  {{!-- layoutHeight="wrap-content" --}}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=0
+    hasFooter=false
+    columns=oneTableColumn
+    content=tableContent
   }}
   {{!-- layoutHeight="wrap-content" --}}
 </div>
@@ -15,8 +28,9 @@
   {{ember-table
     numFixedColumns=1
     hasFooter=true
-    columns=oneTableColumn
+    columns=tableColumns
     content=tableContent
+    snapHorizontalScrollbarToContent=true
   }}
 </div>
 
