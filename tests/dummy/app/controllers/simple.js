@@ -15,14 +15,15 @@ export default Ember.Controller.extend({
 
 	twoTableColumns: Ember.computed(function () {
 		var dateColumn = ColumnDefinition.create({
-			savedWidth: 500,
+			savedWidth: 100,
 			headerCellName: 'Date',
+			canAutoResize: true,
 			getCellContent: function (row) {
 				return row.get('date').toDateString();
 			}
 		});
 		var openColumn = ColumnDefinition.create({
-			savedWidth: 500,
+			savedWidth: 200,
 			headerCellName: 'Open',
 			getCellContent: function (row) {
 				return row.get('open').toFixed(2);
@@ -30,7 +31,7 @@ export default Ember.Controller.extend({
 			textAlign: 'u-textRight',
 		});
 		var highColumn = ColumnDefinition.create({
-			savedWidth: 500,
+			savedWidth: 200,
 			headerCellName: 'Fusce sit amet ex vehicula pretium lectus felis',
 			getCellContent: function (row) {
 				return row.get('open').toFixed(2);

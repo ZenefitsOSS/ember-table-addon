@@ -1,4 +1,3 @@
-// TODO(azirbel): This needs to be an external dependency.
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
@@ -8,31 +7,21 @@ export default Ember.Mixin.create({
   onResizeEnd: Ember.K,
   onResize: Ember.K,
 
-  endResize: Ember.computed(function() {
-    return function(event) {
-      if (this.isDestroyed) {
-        return;
-      }
-      this.set('resizing', false);
-      return typeof this.onResizeEnd === "function" ? this.onResizeEnd(event) : void 0;
-    };
-  }),
+  endResize: function(event) {
+    if (this.isDestroyed) { return; }
+    this.set('resizing', false);
+    this.onResizeEnd(event);
+  },
 
   handleWindowResize: function(event) {
-    if ((typeof event.target.id !== "undefined" && event.target.id !== null) &&
-        (event.target.id !== this.elementId)) {
-      return;
-    }
+    if (this.isDestroyed) { return; }
     if (!this.get('resizing')) {
       this.set('resizing', true);
-      if (typeof this.onResizeStart === "function") {
-        this.onResizeStart(event);
-      }
+      this.onResizeStart(event);
     }
-    if (typeof this.onResize === "function") {
-      this.onResize(event);
-    }
-    return Ember.run.debounce(this, this.get('endResize'), event, this.get('resizeEndDelay'));
+    this.onResize(event);
+    var resizeEndDelay = this.get('resizeEndDelay');
+    return Ember.run.debounce(this, this.endResize, event, resizeEndDelay, false);
   },
 
   didInsertElement: function() {
@@ -49,7 +38,7 @@ export default Ember.Mixin.create({
     if (this._resizeHandler) {
       return;
     }
-    this._resizeHandler = Ember.$.proxy(this.get('handleWindowResize'), this);
+    this._resizeHandler = this.handleWindowResize.bind(this);
     return Ember.$(window).on("resize." + this.elementId, this._resizeHandler);
   },
 
