@@ -521,6 +521,8 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 
 .et-toggle--header {
 	padding-bottom: $et-verticalPadding-headerCell;
+	// Visual alignment because the icon has a different font-size
+	margin-bottom: -3px;
 
 	align-items: flex-end;
 }
