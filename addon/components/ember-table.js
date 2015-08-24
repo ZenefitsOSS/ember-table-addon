@@ -313,10 +313,13 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   updateHeaderLayout: function() {
     // js-header-content is absolutely positioned
-    var heights = Ember.$('.js-header-content').map(function() {
-      return Ember.$(this).outerHeight();
+    var maxHeight = 0;
+    Ember.$('.js-header-content').each(function() {
+      var height = Ember.$(this).outerHeight();
+      if (height > maxHeight) {
+        maxHeight = height;
+      }
     });
-    var maxHeight = Math.max.apply(window, heights);
     return this.set('_contentHeaderHeight', maxHeight);
   },
 

@@ -51,7 +51,7 @@ StyleBindingsMixin, {
       var viewsToRemove = this.slice(newNumViews, oldNumViews);
       this.removeObjects(viewsToRemove);
       viewsToRemove.forEach(function(view) {
-        view.destroy();
+        if (view) { view.destroy(); }
       });
     }
     // if oldNumViews < newNumViews we need to add more views
