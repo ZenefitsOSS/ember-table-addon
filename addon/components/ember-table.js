@@ -316,7 +316,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     var heights = Ember.$('.js-header-content').map(function() {
       return Ember.$(this).outerHeight();
     });
-    var maxHeight = Math.max.apply(null, heights);
+    var maxHeight = Math.max.apply(window, heights);
     return this.set('_contentHeaderHeight', maxHeight);
   },
 

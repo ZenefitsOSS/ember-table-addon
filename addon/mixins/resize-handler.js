@@ -38,7 +38,7 @@ export default Ember.Mixin.create({
     if (this._resizeHandler) {
       return;
     }
-    this._resizeHandler = this.handleWindowResize.bind(this);
+    this._resizeHandler = Ember.$.proxy(this.handleWindowResize, this);
     return Ember.$(window).on("resize." + this.elementId, this._resizeHandler);
   },
 
