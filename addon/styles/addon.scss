@@ -484,6 +484,7 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 	transition: opacity .3s $transition-easing;
 }
 
+.et-headerCellPopoverLink-container.has-popover,
 .et-header-cell:hover .et-headerCellPopoverLink-container {
 	opacity: 1;
 }
