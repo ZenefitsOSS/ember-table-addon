@@ -481,17 +481,10 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 	text-align: center;
 	border: 1px solid $color-grey-300;
 	opacity: 0;
-	display: none;
 	transition: opacity .3s $transition-easing;
 }
 
 .et-header-cell:hover .et-headerCellPopoverLink-container {
-	display: block;
-	opacity: 1;
-}
-
-.et-headerCellPopoverLink-container.has-popover {
-	display: block;
 	opacity: 1;
 }
 
