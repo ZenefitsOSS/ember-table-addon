@@ -566,9 +566,16 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 	transition: box-shadow .6s $transition-easing;
 }
 
-.has-headerShadow .et-header-container,
-.has-frozenColumnShdaow .et-left-table-block {
+.has-headerShadow .et-header-container, .has-frozenColumnShdaow .et-left-table-block {
 	box-shadow: 0 1px 4px rgba(0, 0, 0, .24);
+}
+
+.has-frozenColumnShdaow .et-left-table-block:first-child {
+	box-shadow: 4px 0 8px -4px rgba(0, 0, 0, .24)!important;
+}
+
+.has-frozenColumnShdaow .et-left-table-block:last-child {
+	box-shadow: -4px 0 8px -4px rgba(0, 0, 0, .24)!important;
 }
 
 .has-footerShadow .et-footer-container {
