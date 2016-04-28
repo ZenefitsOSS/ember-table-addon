@@ -8,13 +8,15 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   classNames: ['et-table-block'],
   styleBindings: ['width', 'height'],
   itemViewClass: Ember.computed.alias('tableComponent.tableRowViewClass'),
-  height: Ember.computed.oneWay('tableComponent._headerHeight'),
+  // height: Ember.computed.oneWay('tableComponent._headerHeight'),
   columns: null,
   content: null,
   scrollLeft: null,
 
   onScrollLeftDidChange: Ember.observer(function() {
     return this.$().scrollLeft(this.get('scrollLeft'));
-  }, 'scrollLeft')
-
+  }, 'scrollLeft'),
+  height: Ember.computed(function() {
+		return this.get('tableComponent._headerHeight');
+	}).property('tableComponent._headerHeight')
 });
