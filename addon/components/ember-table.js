@@ -205,13 +205,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     sortByColumn: Ember.K
   },
 
-  height: Ember.computed.alias('_tablesContainerHeight'),
-
-  // TODO(new-api): eliminate view alias
-  // specify the view class to use for rendering the table rows
-  tableRowView: 'table-row',
-  tableRowViewClass: Ember.computed.alias('tableRowView'),
-
   onColumnSort: function(column, newIndex) {
     // Fixed columns are not affected by column reordering
     var numFixedColumns = this.get('fixedColumns.length');
