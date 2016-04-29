@@ -633,7 +633,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   },
 
   getRowForEvent: function(event) {
-    var $rowView = Ember.$(event.target).parents('.ember-table-table-row');
+    var $rowView = Ember.$(event.target).parents('.et-table-row');
     var view = Ember.View.views[$rowView.attr('id')];
     if (view) {
       return view.get('row');
