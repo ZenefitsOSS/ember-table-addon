@@ -7,12 +7,11 @@ export default Ember.View.extend(StyleBindingsMixin, ScrollHandlerMixin, Registe
   templateName: 'scroll-container',
   classNames: ['et-scroll-container'],
   classNameBindings: ['tableComponent._scrollContainerHeight'],
-  styleBindings: ['left', 'width', 'height', 'top'],
-	scrollElementSelector: '.antiscroll-inner',
-	// 10 is the height of the horizontal scrollbar
-	height: 10,
-  // height: Ember.computed.alias('tableComponent._scrollContainerHeight'),
+  styleBindings: ['left', 'width', 'height'],
+  scrollElementSelector: '.antiscroll-inner',
   width: Ember.computed.alias('tableComponent._scrollContainerWidth'),
+  // 10 is the height of the horizontal scrollbar
+  height: 10,
   left: Ember.computed.alias('tableComponent._fixedColumnsWidth'),
   top: Ember.computed.alias('tableComponent._scrollContainerTop'),
   scrollTop: Ember.computed.alias('tableComponent._tableScrollTop'),
