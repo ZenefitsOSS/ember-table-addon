@@ -341,7 +341,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       return;
     }
     // updating antiscroll
-    debugger;
     this.$('.antiscroll-wrap').antiscroll().data('antiscroll').rebuild();
     if (this.get('columnsFillTable')) {
       return this.doForceFillColumns();
