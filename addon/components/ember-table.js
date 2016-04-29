@@ -10,12 +10,12 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   classNameBindings: [
   	'enableContentSelection:is-selectable',
     'hasFrozenColumnShadow:has-frozenColumnShdaow',
-    'hasHeaderShdow:has-headerShadow',
-    'hasFooterShdow:has-footerShadow'
+    'hasHeaderShadow:has-headerShadow',
+    'hasFooterShadow:has-footerShadow'
   ],
   hasFrozenColumnShadow: Ember.computed.gt('_tableScrollLeft', 0),
-  hasHeaderShdow: Ember.computed.gt('_tableScrollTop', 0),
-  hasFooterShdow: function() {
+  hasHeaderShadow: Ember.computed.gt('_tableScrollTop', 0),
+  hasFooterShadow: function() {
     // Handle case when layoutHeight === 'wrap-content'
     if (this.get('layoutHeight') === 'wrap-content') {
       return false;
@@ -444,11 +444,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   _rowWidth: Ember.computed(function() {
     var columnsWidth = this.get('_tableColumnsWidth');
-    var nonFixedTableWidth = this.get('_tableContainerWidth') -
-        this.get('_fixedColumnsWidth');
+    var nonFixedTableWidth = this.get('_tableContainerWidth') - this.get('_fixedColumnsWidth');
     return Math.max(columnsWidth, nonFixedTableWidth);
-  }).property('_fixedColumnsWidth', '_tableColumnsWidth',
-      '_tableContainerWidth'),
+  }).property('_fixedColumnsWidth', '_tableColumnsWidth', '_tableContainerWidth'),
 
   // Dynamic header height that adjusts according to the header content height
   _headerHeight: Ember.computed(function() {
@@ -507,8 +505,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       index = numContent - numViews;
     }
     return Math.max(index, 0);
-  }).property('bodyContent.length', '_numItemsShowing', 'rowHeight',
-      '_tableScrollTop'),
+  }).property('bodyContent.length', '_numItemsShowing', 'rowHeight', '_tableScrollTop'),
 
   _getTotalWidth: function(columns, columnWidthPath) {
     if (columnWidthPath == null) {
