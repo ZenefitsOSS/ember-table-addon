@@ -10,7 +10,7 @@ export default TableContainer.extend(
 MouseWheelHandlerMixin, TouchMoveHandlerMixin, ScrollHandlerMixin,
 ShowHorizontalScrollMixin, RegisterTableComponentMixin, {
   templateName: 'body-table-container',
-  classNames: ['et-table-container', 'et-body-container'],
+  classNames: ['et-table-container', 'et-body-container', 'antiscroll-wrap'],
 
   height: Ember.computed.alias('tableComponent._bodyHeight'),
   width: Ember.computed.alias('tableComponent._width'),
