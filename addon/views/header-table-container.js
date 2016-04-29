@@ -5,9 +5,11 @@ import RegisterTableComponentMixin from 'ember-table/mixins/register-table-compo
 
 export default TableContainer.extend(ShowHorizontalScrollMixin, RegisterTableComponentMixin, {
   templateName: 'header-table-container',
-  classNames: ['et-table-container',
-      'et-fixed-table-container',
-      'et-header-container'],
+  classNames: [
+  	'et-table-container',
+    'et-fixed-table-container',
+    'et-header-container'
+  ],
   height: Ember.computed.alias('tableComponent._headerHeight'),
   width: Ember.computed.alias('tableComponent._tableContainerWidth')
 });
