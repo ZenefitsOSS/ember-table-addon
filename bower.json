@@ -7,9 +7,9 @@
     "jquery": "^1.11.1",
     "jquery-mousewheel": "~3.1.4",
     "jquery-ui": "~1.11.4",
-    "antiscroll": "git@github.com:Automattic/antiscroll.git"
   },
   "devDependencies": {
+    "antiscroll": "git@github.com:Automattic/antiscroll.git",
     "bootstrap-sass": "3.3.4",
     "d3": "~3.5.3",
     "ember-data": "1.0.0-beta.14.1",
