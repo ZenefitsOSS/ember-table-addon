@@ -1,0 +1,21 @@
+//
+// Mixins
+// -----------------------------------------------------------------------------
+
+// Clearfix
+// --------
+// For clearing floats like a boss h5bp.com/q
+.clearfix {
+	*zoom: 1;
+	&:before,
+	&:after {
+		display: table;
+		// Fixes Opera/contenteditable bug:
+		// http://nicolasgallagher.com/micro-clearfix-hack/#comment-36952
+		line-height: 0;
+		content: "";
+	}
+	&:after {
+		clear: both;
+	}
+}

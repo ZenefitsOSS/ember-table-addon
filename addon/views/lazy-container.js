@@ -3,7 +3,7 @@ import StyleBindingsMixin from 'ember-table/mixins/style-bindings';
 
 export default Ember.ContainerView.extend(
 StyleBindingsMixin, {
-  classNames: 'lazy-list-container',
+  classNames: 'et-lazy-list-container',
   styleBindings: ['height'],
   content: null,
   itemViewClass: null,
@@ -51,7 +51,7 @@ StyleBindingsMixin, {
       var viewsToRemove = this.slice(newNumViews, oldNumViews);
       this.removeObjects(viewsToRemove);
       viewsToRemove.forEach(function(view) {
-        view.destroy();
+        if (view) { view.destroy(); }
       });
     }
     // if oldNumViews < newNumViews we need to add more views
@@ -72,7 +72,9 @@ StyleBindingsMixin, {
     var childViews = this.get('childViews');
     var content = this.get('content') || [];
     var clength = content.get('length');
-    var numShownViews = Math.min(this.get('length'), clength);
+    // this.get('length') does not always equal to childView.get('length')
+    // as length is not cacheable while childViews is cacheable
+    var numShownViews = Math.min(childViews.get('length'), clength);
     var startIndex = this.get('startIndex');
     // this is a necessary check otherwise we are trying to access an object
     // that doesn't exist
@@ -92,7 +94,7 @@ StyleBindingsMixin, {
       var itemIndex = startIndex + i;
       childView = childViews.objectAt(itemIndex % numShownViews);
       var item = content.objectAt(itemIndex);
-      if (item !== childView.get('content')) {
+      if (childView && item !== childView.get('content')) {
         childView.teardownContent();
         childView.setProperties({
           itemIndex: itemIndex,

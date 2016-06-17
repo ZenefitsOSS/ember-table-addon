@@ -1,5 +1,127 @@
-{{ember-table
-  hasFooter=false
-  columns=tableColumns
-  content=tableContent
-}}
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=0
+    hasFooter=false
+    columns=twoTableColumns
+    content=tableContent
+    enableContentSelection=true
+    snapHorizontalScrollbarToContent=true
+  }}
+  {{!-- layoutHeight="wrap-content" --}}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=0
+    hasFooter=false
+    columns=oneTableColumn
+    content=tableContent
+  }}
+  {{!-- layoutHeight="wrap-content" --}}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=1
+    hasFooter=true
+    columns=tableColumns
+    content=tableContent
+    snapHorizontalScrollbarToContent=true
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    columns=twoTableColumns
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=1
+    columns=twoTableColumns
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    hasFooter=false
+    columns=threeTableColumns
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    hasFooter=false
+    columns=tableColumns
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=1
+    hasFooter=true
+    columns=tableColumns
+    content=tableContent
+  }}
+</div>
+
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=0
+    hasFooter=false
+    columns=oneTableColumn
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=1
+    hasFooter=true
+    columns=oneTableColumn
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    hasFooter=false
+    columns=tableColumns
+    content=tableContent
+  }}
+</div>
+
+<hr>
+
+<div class="ember-table-example-container">
+  {{ember-table
+    numFixedColumns=1
+    hasFooter=true
+    columns=tableColumns
+    content=tableContent
+  }}
+</div>

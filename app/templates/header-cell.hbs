@@ -1,5 +1,19 @@
 <div class="et-content-container" {{action "sortByColumn" view.content}}>
-  <span class="et-content">
-    {{view.content.headerCellName}}
-  </span>
+	<span class="et-sortIcon">
+		{{#if view.content.isSorted}}
+			{{#if view.content.sortAscending}}
+				&uarr;
+			{{else}}
+				&darr;
+			{{/if}}
+		{{/if}}
+	</span>
+
+	<span class="et-content et-content--headerCell {{if view.content.isSorted 'is-sortedBy'}} js-header-content">
+		{{view.content.headerCellName}}
+	</span>
 </div>
+
+<a class="et-headerCellPopoverLink-container js-et-headerCellPopoverLink-container">
+	<i class="mdi mdi-caret-down et-headerCellPopoverLink"></i>
+</a>

@@ -6,7 +6,7 @@ export default LazyItemView.extend(RegisterTableComponentMixin, {
   templateName: 'table-row',
   classNames: 'et-table-row',
   classNameBindings: ['row.isHovered:et-hover',
-    'row.isSelected:et-selected',
+    'row.isSelected:et-is-selected',
     'row.rowStyle',
     'isLastRow:et-last-row'
   ],
@@ -16,6 +16,7 @@ export default LazyItemView.extend(RegisterTableComponentMixin, {
   width: Ember.computed.alias('tableComponent._rowWidth'),
   height: Ember.computed.alias('tableComponent.rowHeight'),
 
+  // TODO(ppong): Why doesn't this apply to the table footer?
   isLastRow: Ember.computed(function() {
     return this.get('row') ===
       this.get('tableComponent.bodyContent.lastObject');
