@@ -84,6 +84,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // TODO(new-api): Control this via `numFooterRows` and remove from API
   hasFooter: true,
 
+  borderSize: 0,
+
   enableColumnReorder: true,
 
   // Allow users to select the content of table cells.
