@@ -1,17 +1,17 @@
 import Ember from 'ember';
 import StyleBindingsMixin from 'ember-table/mixins/style-bindings';
 import RegisterTableComponentMixin from 'ember-table/mixins/register-table-component';
-import ScrollHandlerMixin from 'ember-table/mixins/scroll-handler';
+// import ScrollHandlerMixin from 'ember-table/mixins/scroll-handler';
 
 // We hacked this. There is an inconsistency at the level in which we are
 // handling scroll event...
 export default Ember.View.extend(
-StyleBindingsMixin, RegisterTableComponentMixin, ScrollHandlerMixin, {
+StyleBindingsMixin, RegisterTableComponentMixin, /*ScrollHandlerMixin,*/ {
   templateName: 'header-row',
   classNames: ['et-table-row', 'et-header-row'],
   styleBindings: ['width'],
   columns: Ember.computed.alias('content'),
-  width: Ember.computed.alias('tableComponent._tableBlockWidth'),
+  width: Ember.computed.alias('tableComponent._rowWidth'),
   scrollLeft: Ember.computed.alias('tableComponent._tableScrollLeft'),
 
   // Options for jQuery UI sortable
@@ -21,7 +21,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, ScrollHandlerMixin, {
       cancel: '.js-et-headerCellPopoverLink-container',
       containment: 'parent',
       cursor: 'move',
-      delay: 150,
+      // delay: 150,
       helper: 'clone',
       items: '.et-header-cell.sortable',
       opacity: 0.9,

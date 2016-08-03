@@ -25,11 +25,11 @@
     "broccoli-es6-concatenator": "^0.1.11",
     "broccoli-es6modules": "~0.5.1",
     "broccoli-filter": "^0.1.7",
-    "broccoli-funnel": "^0.1.6",
+    "broccoli-funnel": "^0.2.12",
     "broccoli-merge-trees": "^0.2.1",
     "broccoli-static-compiler": "^0.2.1",
     "broccoli-writer": "^0.1.1",
-    "ember-cli": "0.2.7",
+    "ember-cli": "1.13.8",
     "ember-cli-app-version": "0.4.0",
     "ember-cli-autoprefixer": "0.4.1",
     "ember-cli-content-security-policy": "0.4.0",
@@ -64,7 +64,7 @@
   ],
   "dependencies": {
     "ember-cli-babel": "^5.0.0",
-    "ember-cli-sass": "git+https://github.com/dukex/ember-cli-sass.git#bugfix/addon-styles"
+    "ember-cli-sass": "^5.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
