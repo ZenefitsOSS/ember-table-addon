@@ -86,6 +86,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   borderSize: 0,
 
+  maxHeight: Infinity,
+
   enableColumnReorder: true,
 
   // Allow users to select the content of table cells.
@@ -105,6 +107,8 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   // similar to android: match-parent or wrap-content
   layoutHeight: 'match-parent',
+
+  useContentHeight: Ember.computed.equal('layoutHeight', 'wrap-content'),
 
   // ---------------------------------------------------------------------------
   // API - Outputs
@@ -424,11 +428,18 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // tables-container height adjusts to the content height
   _tablesContainerHeight: Ember.computed(function() {
     var height = this.get('_height');
+    var maxHeight = this.get('maxHeight');
     var contentHeight = this.get('_tableContentHeight') +
         this.get('_headerHeight') + this.get('_footerHeight');
-    return Math.min(contentHeight, height);
+    var _tablesContainerHeight;
+    if (this.get('useContentHeight')) {
+      _tablesContainerHeight = Math.min(contentHeight, maxHeight);
+    } else {
+      _tablesContainerHeight = Math.min(contentHeight, height);
+    }
+    return _tablesContainerHeight;
   }).property('_height', '_tableContentHeight', '_headerHeight',
-      '_footerHeight'),
+      '_footerHeight', 'maxHeight'),
 
   // Actual width of the fixed columns
   _fixedColumnsWidth: Ember.computed(function() {
