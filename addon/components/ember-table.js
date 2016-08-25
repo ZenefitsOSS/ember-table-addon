@@ -17,7 +17,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   hasHeaderShadow: Ember.computed.gt('_tableScrollTop', 0),
   hasFooterShadow: function() {
     // Handle case when layoutHeight === 'wrap-content'
-    if (this.get('layoutHeight') === 'wrap-content') {
+    if (this.get('useContentHeight')) {
       return false;
     }
 
