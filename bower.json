@@ -6,7 +6,7 @@
     "ember": "1.11.3",
     "jquery": "^1.11.1",
     "jquery-mousewheel": "~3.1.4",
-    "jquery-ui": "~1.11.4",
+    "jquery-ui": "~1.11.4"
   },
   "devDependencies": {
     "antiscroll": "git@github.com:Automattic/antiscroll.git",
