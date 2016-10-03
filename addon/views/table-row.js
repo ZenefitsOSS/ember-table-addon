@@ -2,23 +2,24 @@ import Ember from 'ember';
 import RegisterTableComponentMixin from 'ember-table/mixins/register-table-component';
 import LazyItemView from 'ember-table/views/lazy-item';
 
-export default LazyItemView.extend(
-RegisterTableComponentMixin, {
+export default LazyItemView.extend(RegisterTableComponentMixin, {
   templateName: 'table-row',
-  classNames: 'ember-table-table-row',
-  classNameBindings: ['row.isHovered:ember-table-hover',
-      'row.isSelected:ember-table-selected',
-      'row.rowStyle',
-      'isLastRow:ember-table-last-row'],
+  classNames: 'et-table-row',
+  classNameBindings: ['row.isHovered:et-hover',
+    'row.isSelected:et-is-selected',
+    'row.rowStyle',
+    'isLastRow:et-last-row'
+  ],
   styleBindings: ['width', 'height'],
   row: Ember.computed.alias('content'),
   columns: Ember.computed.alias('parentView.columns'),
   width: Ember.computed.alias('tableComponent._rowWidth'),
   height: Ember.computed.alias('tableComponent.rowHeight'),
 
+  // TODO(ppong): Why doesn't this apply to the table footer?
   isLastRow: Ember.computed(function() {
     return this.get('row') ===
-        this.get('tableComponent.bodyContent.lastObject');
+      this.get('tableComponent.bodyContent.lastObject');
   }).property('tableComponent.bodyContent.lastObject', 'row'),
 
   // TODO(azirbel): Could simplify slightly via

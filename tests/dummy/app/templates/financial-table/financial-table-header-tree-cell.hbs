@@ -1,12 +1,23 @@
-<div class="ember-table-cell-container">
-  <span {{bind-attr class=":ember-table-toggle-span :ember-table-toggle
-      isCollapsed:ember-table-expand:ember-table-collapse"}}
-      {{action 'toggleTableCollapse'}}>
-    {{fa-icon "caret-down" classNames="ember-table-toggle-icon"}}
-  </span>
-  <div class="ember-table-header-content-container">
-    <span class="ember-table-content">
-      {{view.column.headerCellName}}
-    </span>
-  </div>
+<div class="et-content-container" {{action "sortByColumn" view.content}}>
+	<span class="et-sortIcon">
+		{{#if view.content.isSorted}}
+			{{#if view.content.sortAscending}}
+				&uarr;
+			{{else}}
+				&darr;
+			{{/if}}
+		{{/if}}
+	</span>
+
+	<span class="et-toggle et-toggle--header {{if view.contentisCollapsed 'et-toggle--expand' 'et-toggle--collapse'}}"
+		{{action "toggleTableCollapse"}}>
+		<i class="zmdi zmdi-chevron-down et-toggle-icon"></i>
+	</span>
+
+	<span class="et-content et-content--headerCell
+		{{if view.content.isSorted 'is-sortedBy'}} js-header-content">
+		{{view.content.headerCellName}}
+	</span>
 </div>
+
+

@@ -9,7 +9,7 @@ StyleBindingsMixin, {
 
   // TODO: Doc
   templateName: 'table-cell',
-  classNames: ['ember-table-cell'],
+  classNames: ['et-cell'],
   classNameBindings: 'column.textAlign',
   styleBindings: 'width',
 

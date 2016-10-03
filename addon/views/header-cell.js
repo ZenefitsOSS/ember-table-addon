@@ -10,7 +10,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
 
   // TODO: Doc
   templateName: 'header-cell',
-  classNames: ['ember-table-cell', 'ember-table-header-cell'],
+  classNames: ['et-cell', 'et-header-cell'],
   classNameBindings: ['column.isSortable:sortable', 'column.textAlign'],
   styleBindings: ['width', 'height'],
 
@@ -74,7 +74,6 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   }).property('effectiveMinWidth', 'effectiveMaxWidth'),
 
   didInsertElement: function() {
-    this.elementSizeDidChange();
     this.recomputeResizableHandle();
   },
 
@@ -108,7 +107,6 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
     }
 
     this.elementSizeDidChange();
-
     // Trigger the table resize (and redraw of layout) when resizing is done
     if (event.type === 'resizestop') {
       this.get('tableComponent').elementSizeDidChange();
@@ -116,15 +114,7 @@ StyleBindingsMixin, RegisterTableComponentMixin, {
   },
 
   elementSizeDidChange: function() {
-    var maxHeight = 0;
-    // TODO(Louis): This seems bad...
-    Ember.$('.ember-table-header-block .ember-table-content').each(function() {
-      var thisHeight = Ember.$(this).outerHeight();
-      if (thisHeight > maxHeight) {
-        return maxHeight = thisHeight;
-      }
-    });
-    return this.set('tableComponent._contentHeaderHeight', maxHeight);
+    this.get('tableComponent').updateHeaderLayout();
   },
 
   cellWidthDidChange: Ember.observer(function() {

@@ -8,8 +8,7 @@ var pickFiles = require('broccoli-static-compiler');
 var compileES6 = require('broccoli-es6-concatenator');
 var ES6Modules = require('broccoli-es6modules');
 var es3Safe = require('broccoli-es3-safe-recast');
-var templateCompiler = require('broccoli-ember-hbs-template-compiler');
-var less = require('broccoli-less-single');
+var HtmlbarsCompiler = require('ember-cli-htmlbars');
 var wrap = require('./wrap');
 var globals = require('./globals');
 
@@ -19,7 +18,13 @@ var addonTree = pickFiles('addon', {
 });
 
 // Compile templates
-var templateTree = templateCompiler('app/templates', { module: true });
+var templateTree = new HtmlbarsCompiler('app/templates', {
+  isHtmlBars: true,
+
+  // provide the templateCompiler that is paired with your Ember version
+  templateCompiler: require('../bower_components/ember/ember-template-compiler')
+});
+
 templateTree = pickFiles(templateTree, {srcDir: '/', destDir: 'ember-table/templates'});
 
 var sourceTree = mergeTrees([templateTree, addonTree], {overwrite: true});
@@ -49,10 +54,4 @@ var compiled = compileES6(jsTree, {
 // Wrap in a function which is executed
 compiled = wrap(compiled);
 
-// Compile LESS
-var lessTree = pickFiles('addon/styles', { srcDir: '/', destDir: '/' });
-var lessMain = 'addon.less';
-var lessOutput = 'ember-table.css';
-lessTree = less(lessTree, lessMain, lessOutput);
-
-module.exports = mergeTrees([es3Safe(compiled), lessTree]);
+module.exports = mergeTrees([es3Safe(compiled)]);

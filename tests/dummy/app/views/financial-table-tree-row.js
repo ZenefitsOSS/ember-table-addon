@@ -38,7 +38,7 @@ export default Row.extend({
   computeRowStyle: function(maxLevels) {
     var level;
     level = this.getFormattingLevel(this.get('groupingLevel'), maxLevels);
-    return this.set('rowStyle', 'ember-table-row-style-' + level);
+    return this.set('rowStyle', 'et-row-style-' + level);
   },
 
   recursiveCollapse: function(isCollapsed) {

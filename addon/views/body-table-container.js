@@ -7,12 +7,13 @@ import TouchMoveHandlerMixin from 'ember-table/mixins/touch-move-handler';
 import ScrollHandlerMixin from 'ember-table/mixins/scroll-handler';
 
 export default TableContainer.extend(
-MouseWheelHandlerMixin, TouchMoveHandlerMixin, ScrollHandlerMixin,
-ShowHorizontalScrollMixin, RegisterTableComponentMixin, {
+	MouseWheelHandlerMixin,
+	TouchMoveHandlerMixin,
+	ScrollHandlerMixin,
+	ShowHorizontalScrollMixin,
+	RegisterTableComponentMixin, {
   templateName: 'body-table-container',
-  classNames: ['ember-table-table-container',
-      'ember-table-body-container',
-      'antiscroll-wrap'],
+  classNames: ['et-table-container', 'et-body-container', 'antiscroll-wrap'],
 
   height: Ember.computed.alias('tableComponent._bodyHeight'),
   width: Ember.computed.alias('tableComponent._width'),
@@ -30,7 +31,7 @@ ShowHorizontalScrollMixin, RegisterTableComponentMixin, {
     if (Math.abs(deltaX) <= Math.abs(deltaY)) {
       return;
     }
-    var scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX;
+    var scrollLeft = this.$('.et-right-table-block').scrollLeft() + deltaX;
     this.set('scrollLeft', scrollLeft);
     event.preventDefault();
   },
@@ -40,7 +41,7 @@ ShowHorizontalScrollMixin, RegisterTableComponentMixin, {
     if (Math.abs(deltaX) <= Math.abs(deltaY)) {
       return;
     }
-    var scrollLeft = this.$('.ember-table-right-table-block').scrollLeft() + deltaX;
+    var scrollLeft = this.$('.et-right-table-block').scrollLeft() + deltaX;
     this.set('scrollLeft', scrollLeft);
     event.preventDefault();
   }

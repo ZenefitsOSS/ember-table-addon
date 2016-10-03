@@ -3,7 +3,7 @@ import StyleBindingsMixin from 'ember-table/mixins/style-bindings';
 
 export default Ember.ContainerView.extend(
 StyleBindingsMixin, {
-  classNames: 'lazy-list-container',
+  classNames: 'et-lazy-list-container',
   styleBindings: ['height'],
   content: null,
   itemViewClass: null,
@@ -11,7 +11,7 @@ StyleBindingsMixin, {
   scrollTop: null,
   startIndex: null,
 
-  init: function() {
+  didInsertElement: function() {
     this._super();
     return this.onNumChildViewsDidChange();
   },
@@ -24,37 +24,47 @@ StyleBindingsMixin, {
     return this.get('numItemsShowing') + 2;
   }).property('numItemsShowing'),
 
-  onNumChildViewsDidChange: Ember.observer(function() {
-    var view = this;
+  itemView: function() {
     // We are getting the class from a string e.g. "Ember.Table.Row"
     var itemViewClass = this.get('itemViewClass');
     if (typeof itemViewClass === 'string') {
       if (/[A-Z]+/.exec(itemViewClass)) {
         // Global var lookup - 'App.MessagePreviewView'
-        itemViewClass = Ember.get(Ember.lookup, itemViewClass);
+        return Ember.get(Ember.lookup, itemViewClass);
       } else {
         // Ember CLI Style lookup - 'message/preview'
-        itemViewClass = this.container.lookupFactory("view:" + itemViewClass);
+        return this.container.lookupFactory("view:" + itemViewClass);
       }
     }
+  }.property('itemViewClass'),
+
+  onNumChildViewsDidChange: Ember.observer(function() {
+    var itemView = this.get('itemView');
     var newNumViews = this.get('numChildViews');
-    if (!itemViewClass || !newNumViews) {
+    var oldNumViews = this.get('length');
+    if (!itemView || !newNumViews) {
       return;
     }
-    var oldNumViews = this.get('length');
     var numViewsToInsert = newNumViews - oldNumViews;
     // if newNumViews < oldNumViews we need to remove some views
     if (numViewsToInsert < 0) {
       var viewsToRemove = this.slice(newNumViews, oldNumViews);
       this.removeObjects(viewsToRemove);
+      viewsToRemove.forEach(function(view) {
+        if (view) { view.destroy(); }
+      });
+    }
     // if oldNumViews < newNumViews we need to add more views
-    } else if (numViewsToInsert > 0) {
+    else if (numViewsToInsert > 0) {
+      var viewsToInsert = [];
       for (var i = 0; i < numViewsToInsert; ++i) {
-        this.pushObject(view.createChildView(itemViewClass));
+        viewsToInsert.pushObject(this.createChildView(itemView));
       }
+      // we want to batch insert view to make things faster
+      this.pushObjects(viewsToInsert);
     }
     this.viewportDidChange();
-  }, 'numChildViews', 'itemViewClass'),
+  }, 'numChildViews', 'itemView'),
 
   // TODO(Peter): Consider making this a computed... binding logic will go
   // into the LazyItemMixin
@@ -62,7 +72,9 @@ StyleBindingsMixin, {
     var childViews = this.get('childViews');
     var content = this.get('content') || [];
     var clength = content.get('length');
-    var numShownViews = Math.min(this.get('length'), clength);
+    // this.get('length') does not always equal to childView.get('length')
+    // as length is not cacheable while childViews is cacheable
+    var numShownViews = Math.min(childViews.get('length'), clength);
     var startIndex = this.get('startIndex');
     // this is a necessary check otherwise we are trying to access an object
     // that doesn't exist
@@ -82,10 +94,12 @@ StyleBindingsMixin, {
       var itemIndex = startIndex + i;
       childView = childViews.objectAt(itemIndex % numShownViews);
       var item = content.objectAt(itemIndex);
-      if (item !== childView.get('content')) {
+      if (childView && item !== childView.get('content')) {
         childView.teardownContent();
-        childView.set('itemIndex', itemIndex);
-        childView.set('content', item);
+        childView.setProperties({
+          itemIndex: itemIndex,
+          content: item
+        });
         childView.prepareContent();
       }
     });

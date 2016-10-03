@@ -1,7 +1,15 @@
-<div class="ember-table-cell-container">
-  <div class="ember-table-header-content-container">
-    <span class="ember-table-content">
-      {{view.content.headerCellName}}
-    </span>
-  </div>
+<div class="et-content-container" {{action "sortByColumn" view.content}}>
+	<span class="et-sortIcon">
+		{{#if view.content.isSorted}}
+			{{#if view.content.sortAscending}}
+				&uarr;
+			{{else}}
+				&darr;
+			{{/if}}
+		{{/if}}
+	</span>
+
+	<span class="et-content et-content--headerCell {{if view.content.isSorted 'is-sortedBy'}} js-header-content">
+		{{view.content.headerCellName}}
+	</span>
 </div>

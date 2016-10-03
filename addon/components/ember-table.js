@@ -6,8 +6,34 @@ import Row from 'ember-table/controllers/row';
 
 export default Ember.Component.extend(
 StyleBindingsMixin, ResizeHandlerMixin, {
-  classNames: ['ember-table-tables-container'],
-  classNameBindings: ['enableContentSelection:ember-table-content-selectable'],
+  classNames: ['et-tables-container'],
+  classNameBindings: [
+  	'enableContentSelection:is-selectable',
+    'hasFrozenColumnShadow:has-frozenColumnShdaow',
+    'hasHeaderShadow:has-headerShadow',
+    'hasFooterShadow:has-footerShadow'
+  ],
+  hasFrozenColumnShadow: Ember.computed.gt('_tableScrollLeft', 0),
+  hasHeaderShadow: Ember.computed.gt('_tableScrollTop', 0),
+  hasFooterShadow: function() {
+    // Handle case when layoutHeight === 'wrap-content'
+    if (this.get('useContentHeight')) {
+      return false;
+    }
+
+    // We add 1 pixel for odd rendering issues where there are decimal pixels
+    var currentScrollTop = this.get('_tableScrollTop') + 1;
+    // The scrollTop position when we are scrolled to bottom
+    var scrollTopAtBottom = this.get('_tableContentHeight') - this.get(
+      '_bodyHeight');
+
+    if (scrollTopAtBottom < currentScrollTop) {
+      return false;
+    } else {
+      return true;
+    }
+  }.property('_tableScrollTop', '_bodyHeight', '_tableContentHeight', 'layoutHeight'),
+
 
   // ---------------------------------------------------------------------------
   // API - Inputs
@@ -40,16 +66,16 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // The row height in pixels. A consistent row height is necessary to calculate
   // which rows are being shown, to enable lazy rendering.
   // TODO: Currently must be kept in sync with the LESS file.
-  rowHeight: 30,
+  rowHeight: 38,
 
   // The minimum header height in pixels. Headers will grow in height if given
   // more content than they can display.
   // TODO: Currently must be kept in sync with the LESS file.
-  minHeaderHeight: 30,
+  minHeaderHeight: 38,
 
   // The footer height in pixels.
   // TODO: Currently must be kept in sync with the LESS file.
-  footerHeight: 30,
+  footerHeight: 38,
 
   // Enables or disables the header block.
   hasHeader: true,
@@ -57,6 +83,10 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // Enables or disables the footer block.
   // TODO(new-api): Control this via `numFooterRows` and remove from API
   hasFooter: true,
+
+  borderSize: 0,
+
+  maxHeight: Infinity,
 
   enableColumnReorder: true,
 
@@ -74,6 +104,11 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // and deselects other rows), and 'multiple' (multiple rows can be selected
   // through ctrl/cmd-click or shift-click).
   selectionMode: 'single',
+
+  // similar to android: match-parent or wrap-content
+  layoutHeight: 'match-parent',
+
+  useContentHeight: Ember.computed.equal('layoutHeight', 'wrap-content'),
 
   // ---------------------------------------------------------------------------
   // API - Outputs
@@ -115,6 +150,13 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   columnsFillTable: true,
 
+  height: Ember.computed.alias('_tablesContainerHeight'),
+
+  // TODO(new-api): eliminate view alias
+  // specify the view class to use for rendering the table rows
+  tableRowView: 'table-row',
+  tableRowViewClass: Ember.computed.alias('tableRowView'),
+
   // _resolvedContent is an intermediate property between content and rows
   // This allows content to be a plain array or a promise resolving to an array
   _resolvedContent: function(key, value) {
@@ -137,7 +179,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
           value = resolvedContent;
         });
 
-        // returns [] if the promise doesn't resolve immediately, or 
+        // returns [] if the promise doesn't resolve immediately, or
         // the resolved value if it's ready
         return value;
       }
@@ -168,13 +210,6 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     addColumn: Ember.K,
     sortByColumn: Ember.K
   },
-
-  height: Ember.computed.alias('_tablesContainerHeight'),
-
-  // TODO(new-api): eliminate view alias
-  // specify the view class to use for rendering the table rows
-  tableRowView: 'table-row',
-  tableRowViewClass: Ember.computed.alias('tableRowView'),
 
   onColumnSort: function(column, newIndex) {
     // Fixed columns are not affected by column reordering
@@ -271,11 +306,29 @@ StyleBindingsMixin, ResizeHandlerMixin, {
     if ((this.get('_state') || this.get('state')) !== 'inDOM') {
       return;
     }
-    this.set('_width', this.$().parent().width());
-    this.set('_height', this.$().parent().height());
-    // we need to wait for the table to be fully rendered before antiscroll can
-    // be used
-    return Ember.run.next(this, this.updateLayout);
+    // border size of the table. we need to take this into account
+    var totalBorderWidth = this.get('borderSize') * 2;
+    this.beginPropertyChanges();
+    // We use innerWidth and innerHeight in case the parent has a border
+    this.setProperties({
+      _width: this.$().parent().innerWidth() - totalBorderWidth,
+      _height: this.$().parent().innerHeight() - totalBorderWidth
+    });
+    this.updateHeaderLayout();
+    this.updateLayout();
+    this.endPropertyChanges();
+  },
+
+  updateHeaderLayout: function() {
+    // js-header-content is absolutely positioned
+    var maxHeight = 0;
+    Ember.$('.js-header-content').each(function() {
+      var height = Ember.$(this).outerHeight();
+      if (height > maxHeight) {
+        maxHeight = height;
+      }
+    });
+    return this.set('_contentHeaderHeight', maxHeight);
   },
 
   tableWidthNowTooSmall: function() {
@@ -375,11 +428,18 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   // tables-container height adjusts to the content height
   _tablesContainerHeight: Ember.computed(function() {
     var height = this.get('_height');
+    var maxHeight = this.get('maxHeight');
     var contentHeight = this.get('_tableContentHeight') +
         this.get('_headerHeight') + this.get('_footerHeight');
-    return Math.min(contentHeight, height);
+    var _tablesContainerHeight;
+    if (this.get('useContentHeight')) {
+      _tablesContainerHeight = Math.min(contentHeight, maxHeight);
+    } else {
+      _tablesContainerHeight = Math.min(contentHeight, height);
+    }
+    return _tablesContainerHeight;
   }).property('_height', '_tableContentHeight', '_headerHeight',
-      '_footerHeight'),
+      '_footerHeight', 'maxHeight'),
 
   // Actual width of the fixed columns
   _fixedColumnsWidth: Ember.computed(function() {
@@ -397,11 +457,9 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   _rowWidth: Ember.computed(function() {
     var columnsWidth = this.get('_tableColumnsWidth');
-    var nonFixedTableWidth = this.get('_tableContainerWidth') -
-        this.get('_fixedColumnsWidth');
+    var nonFixedTableWidth = this.get('_tableContainerWidth') - this.get('_fixedColumnsWidth');
     return Math.max(columnsWidth, nonFixedTableWidth);
-  }).property('_fixedColumnsWidth', '_tableColumnsWidth',
-      '_tableContainerWidth'),
+  }).property('_fixedColumnsWidth', '_tableColumnsWidth', '_tableContainerWidth'),
 
   // Dynamic header height that adjusts according to the header content height
   _headerHeight: Ember.computed(function() {
@@ -460,8 +518,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
       index = numContent - numViews;
     }
     return Math.max(index, 0);
-  }).property('bodyContent.length', '_numItemsShowing', 'rowHeight',
-      '_tableScrollTop'),
+  }).property('bodyContent.length', '_numItemsShowing', 'rowHeight', '_tableScrollTop'),
 
   _getTotalWidth: function(columns, columnWidthPath) {
     if (columnWidthPath == null) {
@@ -588,7 +645,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
   },
 
   getRowForEvent: function(event) {
-    var $rowView = Ember.$(event.target).parents('.ember-table-table-row');
+    var $rowView = Ember.$(event.target).parents('.et-table-row');
     var view = Ember.View.views[$rowView.attr('id')];
     if (view) {
       return view.get('row');
