@@ -1,21 +1,25 @@
-<div class="et-table-scrollable-wrapper">
-  {{#if numFixedColumns}}
-    {{view "lazy-table-block" classNames="et-left-table-block"
-      content=bodyContent
-      columns=fixedColumns
-      width=_fixedBlockWidth
-      numItemsShowing=_numItemsShowing
-      scrollTop=_scrollTop
-      startIndex=_startIndex
-    }}
-  {{/if}}
-  {{view "lazy-table-block" classNames="et-right-table-block"
-    content=bodyContent
-    columns=tableColumns
-    scrollLeft=_tableScrollLeft
-    width=_tableBlockWidth
-    numItemsShowing=_numItemsShowing
-    scrollTop=_scrollTop
-    startIndex=_startIndex
-  }}
+<div class="antiscroll-box">
+	<div class="antiscroll-inner">
+		<div class="et-table-scrollable-wrapper">
+		  {{#if numFixedColumns}}
+		    {{view "lazy-table-block" classNames="et-left-table-block"
+		      content=bodyContent
+		      columns=fixedColumns
+		      width=_fixedBlockWidth
+		      numItemsShowing=_numItemsShowing
+		      scrollTop=_scrollTop
+		      startIndex=_startIndex
+		    }}
+		  {{/if}}
+		  {{view "lazy-table-block" classNames="et-right-table-block"
+		    content=bodyContent
+		    columns=tableColumns
+		    scrollLeft=_tableScrollLeft
+		    width=_tableBlockWidth
+		    numItemsShowing=_numItemsShowing
+		    scrollTop=_scrollTop
+		    startIndex=_startIndex
+		  }}
+		</div>
+	</div>
 </div>
