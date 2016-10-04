@@ -142,10 +142,10 @@ $et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellP
 .et-table-container {
 	position: relative;
 	z-index: $et-zIndex + 3;
-	overflow-x: hidden;
+	overflow: hidden;
 	// Height and Width defined dynamically through JS
 	// Let Antiscroll handle the overflow
-	overflow-y: auto;
+	// overflow-y: auto;
 	// deal with Linux Chrome v38 wrapping bug
 	// reset to normal in .et-table-block
 	white-space: nowrap;
@@ -183,11 +183,12 @@ $et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellP
 
 .et-scroll-container {
 	// Top, left, height and width defined dynamically through JS
+	// Override antiscroll-wrapper position relative
 	position: absolute;
 	bottom: 0;
 	z-index: $et-zIndex + 5;
-	overflow-x: auto;
-	overflow-y: hidden;
+	// overflow-x: auto;
+	// overflow-y: hidden;
 	// TODO(ldvz): need to figure
 	// border-left: $et-borderSize solid $et-borderColor;
 }
@@ -222,6 +223,52 @@ $et-cellContent-rightPadding: $et-headerCellPopoverLink-margin + $et-headerCellP
 .et-header-container {
 	border-bottom: $et-borderSize-header solid $et-borderColor-header;
 }
+
+/* Antiscroll */
+
+.antiscroll-scrollbar {
+  z-index: 10;
+}
+
+.et-body-container .antiscroll-box {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+// Make the antiscroll-box the size of the antiscroll-wrapper
+.et-body-container .antiscroll-box .antiscroll-inner {
+  height: 100%;
+  width: 100%;
+  // Scrollbar appears on antiscroll-inner in IE9 + Firefox
+  // overflow-x: hidden;
+}
+
+.et-scroll-container {
+  // The default line-height of 29px kills the scrollbar
+  line-height: 20px;
+
+  // override inline antiscroll height
+  .antiscroll-wrap {
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  .antiscroll-scrollbar-vertical {
+    display: none;
+  }
+
+  // Flush the horizontal scrollbar to the bottom
+  .antiscroll-scrollbar-horizontal {
+    bottom: 0;
+  }
+}
+
+// Vertical Scrollbar hacks
+.et-tables-container > .antiscroll-wrap .antiscroll-scrollbar-horizontal {
+  display: none !important;
+}
+
 
 // Table Row
 // ---------
@@ -581,28 +628,3 @@ $et-sortableIndicator-color: rgba(0, 0, 0, .3);
 .has-footerShadow .et-footer-container {
 	box-shadow: 0 -3px 3px rgba(0, 0, 0, .1);
 }
-
-// Deprecated
-// ----------
-
-// .et-table-header-tree-cell .et-header-content-container {
-// 	left: 20px;
-// }
-
-// .et-header-cell .et-toggle {
-// 	position: relative;
-// 	i {
-// 		position: absolute;
-// 		bottom: 8px;
-// 		font-size: 13px;
-// 	}
-// }
-
-// .et-toggle-span {
-// 	padding: 0;
-// 	// Note the -1 is because we use box sizing and the row has a bottom border
-// 	line-height: $et-height-row - 1;
-// 	&:hover {
-// 		cursor: pointer;
-// 	}
-// }
