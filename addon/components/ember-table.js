@@ -449,9 +449,7 @@ StyleBindingsMixin, ResizeHandlerMixin, {
 
   // Actual width of the (non-fixed) columns
   _tableColumnsWidth: Ember.computed(function() {
-    // Hack: We add 3px padding to the right of the table content so that we can
-    // reorder into the last column.
-    var contentWidth = this._getTotalWidth(this.get('tableColumns')) + 3;
+    var contentWidth = this._getTotalWidth(this.get('tableColumns'));
     var availableWidth = this.get('_width') - this.get('_fixedColumnsWidth');
     return Math.max(contentWidth, availableWidth);
   }).property('tableColumns.@each.width', '_width', '_fixedColumnsWidth'),
