@@ -7,21 +7,31 @@ export default Ember.Mixin.create({
   onResizeEnd: Ember.K,
   onResize: Ember.K,
 
-  endResize: function(event) {
-    if (this.isDestroyed) { return; }
-    this.set('resizing', false);
-    this.onResizeEnd(event);
-  },
+  endResize: Ember.computed(function() {
+    return function(event) {
+      if (this.isDestroyed) {
+        return;
+      }
+      this.set('resizing', false);
+      return typeof this.onResizeEnd === "function" ? this.onResizeEnd(event) : void 0;
+    };
+  }),
 
   handleWindowResize: function(event) {
-    if (this.isDestroyed) { return; }
+    if ((typeof event.target.id !== "undefined" && event.target.id !== null) &&
+        (event.target.id !== this.elementId)) {
+      return;
+    }
     if (!this.get('resizing')) {
       this.set('resizing', true);
-      this.onResizeStart(event);
+      if (typeof this.onResizeStart === "function") {
+        this.onResizeStart(event);
+      }
     }
-    this.onResize(event);
-    var resizeEndDelay = this.get('resizeEndDelay');
-    return Ember.run.debounce(this, this.endResize, event, resizeEndDelay, false);
+    if (typeof this.onResize === "function") {
+      this.onResize(event);
+    }
+    return Ember.run.debounce(this, this.get('endResize'), event, this.get('resizeEndDelay'));
   },
 
   didInsertElement: function() {
@@ -38,7 +48,7 @@ export default Ember.Mixin.create({
     if (this._resizeHandler) {
       return;
     }
-    this._resizeHandler = Ember.$.proxy(this.handleWindowResize, this);
+    this._resizeHandler = Ember.$.proxy(this.get('handleWindowResize'), this);
     return Ember.$(window).on("resize." + this.elementId, this._resizeHandler);
   },
 

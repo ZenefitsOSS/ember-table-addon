@@ -1,6 +1,6 @@
 {
   "name": "ember-table",
-  "version": "0.9.0",
+  "version": "0.9.0-zenefits.1",
   "description": "Table built using Ember.js that lazily renders rows.",
   "directories": {
     "doc": "doc",
@@ -9,9 +9,9 @@
   "scripts": {
     "start": "ember server",
     "build": "ember build",
-    "test": "ember try:testall"
+    "test": "ember try:each"
   },
-  "repository": "https://github.com/Addepar/ember-table",
+  "repository": "https://github.com/zenefits/ember-table-addon",
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -45,7 +45,7 @@
     "ember-data": "1.0.0-beta.18",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
-    "ember-try": "0.0.6",
+    "ember-try": "0.2.6",
     "glob": "^4.0.5",
     "grunt": "~0.4.1",
     "grunt-banner": "~0.2.2",
